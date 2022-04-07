@@ -1,18 +1,23 @@
 package interfaces
 
-import "OLC2/generator"
+import (
+	"OLC2/generator"
+
+	"github.com/colegno/arraylist"
+)
 
 type Symbol struct {
 	Id       string
-	Tipo     TipoExpresion
-	Tipo2    TipoExpresion
+	Tipo     TipoSimbolo
 	Posicion int
+	Mutable  bool
 }
 
 type Value struct {
 	Value      string
 	IsTemp     bool
 	Type       TipoExpresion
+	Tipo2      *arraylist.List
 	TrueLabel  string
 	FalseLabel string
 }
@@ -40,7 +45,6 @@ type Optimizacion struct {
 type Simbolos struct {
 	ID      string
 	Tipo    string
-	Tipo2   string
 	Ambito  string
 	Fila    string
 	Columna string
@@ -49,9 +53,7 @@ type Simbolos struct {
 type Errores struct {
 	Line  string
 	Col   string
-	Tipo  string
 	Mess  string
-	Ambit string
 	Fecha string
 }
 
@@ -61,4 +63,14 @@ type Expresion interface {
 
 type Instruction interface {
 	Ejecutar(env interface{}, gen *generator.Generator) interface{}
+}
+
+type TipoSimbolo struct {
+	Tipo  TipoExpresion
+	Tipo2 *arraylist.List
+}
+
+type Dimensions struct {
+	Tipo       TipoExpresion
+	Dimensions *arraylist.List
 }

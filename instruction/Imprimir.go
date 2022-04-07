@@ -17,11 +17,21 @@ func NewImprimir(val interfaces.Expresion) Imprimir {
 
 func (p Imprimir) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 
-	var result interfaces.Value
+	result := p.Expresion.Ejecutar(env, gen)
+	//fmt.Println(result)
+	if result.Type == interfaces.INTEGER || result.Type == interfaces.USIZE {
+		gen.AddPrintf("d", "(int)"+fmt.Sprintf("%v", result.Value))
+	} else if result.Type == interfaces.FLOAT {
+		gen.AddPrintf("f", fmt.Sprintf("%v", result.Value))
+	} else if result.Type == interfaces.CHAR {
+		gen.AddPrintf("c", fmt.Sprintf("%v", result.Value))
+	} else if result.Type == interfaces.STR || result.Type == interfaces.STRING {
 
-	result = p.Expresion.Ejecutar(env, gen)
-
-	gen.AddPrintf("d", "(int)"+fmt.Sprintf("%v", result.Value))
-
-	return result.Value
+	}
+	//gen.AddPrintf("c", fmt.Sprintf("%v", result.Value))
+	//salto de línea
+	gen.AddCode("printf(\"\\n\");")
+	var retorno interfaces.Symbol
+	retorno.Tipo.Tipo = interfaces.NULL
+	return retorno
 }

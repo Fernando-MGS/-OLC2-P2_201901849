@@ -17,6 +17,30 @@ type ChemsListener interface {
 	// EnterInstruccion is called when entering the instruccion production.
 	EnterInstruccion(c *InstruccionContext)
 
+	// EnterDeclaracion_var is called when entering the declaracion_var production.
+	EnterDeclaracion_var(c *Declaracion_varContext)
+
+	// EnterMutable is called when entering the mutable production.
+	EnterMutable(c *MutableContext)
+
+	// EnterTypes is called when entering the types production.
+	EnterTypes(c *TypesContext)
+
+	// EnterTipo_d is called when entering the tipo_d production.
+	EnterTipo_d(c *Tipo_dContext)
+
+	// EnterAsignar_Array is called when entering the asignar_Array production.
+	EnterAsignar_Array(c *Asignar_ArrayContext)
+
+	// EnterDimensiones is called when entering the dimensiones production.
+	EnterDimensiones(c *DimensionesContext)
+
+	// EnterTipo_vector is called when entering the tipo_vector production.
+	EnterTipo_vector(c *Tipo_vectorContext)
+
+	// EnterVectores is called when entering the vectores production.
+	EnterVectores(c *VectoresContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -34,6 +58,30 @@ type ChemsListener interface {
 
 	// ExitInstruccion is called when exiting the instruccion production.
 	ExitInstruccion(c *InstruccionContext)
+
+	// ExitDeclaracion_var is called when exiting the declaracion_var production.
+	ExitDeclaracion_var(c *Declaracion_varContext)
+
+	// ExitMutable is called when exiting the mutable production.
+	ExitMutable(c *MutableContext)
+
+	// ExitTypes is called when exiting the types production.
+	ExitTypes(c *TypesContext)
+
+	// ExitTipo_d is called when exiting the tipo_d production.
+	ExitTipo_d(c *Tipo_dContext)
+
+	// ExitAsignar_Array is called when exiting the asignar_Array production.
+	ExitAsignar_Array(c *Asignar_ArrayContext)
+
+	// ExitDimensiones is called when exiting the dimensiones production.
+	ExitDimensiones(c *DimensionesContext)
+
+	// ExitTipo_vector is called when exiting the tipo_vector production.
+	ExitTipo_vector(c *Tipo_vectorContext)
+
+	// ExitVectores is called when exiting the vectores production.
+	ExitVectores(c *VectoresContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)

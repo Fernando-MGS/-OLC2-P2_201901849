@@ -39,6 +39,54 @@ func (s *BaseChemsListener) EnterInstruccion(ctx *InstruccionContext) {}
 // ExitInstruccion is called when production instruccion is exited.
 func (s *BaseChemsListener) ExitInstruccion(ctx *InstruccionContext) {}
 
+// EnterDeclaracion_var is called when production declaracion_var is entered.
+func (s *BaseChemsListener) EnterDeclaracion_var(ctx *Declaracion_varContext) {}
+
+// ExitDeclaracion_var is called when production declaracion_var is exited.
+func (s *BaseChemsListener) ExitDeclaracion_var(ctx *Declaracion_varContext) {}
+
+// EnterMutable is called when production mutable is entered.
+func (s *BaseChemsListener) EnterMutable(ctx *MutableContext) {}
+
+// ExitMutable is called when production mutable is exited.
+func (s *BaseChemsListener) ExitMutable(ctx *MutableContext) {}
+
+// EnterTypes is called when production types is entered.
+func (s *BaseChemsListener) EnterTypes(ctx *TypesContext) {}
+
+// ExitTypes is called when production types is exited.
+func (s *BaseChemsListener) ExitTypes(ctx *TypesContext) {}
+
+// EnterTipo_d is called when production tipo_d is entered.
+func (s *BaseChemsListener) EnterTipo_d(ctx *Tipo_dContext) {}
+
+// ExitTipo_d is called when production tipo_d is exited.
+func (s *BaseChemsListener) ExitTipo_d(ctx *Tipo_dContext) {}
+
+// EnterAsignar_Array is called when production asignar_Array is entered.
+func (s *BaseChemsListener) EnterAsignar_Array(ctx *Asignar_ArrayContext) {}
+
+// ExitAsignar_Array is called when production asignar_Array is exited.
+func (s *BaseChemsListener) ExitAsignar_Array(ctx *Asignar_ArrayContext) {}
+
+// EnterDimensiones is called when production dimensiones is entered.
+func (s *BaseChemsListener) EnterDimensiones(ctx *DimensionesContext) {}
+
+// ExitDimensiones is called when production dimensiones is exited.
+func (s *BaseChemsListener) ExitDimensiones(ctx *DimensionesContext) {}
+
+// EnterTipo_vector is called when production tipo_vector is entered.
+func (s *BaseChemsListener) EnterTipo_vector(ctx *Tipo_vectorContext) {}
+
+// ExitTipo_vector is called when production tipo_vector is exited.
+func (s *BaseChemsListener) ExitTipo_vector(ctx *Tipo_vectorContext) {}
+
+// EnterVectores is called when production vectores is entered.
+func (s *BaseChemsListener) EnterVectores(ctx *VectoresContext) {}
+
+// ExitVectores is called when production vectores is exited.
+func (s *BaseChemsListener) ExitVectores(ctx *VectoresContext) {}
+
 // EnterExpression is called when production expression is entered.
 func (s *BaseChemsListener) EnterExpression(ctx *ExpressionContext) {}
 

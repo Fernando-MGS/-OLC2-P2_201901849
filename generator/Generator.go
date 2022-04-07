@@ -9,12 +9,14 @@ import (
 type Generator struct {
 	temporal int
 	label    int
+	Stack    int
+	Heap     int
 	code     *arrayList.List
 	tempList *arrayList.List
 }
 
 func NewGenerator() *Generator {
-
+	//fmt.Println("neuvo generator")
 	generator := Generator{temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New()}
 	return &generator
 }
@@ -57,4 +59,12 @@ func (g *Generator) AddExpression(target string, left string, right string, oper
 //Añade un printf
 func (g *Generator) AddPrintf(typePrint string, value string) {
 	g.code.Add("printf(\"%" + typePrint + "\"," + value + ");")
+}
+
+func (g *Generator) AddCode(code string) {
+	g.code.Add(code)
+}
+
+func (g *Generator) AddFunc() {
+
 }
