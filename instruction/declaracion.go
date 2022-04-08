@@ -22,9 +22,18 @@ func NewDeclaracion(id string, tipo interfaces.TipoSimbolo, val interfaces.Expre
 }
 
 func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
-	fmt.Println("DECLARACION")
+	//fmt.Println("DECLARACION")
 	result := p.Expresion.Ejecutar(env, gen)
-	if result.Type == p.Tipo.Tipo {
+	conf := false
+	if p.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
+		conf = true
+	} else if p.Tipo.Tipo == result.Type {
+		conf = true
+	} else if result.Type == interfaces.NULL {
+		result.Type = interfaces.NULL
+		return result.Value
+	}
+	if conf {
 		if p.Tipo.Tipo == interfaces.ARRAY {
 			fmt.Println(p.Tipo.Tipo)
 			fmt.Println(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Tipo)
@@ -64,8 +73,9 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			t.Hour(), t.Minute(), t.Second())
 		err := interfaces.Errores{Line: "0", Col: "0", Mess: "LOS TIPOS NO CONCUERDAN EN LA DECLARACION", Fecha: fecha}
 		env.(environment.Environment).Errores(err)
+		fmt.Println(err)
 	}
-
+	fmt.Println("nel")
 	result.Type = interfaces.NULL
 	return result.Value
 }

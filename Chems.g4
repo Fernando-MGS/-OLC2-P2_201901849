@@ -118,6 +118,9 @@ expr_arit returns[interfaces.Expresion p]
     | opIz = expr_arit op=('<'|'<='|'>='|'>') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}     
     | primitivo {$p = $primitivo.p} 
     | PARIZQ expression PARDER {$p = $expression.p}
+    | exp=expr_arit P_AS tipo_d  {$p=expresion.NewCast($exp.p,$tipo_d.t)
+      fmt.Println("line")
+    } 
 ;
 
 primitivo returns[interfaces.Expresion p]
@@ -127,6 +130,10 @@ primitivo returns[interfaces.Expresion p]
                     fmt.Println(err)
                 }
             $p = expresion.NewPrimitivo (num,interfaces.INTEGER)
+            linea:=$ctx._NUMBER.GetLine()
+            col:=$ctx._NUMBER.GetColumn()
+            fmt.Println(linea)
+            fmt.Println(col)
        } 
     | STRING { 
       str:= $STRING.text[1:len($STRING.text)-1]

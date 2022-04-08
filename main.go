@@ -87,7 +87,30 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	}
 
 	salida += "return 0;\n}\n"
-
+	errores := globalEnv.DevErrores()
+	simbolos := globalEnv.DevSimbolos()
+	bases := globalEnv.DevBases()
+	var reset []interfaces.Errores
+	var resetS []interfaces.Simbolos
+	var resetB []interfaces.Bases
+	var resetO []interfaces.Optimizacion
+	RepErr = reset
+	RepSim = resetS
+	RepBase = resetB
+	RepOptimizacion = resetO
+	RepErr = append(RepErr, interfaces.Errores{Line: "LINEA", Col: "COLUMNA", Mess: "MENSAJE", Fecha: "FECHA"})
+	RepSim = append(RepSim, interfaces.Simbolos{ID: "ID", Tipo: "TIPO", Ambito: "AMBITO", Fila: "FILA"})
+	RepBase = append(RepBase, interfaces.Bases{Nombre: "NOMBRE", NoTables: "TABLAS", Linea: "LINEA"})
+	RepOptimizacion = append(RepOptimizacion, interfaces.Optimizacion{Tipo: "TIPO", Regla: "REGLA", Expr_Original: "EXPRESION ORIGINAL", Expr_Optima: "EXPRESION OPTIMA", Fila: "FILA"})
+	for _, s := range bases {
+		RepBase = append(RepBase, s.(interfaces.Bases))
+	}
+	for _, s := range simbolos {
+		RepSim = append(RepSim, s.(interfaces.Simbolos))
+	}
+	for _, s := range errores {
+		RepErr = append(RepErr, s.(interfaces.Errores))
+	}
 	/*_, err2 := f.WriteString(salida)
 
 	if err2 != nil {
@@ -148,10 +171,15 @@ func main() {
 			consola = editor.Text
 			ejecutar_antlr()
 			result.SetText(salida)
+			fmt.Println("start")
 			list.Refresh()
+			fmt.Println("l")
 			list1.Refresh()
+			fmt.Println("l1")
 			list2.Refresh()
+			fmt.Println("l2")
 			list3.Refresh()
+			fmt.Println("l3")
 		}),
 		widget.NewToolbarSeparator(),
 		widget.NewToolbarAction(theme.ConfirmIcon(), func() {}),
@@ -182,7 +210,7 @@ func main() {
 			}
 
 		})
-	list.Refresh()
+	//list.Refresh()
 	list1 = widget.NewTable(
 		func() (int, int) {
 			return len(RepSim), 5
