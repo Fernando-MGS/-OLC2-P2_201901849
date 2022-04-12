@@ -11,6 +11,8 @@ type Symbol struct {
 	Tipo     TipoSimbolo
 	Posicion int
 	Mutable  bool
+	Line     string
+	Col      string
 }
 
 type Value struct {

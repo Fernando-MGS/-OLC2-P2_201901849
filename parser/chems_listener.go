@@ -17,6 +17,9 @@ type ChemsListener interface {
 	// EnterInstruccion is called when entering the instruccion production.
 	EnterInstruccion(c *InstruccionContext)
 
+	// EnterAsignacion_var is called when entering the asignacion_var production.
+	EnterAsignacion_var(c *Asignacion_varContext)
+
 	// EnterDeclaracion_var is called when entering the declaracion_var production.
 	EnterDeclaracion_var(c *Declaracion_varContext)
 
@@ -58,6 +61,9 @@ type ChemsListener interface {
 
 	// ExitInstruccion is called when exiting the instruccion production.
 	ExitInstruccion(c *InstruccionContext)
+
+	// ExitAsignacion_var is called when exiting the asignacion_var production.
+	ExitAsignacion_var(c *Asignacion_varContext)
 
 	// ExitDeclaracion_var is called when exiting the declaracion_var production.
 	ExitDeclaracion_var(c *Declaracion_varContext)

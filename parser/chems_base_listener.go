@@ -39,6 +39,12 @@ func (s *BaseChemsListener) EnterInstruccion(ctx *InstruccionContext) {}
 // ExitInstruccion is called when production instruccion is exited.
 func (s *BaseChemsListener) ExitInstruccion(ctx *InstruccionContext) {}
 
+// EnterAsignacion_var is called when production asignacion_var is entered.
+func (s *BaseChemsListener) EnterAsignacion_var(ctx *Asignacion_varContext) {}
+
+// ExitAsignacion_var is called when production asignacion_var is exited.
+func (s *BaseChemsListener) ExitAsignacion_var(ctx *Asignacion_varContext) {}
+
 // EnterDeclaracion_var is called when production declaracion_var is entered.
 func (s *BaseChemsListener) EnterDeclaracion_var(ctx *Declaracion_varContext) {}
 

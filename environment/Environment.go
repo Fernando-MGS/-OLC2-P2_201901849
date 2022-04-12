@@ -9,37 +9,43 @@ import (
 )
 
 type Environment struct {
-	id       string
+	Control  *EnvControl
 	father   interface{}
 	variable map[string]interfaces.Symbol
-	size     int
+
 	bases    *arraylist.List
 	simbolos *arraylist.List
 	errores  *arraylist.List
 }
 
+type EnvControl struct {
+	Id    string
+	Stack int
+	Heap  int
+}
+
 func NewEnvironment(father interface{}, id string) Environment {
-	env := Environment{id, father, make(map[string]interfaces.Symbol), 0, arraylist.New(), arraylist.New(), arraylist.New()}
+	env := Environment{&EnvControl{Id: id, Stack: 1, Heap: 1}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New()}
 	return env
 }
 
-func (env Environment) SaveVariable(id string, value interfaces.Symbol, tipo interfaces.TipoSimbolo) {
+func (env Environment) SaveVariable(line, col, id string, value interfaces.Symbol, tipo interfaces.TipoSimbolo) {
 	if variable, ok := env.variable[id]; ok {
 		t := time.Now()
 		fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
 			t.Year(), t.Month(), t.Day(),
 			t.Hour(), t.Minute(), t.Second())
-		err := interfaces.Errores{Line: "0", Col: "0", Mess: "LA VARIABLE " + variable.Id + " YA EXISTE", Fecha: fecha}
+		err := interfaces.Errores{Line: "0", Col: "0", Mess: "LA VARIABLE \"" + variable.Id + "\" YA EXISTE", Fecha: fecha}
 		env.Errores(err)
 		return
 	}
 	env.variable[id] = value
-	simbolos := interfaces.Simbolos{ID: id, Tipo: Tipo2(value.Tipo.Tipo), Ambito: "GLOBAL", Fila: "0", Columna: "0"}
+	simbolos := interfaces.Simbolos{ID: id, Tipo: Tipo2(value.Tipo.Tipo), Ambito: env.Control.Id, Fila: line, Columna: col}
 	env.LogSimbolo(simbolos)
 	//env.size = env.size + 1
 }
 
-func (env Environment) GetVariable(id string) interfaces.Symbol {
+func (env Environment) GetVariable(id, line, col string) interfaces.Symbol {
 
 	var tmpEnv Environment
 	tmpEnv = env
@@ -60,7 +66,7 @@ func (env Environment) GetVariable(id string) interfaces.Symbol {
 	fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
 		t.Year(), t.Month(), t.Day(),
 		t.Hour(), t.Minute(), t.Second())
-	err := interfaces.Errores{Line: "0", Col: "0", Mess: "LA VARIABLE " + id + " NO EXISTE", Fecha: fecha}
+	err := interfaces.Errores{Line: line, Col: col, Mess: "LA VARIABLE \"" + id + "\" NO EXISTE", Fecha: fecha}
 	env.Errores(err)
 	tipos := interfaces.TipoSimbolo{Tipo: interfaces.NULL}
 	return interfaces.Symbol{Id: "", Tipo: tipos, Posicion: 0}

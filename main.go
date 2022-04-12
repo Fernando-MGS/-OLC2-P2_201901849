@@ -79,14 +79,24 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 		salida += ";\n\n"
 	}
 
-	salida += "\nint main(){\n    "
+	salida += "\nvoid main(){\n"
 
 	for _, s := range gen.GetCode().ToArray() {
 		salida += fmt.Sprintf("%v", s)
-		salida += "\n    "
+		salida += "\n"
 	}
 
-	salida += "return 0;\n}\n"
+	salida += "return;\n}\n"
+
+	for _, s := range gen.GetExtraFuncs().ToArray() {
+		salida += fmt.Sprintf("%v", s)
+		salida += "\n"
+	}
+	salida += "\n"
+	for _, s := range gen.GetFuncs().ToArray() {
+		salida += fmt.Sprintf("%v", s)
+		salida += "\n"
+	}
 	errores := globalEnv.DevErrores()
 	simbolos := globalEnv.DevSimbolos()
 	bases := globalEnv.DevBases()
@@ -144,9 +154,9 @@ func show_Data() {
 }
 
 func set_Reportes() {
-	err1 := interfaces.Errores{Line: "LINEA", Col: "COLUMNA", Mess: "prueba1", Fecha: "2022-03-23T12:38:23"}
-	sim1 := interfaces.Simbolos{ID: "OLC2N-1S2022", Tipo: "---------PROYECTO1---------", Ambito: "GLOBAL", Fila: "FILA", Columna: "COLUMNA"}
-	bases := interfaces.Bases{Nombre: "MODULOS", NoTables: "0", Linea: "0"}
+	err1 := interfaces.Errores{Line: "LINEA", Col: "COLUMNA", Mess: "DETALLES", Fecha: "FECHA"}
+	sim1 := interfaces.Simbolos{ID: "ID", Tipo: "TIPO", Ambito: "AMBITO", Fila: "FILA", Columna: "COLUMNA"}
+	bases := interfaces.Bases{Nombre: "MODULOS", NoTables: "NO. TABLAS", Linea: "LINEA"}
 	optimos := interfaces.Optimizacion{Tipo: "TIPO", Regla: "REGLA", Expr_Original: "EXPRESION ORIGINAL", Expr_Optima: "EXPRESION OPTIMA", Fila: "FILA"}
 	RepErr = []interfaces.Errores{err1}
 	RepSim = []interfaces.Simbolos{sim1}
@@ -171,15 +181,10 @@ func main() {
 			consola = editor.Text
 			ejecutar_antlr()
 			result.SetText(salida)
-			fmt.Println("start")
 			list.Refresh()
-			fmt.Println("l")
 			list1.Refresh()
-			fmt.Println("l1")
 			list2.Refresh()
-			fmt.Println("l2")
 			list3.Refresh()
-			fmt.Println("l3")
 		}),
 		widget.NewToolbarSeparator(),
 		widget.NewToolbarAction(theme.ConfirmIcon(), func() {}),
@@ -192,11 +197,11 @@ func main() {
 			return len(RepErr), 4
 		},
 		func() fyne.CanvasObject {
-			return widget.NewLabel("                       ")
+			return widget.NewLabel("----------------------------------------------")
 		},
 		func(i widget.TableCellID, o fyne.CanvasObject) {
 			if i.Col == 0 {
-				o.(*widget.Label).SetText(RepErr[i.Row].Line + "a")
+				o.(*widget.Label).SetText(RepErr[i.Row].Line)
 				o.Refresh()
 			} else if i.Col == 1 {
 				o.(*widget.Label).SetText(RepErr[i.Row].Col)
@@ -216,11 +221,11 @@ func main() {
 			return len(RepSim), 5
 		},
 		func() fyne.CanvasObject {
-			return widget.NewLabel("-------------------------------")
+			return widget.NewLabel("-------------------------------------------------------")
 		},
 		func(i widget.TableCellID, o fyne.CanvasObject) {
 			if i.Col == 0 {
-				//o.(*widget.Label).SetText(RepSim[i.Row].Fila)
+				o.(*widget.Label).SetText(RepSim[i.Row].Fila)
 			} else if i.Col == 1 {
 				o.(*widget.Label).SetText(RepSim[i.Row].Columna)
 			} else if i.Col == 2 {
@@ -233,10 +238,10 @@ func main() {
 		})
 	list2 = widget.NewTable(
 		func() (int, int) {
-			return len(RepBase), 6
+			return len(RepBase), 3
 		},
 		func() fyne.CanvasObject {
-			return widget.NewLabel("wide content")
+			return widget.NewLabel("-----------------------------------------------------")
 		},
 		func(i widget.TableCellID, o fyne.CanvasObject) {
 			if i.Col == 0 {
@@ -256,10 +261,10 @@ func main() {
 		})
 	list3 = widget.NewTable(
 		func() (int, int) {
-			return len(RepBase), 6
+			return len(RepBase), 5
 		},
 		func() fyne.CanvasObject {
-			return widget.NewLabel("wide content")
+			return widget.NewLabel("------------------------------------------------------")
 		},
 		func(i widget.TableCellID, o fyne.CanvasObject) {
 			if i.Col == 0 {
