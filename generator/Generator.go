@@ -156,8 +156,15 @@ func (g *Generator) AddFuncExtra(id string) {
 			g.func_extra[id] = true
 			g.extra_code.Add(print_divZero())
 		} else if id == "NULL" {
-
+			g.func_extra[id] = true
+			g.extra_code.Add(print_Null())
 		} else if id == "CONCATSTR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(concat_STR(g))
+		} else if id == "PRINTSTR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(print_String(g))
+		} else if id == "POW" {
 
 		}
 	}
@@ -195,12 +202,89 @@ func print_bools() string {
 	return code
 }
 
+func print_Null() string {
+	code := "void proc_printNull(){\n"
+	code += "printf(\"%c\",110);\n"
+	code += "printf(\"%c\",117);\n"
+	code += "printf(\"%c\",108);\n"
+	code += "printf(\"%c\",108);\n"
+	code += "return;\n}"
+	return code
+}
+
+func concat_STR(gen *Generator) string {
+	code := "void proc_concatSTR(){\n"
+	tmp1 := gen.NewTemp()
+	code += tmp1 + "=H;\n"
+	tmp2 := gen.NewTemp()
+	code += tmp2 + "=P+1;\n"
+	tmp3 := gen.NewTemp()
+	code += tmp3 + "=STACK[(int)" + tmp2 + "];\n"
+	tmp4 := gen.NewTemp()
+	code += tmp4 + "=P+2;\n"
+	tmp5 := gen.NewTemp()
+	code += tmp5 + "=STACK[(int)" + tmp4 + "];\n"
+	l1 := gen.NewLabel()
+	l2 := gen.NewLabel()
+	l3 := gen.NewLabel()
+	code += l1 + ":\n"
+	tmp6 := gen.NewTemp()
+	code += tmp6 + "=HEAP[(int)" + tmp3 + "];\n"
+	code += "if(" + tmp6 + "!=-1) goto " + l3 + ";\n"
+	code += "goto " + l2 + ";\n"
+	code += l3 + ":\n"
+	code += "HEAP[(int)H] =" + tmp6 + ";\n"
+	code += "H=H+1;\n"
+	code += tmp3 + "=" + tmp3 + "+1;\n"
+	code += "goto " + l1 + ";\n"
+	code += l2 + ":\n"
+	code += tmp6 + "= HEAP[(int)" + tmp5 + "];\n"
+	l4 := gen.NewLabel()
+	l5 := gen.NewLabel()
+	code += "if(" + tmp6 + "!=-1) goto " + l4 + ";\n"
+	code += "goto " + l5 + ";\n"
+	code += l4 + ":\n"
+	code += "HEAP[(int)H] =" + tmp6 + ";\n"
+	code += "H=H+1;\n"
+	code += tmp5 + "=" + tmp5 + "+1;\n"
+	code += "goto " + l2 + ";\n"
+	code += l5 + ":\n"
+	code += "HEAP[(int)H] = -1;"
+	code += "H=H+1;\n"
+	code += "STACK[(int)P] = " + tmp1 + ";\n"
+	code += "return;\n}"
+	return code
+}
+
+func print_String(gen *Generator) string {
+	code := "void proc_printString(){\n"
+	t5 := gen.NewTemp()
+	code += t5 + "=P+1;\n"
+	t6 := gen.NewTemp()
+	l5 := gen.NewLabel()
+	code += t6 + "=STACK[(int)" + t5 + "];\n"
+	code += l5 + ":\n"
+	t7 := gen.NewTemp()
+	code += t7 + "=HEAP[(int)" + t6 + "];\n"
+	l3 := gen.NewLabel()
+	l4 := gen.NewLabel()
+	code += "if(" + t7 + "!=-1) goto " + l3 + ";\n"
+	code += "goto " + l4 + ";\n"
+	code += l3 + ":\n"
+	code += "printf(\"%c\",(int)" + t7 + ");\n"
+	code += t6 + "=" + t6 + " + 1;\n"
+	code += "goto " + l5 + ";\n"
+	code += l4 + ":\n"
+	code += "return;\n}"
+	return code
+}
+
 func print_divZero() string {
 	code := ""
 	return code
 }
 
-func (g *Generator) array_char(str string) []rune {
+func (g *Generator) Array_char(str string) []rune {
 	runes := []rune(str)
 	return runes
 }

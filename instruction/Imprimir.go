@@ -48,7 +48,20 @@ func (p Imprimir) Ejecutar(env interface{}, gen *generator.Generator) interface{
 		gen.SetConf()
 		gen.AddFuncExtra("PRINTBOOL")
 	} else if result.Type == interfaces.STR || result.Type == interfaces.STRING {
-
+		l1 := gen.NewLabel()
+		l2 := gen.NewLabel()
+		code := "if (" + result.Value + "==-1) goto " + l1 + ";\n"
+		code += "P=P+1;\n"
+		t1 := gen.NewTemp()
+		code += t1 + "=P+1;\n"
+		code += "STACK[(int)" + t1 + "] =" + result.Value + ";\n"
+		code += "proc_printString();\n"
+		code += "P=P-1;\n"
+		code += "goto " + l2 + ";\n"
+		code += l1 + ":\n"
+		code += l2 + ":\n"
+		gen.AddCodes(code, ambito)
+		gen.AddFuncExtra("PRINTSTR")
 	}
 	//gen.AddPrintf("c", fmt.Sprintf("%v", result.Value))
 	//salto de línea

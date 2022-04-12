@@ -88,9 +88,43 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				}
 			} else {
 				if retornoIzq.Type == interfaces.STR && retornoDer.Type == interfaces.STRING {
-
+					gen.AddCodes("//CONCATENACION DE STRINGS", ambito)
+					gen.AddFuncExtra("CONCATSTR")
+					tmp1 := gen.NewTemp()
+					asignacion1 := tmp1 + "=P+1;"
+					gen.AddCodes(asignacion1, ambito)
+					tmp2 := gen.NewTemp()
+					asignacion2 := tmp2 + "=P+2;"
+					gen.AddCodes(asignacion2, ambito)
+					asignacion1 = "STACK[(int)" + tmp1 + "]=" + retornoIzq.Value + ";"
+					asignacion2 = "STACK[(int)" + tmp2 + "]=" + retornoDer.Value + ";"
+					gen.AddCodes(asignacion1, ambito)
+					gen.AddCodes(asignacion2, ambito)
+					gen.AddCodes("proc_concatSTR();", ambito)
+					tmp3 := gen.NewTemp()
+					code := tmp3 + "=STACK[(int)P];\n"
+					gen.AddCodes(code, ambito)
+					gen.AddCodes("//FIN DE CONCATENACION DE STRINGS", ambito)
+					return interfaces.Value{Value: tmp3, IsTemp: true, Type: interfaces.STR, TrueLabel: "", FalseLabel: ""}
 				} else if retornoIzq.Type == interfaces.STRING && retornoDer.Type == interfaces.STR {
-
+					gen.AddCodes("//CONCATENACION DE STRINGS", ambito)
+					gen.AddFuncExtra("CONCATSTR")
+					tmp1 := gen.NewTemp()
+					asignacion1 := tmp1 + "=P+1;"
+					gen.AddCodes(asignacion1, ambito)
+					tmp2 := gen.NewTemp()
+					asignacion2 := tmp2 + "=P+2;"
+					gen.AddCodes(asignacion2, ambito)
+					asignacion1 = "STACK[(int)" + tmp1 + "]=" + retornoIzq.Value + ";"
+					asignacion2 = "STACK[(int)" + tmp2 + "]=" + retornoDer.Value + ";"
+					gen.AddCodes(asignacion1, ambito)
+					gen.AddCodes(asignacion2, ambito)
+					gen.AddCodes("proc_concatSTR();", ambito)
+					tmp3 := gen.NewTemp()
+					code := tmp3 + "=STACK[(int)P];\n"
+					gen.AddCodes(code, ambito)
+					gen.AddCodes("//FIN DE CONCATENACION DE STRINGS", ambito)
+					return interfaces.Value{Value: tmp3, IsTemp: true, Type: interfaces.STR, TrueLabel: "", FalseLabel: ""}
 				}
 				t := time.Now()
 				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",

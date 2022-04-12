@@ -46,6 +46,28 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 		} else if p.Tipo.Tipo == interfaces.VECTOR {
 			fmt.Println(p.Tipo.Tipo)
 			fmt.Println(p.Tipo.Tipo2.ToArray()...)
+		} else if p.Tipo.Tipo == interfaces.STR || p.Tipo.Tipo == interfaces.STRING {
+			code := "//--------------INICIO DE DECLARACION--------\n"
+			tam := env.(environment.Environment).Control.Stack
+			guia := ""
+			incremento := ""
+			if env.(environment.Environment).Control.Id == "main" || env.(environment.Environment).Control.Id == "GLOBAL" {
+				guia = "(int)P"
+				incremento = "P=P+1;"
+
+			} else {
+				tmp := gen.NewTemp()
+				gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", true)
+				guia = "(int)" + tmp
+				ambito = true
+				env.(environment.Environment).Control.Stack++
+			}
+			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: gen.Stack, Mutable: p.Mutable}
+			env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
+			code += "STACK[" + guia + " ]=" + result.Value + ";\n"
+			code += incremento + "\n"
+			code += "//--------------FIN DE DECLARACION--------"
+			gen.AddCodes(code, ambito)
 		} else {
 
 			codigo := "//--------------INICIO DE DECLARACION--------\n"
@@ -55,12 +77,13 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			if env.(environment.Environment).Control.Id == "main" || env.(environment.Environment).Control.Id == "GLOBAL" {
 				guia = "(int)P"
 				incremento = "P=P+1;"
-				env.(environment.Environment).Control.Stack++
+
 			} else {
 				tmp := gen.NewTemp()
 				gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", true)
 				guia = "(int)" + tmp
 				ambito = true
+				env.(environment.Environment).Control.Stack++
 			}
 			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: gen.Stack, Mutable: p.Mutable}
 			if result.Type == interfaces.INTEGER || result.Type == interfaces.FLOAT || result.Type == interfaces.CHAR || result.Type == interfaces.USIZE {

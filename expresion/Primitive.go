@@ -17,7 +17,13 @@ type Primitivo struct {
 }
 
 func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
+	name := env.(environment.Environment).Control.Id
+	ambito := true
+	if name == "GLOBAL" || name == "main" {
+		ambito = false
+	}
 	if p.Tipo == interfaces.STRING || p.Tipo == interfaces.CHAR {
+
 		cadena := fmt.Sprintf("%v", p.Valor)
 		cadena = strings.Replace(cadena, "\\n", "\n", -1)
 		cadena = strings.Replace(cadena, "\\t", "\t", -1)
@@ -25,13 +31,26 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 		cadena = strings.Replace(cadena, "\\'", "'", -1)
 		//cadena = strings.Replace(cadena, "\\\\", "\\", -1)
 		p.Valor = cadena
+		if p.Tipo == interfaces.STRING {
+			tmp := gen.NewTemp()
+			p.Valor = tmp
+			declarar := tmp + "=H;"
+			gen.AddCodes(declarar, ambito)
+			chars := gen.Array_char(cadena)
+			for _, s := range chars {
+				val := strconv.Itoa(int(s))
+				save := "HEAP[(int)H]=" + val + ";\n"
+				save += "H=H+1;"
+				gen.AddCodes(save, ambito)
+
+			}
+			save := "HEAP[(int)H]=-1;\n"
+			save += "H=H+1;"
+			gen.AddCodes(save, ambito)
+		}
 		//fmt.Println(p.Valor)
 	} else if p.Tipo == interfaces.BOOLEAN {
-		name := env.(environment.Environment).Control.Id
-		ambito := true
-		if name == "GLOBAL" || name == "main" {
-			ambito = false
-		}
+
 		l1 := gen.NewLabel()
 		l2 := ""
 

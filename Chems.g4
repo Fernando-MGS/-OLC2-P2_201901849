@@ -132,6 +132,7 @@ expr_arit returns[interfaces.Expresion p]
     | primitivo {$p = $primitivo.p} 
     | PARIZQ expression PARDER {$p = $expression.p}
     | exp=expr_arit P_AS tipo_d  {$p=expresion.NewCast($exp.p,$tipo_d.t)} 
+    |exp=expr_arit PUNTO T_STRING PARIZQ PARDER  {$p=expresion.NewToString($exp.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
 ;
 
 primitivo returns[interfaces.Expresion p]

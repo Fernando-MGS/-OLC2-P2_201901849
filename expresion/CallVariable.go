@@ -65,6 +65,10 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 				gen.AddTempBool(l1, value)
 			}
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
+		} else if interfaces.STR == result.Tipo.Tipo || result.Tipo.Tipo == interfaces.STRING {
+			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"
+			gen.AddExpression(newTemp, "", "", value, ambito)
+			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		}
 	}
 	return retorno
