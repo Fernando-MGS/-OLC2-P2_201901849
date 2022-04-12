@@ -62,9 +62,9 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				guia = "(int)" + tmp
 				ambito = true
 			}
-
+			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: gen.Stack, Mutable: p.Mutable}
 			if result.Type == interfaces.INTEGER || result.Type == interfaces.FLOAT || result.Type == interfaces.CHAR || result.Type == interfaces.USIZE {
-				simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: gen.Stack, Mutable: p.Mutable}
+
 				if interfaces.CHAR == result.Type {
 					runes := []rune(result.Value)
 					var val string
@@ -97,6 +97,7 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				value += l3 + ":\n"
 				gen.AddCodes(value, ambito)
 				gen.SetConf()
+				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			}
 		}
 	} else {

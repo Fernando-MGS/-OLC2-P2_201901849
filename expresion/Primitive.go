@@ -47,7 +47,7 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 			gen.SetConf()
 		} else {
 			l1 = gen.NewLabel()
-			gen.AddTempBool(l1, "goto "+l1+";\n")
+			gen.AddTempBool(l1, "goto ")
 		}
 
 		/*gen.AddTempBool(l1, l2)

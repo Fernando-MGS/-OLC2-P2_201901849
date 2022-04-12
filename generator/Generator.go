@@ -84,6 +84,9 @@ func (g Generator) InvertirLabels() {
 	g.temp_Bools.FalseL = g.temp_Bools.TrueL
 	g.temp_Bools.TrueL = aux
 }
+func (g Generator) LabelsOr(l2 string) {
+	g.temp_Bools.FalseL = l2
+}
 func (g Generator) RotarLabels() {
 	g.temp_Bools.TrueL = g.temp_Bools.TrueL1
 }
@@ -152,7 +155,9 @@ func (g *Generator) AddFuncExtra(id string) {
 		} else if id == "DIVZERO" {
 			g.func_extra[id] = true
 			g.extra_code.Add(print_divZero())
-		} else if id == "null" {
+		} else if id == "NULL" {
+
+		} else if id == "CONCATSTR" {
 
 		}
 	}
@@ -193,4 +198,9 @@ func print_bools() string {
 func print_divZero() string {
 	code := ""
 	return code
+}
+
+func (g *Generator) array_char(str string) []rune {
+	runes := []rune(str)
+	return runes
 }

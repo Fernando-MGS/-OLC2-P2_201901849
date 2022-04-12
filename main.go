@@ -78,16 +78,6 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 
 		salida += ";\n\n"
 	}
-
-	salida += "\nvoid main(){\n"
-
-	for _, s := range gen.GetCode().ToArray() {
-		salida += fmt.Sprintf("%v", s)
-		salida += "\n"
-	}
-
-	salida += "return;\n}\n"
-
 	for _, s := range gen.GetExtraFuncs().ToArray() {
 		salida += fmt.Sprintf("%v", s)
 		salida += "\n"
@@ -97,6 +87,15 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 		salida += fmt.Sprintf("%v", s)
 		salida += "\n"
 	}
+	salida += "\nvoid main(){\n"
+
+	for _, s := range gen.GetCode().ToArray() {
+		salida += fmt.Sprintf("%v", s)
+		salida += "\n"
+	}
+
+	salida += "return;\n}\n"
+
 	errores := globalEnv.DevErrores()
 	simbolos := globalEnv.DevSimbolos()
 	bases := globalEnv.DevBases()

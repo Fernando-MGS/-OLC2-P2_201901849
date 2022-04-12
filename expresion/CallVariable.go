@@ -61,7 +61,7 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 				gen.SetConf()
 			} else {
 				l1 = gen.NewLabel()
-				value := "if(" + newTemp + "==" + "0) goto " + l1 + ";\n"
+				value := "if(" + newTemp + "==" + "0) goto "
 				gen.AddTempBool(l1, value)
 			}
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}

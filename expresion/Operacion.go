@@ -71,22 +71,34 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	case "+":
 		{
 
-			dominante = suma_resta_dominante[retornoIzq.Type][retornoDer.Type]
+			if retornoIzq.Type == retornoDer.Type {
 
-			if dominante == interfaces.INTEGER {
+				if dominante == interfaces.INTEGER {
 
-				gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
 
-			} else if dominante == interfaces.FLOAT {
+				} else if dominante == interfaces.FLOAT {
 
-				gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
 
+				} else {
+					fmt.Print("ERROR: No es posible sumar")
+				}
 			} else {
-				fmt.Print("ERROR: No es posible sumar")
-			}
+				if retornoIzq.Type == interfaces.STR && retornoDer.Type == interfaces.STRING {
 
+				} else if retornoIzq.Type == interfaces.STRING && retornoDer.Type == interfaces.STR {
+
+				}
+				t := time.Now()
+				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+					t.Year(), t.Month(), t.Day(),
+					t.Hour(), t.Minute(), t.Second())
+				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE SUMAR ESTE TIPO DATO", Fecha: fecha}
+				env.(environment.Environment).Errores(err)
+			}
 		}
 
 	case "-":
@@ -163,7 +175,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.SetConf()
 					} else if gen.GetConf() == 1 {
 						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "<" + retornoDer.Value + ") goto " + l1 + ";\n"
+						value := "if (" + retornoIzq.Value + "<" + retornoDer.Value + ") goto "
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
@@ -194,7 +206,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.SetConf()
 					} else if gen.GetConf() == 1 {
 						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + ">" + retornoDer.Value + ") goto " + l1 + ";\n"
+						value := "if (" + retornoIzq.Value + ">" + retornoDer.Value + ") goto "
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
@@ -224,7 +236,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.SetConf()
 					} else if gen.GetConf() == 1 {
 						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + ">=" + retornoDer.Value + ") goto " + l1 + ";\n"
+						value := "if (" + retornoIzq.Value + ">=" + retornoDer.Value + ") goto "
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
@@ -258,7 +270,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.SetConf()
 					} else if gen.GetConf() == 1 {
 						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "<=" + retornoDer.Value + ") goto " + l1 + ";\n"
+						value := "if (" + retornoIzq.Value + "<=" + retornoDer.Value + ") goto "
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
@@ -296,7 +308,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.SetConf()
 					} else if gen.GetConf() == 1 {
 						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "!=" + retornoDer.Value + ") goto " + l1 + ";\n"
+						value := "if (" + retornoIzq.Value + "!=" + retornoDer.Value + ") goto "
 						gen.AddTempBool(l1, value)
 
 					}
@@ -327,7 +339,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					gen.SetConf()
 				} else if gen.GetConf() == 1 {
 					l1 = gen.NewLabel()
-					value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto " + l1 + ";\n"
+					value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto "
 					gen.AddTempBool(l1, value)
 				}
 				return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
@@ -345,11 +357,25 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		{
 			if retornoIzq.Type == retornoDer.Type && retornoDer.Type == interfaces.BOOLEAN {
 				anterior := gen.GetTempsB()
+				/*fmt.Println("entro||-" + anterior.TrueL)
+				fmt.Println(anterior.FalseL)
+				fmt.Println(anterior.TrueL1)
+				fmt.Println(anterior.FalseL1)
+				fmt.Println("============")*/
+				l2 := gen.NewLabel()
 				value := anterior.FalseL + ":\n"
-				value += anterior.FalseL1
-				value += "goto " + anterior.FalseL + ";\n"
+				value += anterior.FalseL1 + anterior.TrueL + ";\n"
+				value += "goto " + l2 + ";"
+				fmt.Println(value)
+				gen.LabelsOr(l2)
 				gen.AddCodes(value, ambito)
-				gen.RotarLabels()
+				//gen.RotarLabels()
+				/*anterior = gen.GetTempsB()
+				fmt.Println("salio-" + anterior.TrueL)
+				fmt.Println(anterior.FalseL)
+				fmt.Println(anterior.TrueL1)
+				fmt.Println(anterior.FalseL1)
+				fmt.Println("============")*/
 				return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 			} else {
 				t := time.Now()
@@ -368,16 +394,22 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			fmt.Println(retornoIzq)
 			if retornoIzq.Type == retornoDer.Type && retornoDer.Type == interfaces.BOOLEAN {
 				anterior := gen.GetTempsB()
-				fmt.Println("entro-" + anterior.TrueL)
+				/*fmt.Println("entro-" + anterior.TrueL)
 				fmt.Println(anterior.FalseL)
 				fmt.Println(anterior.TrueL1)
 				fmt.Println(anterior.FalseL1)
-				fmt.Println("============")
+				fmt.Println("============")*/
 				value := anterior.TrueL + ":\n"
-				value += anterior.FalseL1
-				value += "goto " + anterior.FalseL + ";\n"
+				value += anterior.FalseL1 + anterior.TrueL1 + ";\n"
+				value += "goto " + anterior.FalseL + ";"
 				gen.AddCodes(value, ambito)
 				gen.RotarLabels()
+				/*anterior = gen.GetTempsB()
+				fmt.Println("salio-" + anterior.TrueL)
+				fmt.Println(anterior.FalseL)
+				fmt.Println(anterior.TrueL1)
+				fmt.Println(anterior.FalseL1)
+				fmt.Println("============")*/
 				return interfaces.Value{Value: newTemp, IsTemp: false, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				//gen.AddTempBool(anterior.TrueL1, anterior.FalseL1)
 			} else {
