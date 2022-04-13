@@ -29,6 +29,7 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	result := p.Expresion.Ejecutar(env, gen)
 	conf := false
 	ambito := false
+	//index := 0
 	if p.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
 		conf = true
 	} else if p.Tipo.Tipo == result.Type {
@@ -56,16 +57,18 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			incremento := ""
 			if env.(environment.Environment).Control.Id == "main" || env.(environment.Environment).Control.Id == "GLOBAL" {
 				guia = "(int)P"
+				tam = gen.Stack
 				incremento = "P=P+1;"
-
+				gen.Stack++
 			} else {
 				tmp := gen.NewTemp()
+				tam = gen.Stack + tam
 				gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", true)
 				guia = "(int)" + tmp
 				ambito = true
 				env.(environment.Environment).Control.Stack++
 			}
-			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: gen.Stack, Mutable: p.Mutable}
+			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: tam, Mutable: p.Mutable}
 			env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			code += "STACK[" + guia + " ]=" + result.Value + ";\n"
 			code += incremento + "\n"
@@ -81,14 +84,17 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				guia = "(int)P"
 				incremento = "P=P+1;"
 
+				tam = gen.Stack
+				gen.Stack++
 			} else {
 				tmp := gen.NewTemp()
+				tam = gen.Stack + tam
 				gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", true)
 				guia = "(int)" + tmp
 				ambito = true
 				env.(environment.Environment).Control.Stack++
 			}
-			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: gen.Stack, Mutable: p.Mutable}
+			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: tam, Mutable: p.Mutable}
 			if result.Type == interfaces.INTEGER || result.Type == interfaces.FLOAT || result.Type == interfaces.CHAR || result.Type == interfaces.USIZE {
 
 				if interfaces.CHAR == result.Type {

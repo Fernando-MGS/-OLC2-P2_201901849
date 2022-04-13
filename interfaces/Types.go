@@ -15,4 +15,5 @@ const (
 	STRUCT
 	VOID
 	NULL
+	ERROR
 )

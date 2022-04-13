@@ -170,6 +170,9 @@ func (g *Generator) AddFuncExtra(id string) {
 		} else if id == "COMPARESTR" {
 			g.func_extra[id] = true
 			g.extra_code.Add(compare_string(g))
+		} else if id == "BOUNDS" {
+			g.func_extra[id] = true
+			g.extra_code.Add(bounds_error())
 		}
 	}
 
@@ -212,6 +215,22 @@ func print_Null() string {
 	code += "printf(\"%c\",117);\n"
 	code += "printf(\"%c\",108);\n"
 	code += "printf(\"%c\",108);\n"
+	code += "return;\n}"
+	return code
+}
+
+func print_divZero() string {
+	code := "void proc_divZero(){\n"
+	code += "printf(\"%c\",77);\n"  //m
+	code += "printf(\"%c\",97);\n"  //a
+	code += "printf(\"%c\",116);\n" //t
+	code += "printf(\"%c\",104);\n" //h
+	code += "printf(\"%c\",69);\n"  //e
+	code += "printf(\"%c\",114);\n" //r
+	code += "printf(\"%c\",114);\n" //r
+	code += "printf(\"%c\",111);\n" //o
+	code += "printf(\"%c\",114);\n" //r
+	code += "printf(\"%c\",10);\n"  //r
 	code += "return;\n}"
 	return code
 }
@@ -278,11 +297,13 @@ func concat_STR(gen *Generator) string {
 	code += l4 + ":\n"
 	code += "HEAP[(int)H] =" + tmp6 + ";\n"
 	code += "H=H+1;\n"
+	gen.Heap++
 	code += tmp5 + "=" + tmp5 + "+1;\n"
 	code += "goto " + l2 + ";\n"
 	code += l5 + ":\n"
 	code += "HEAP[(int)H] = -1;"
 	code += "H=H+1;\n"
+	gen.Heap++
 	code += "STACK[(int)P] = " + tmp1 + ";\n"
 	code += "return;\n}"
 	return code
@@ -360,8 +381,21 @@ func compare_string(g *Generator) string {
 	return code
 }
 
-func print_divZero() string {
-	code := ""
+func bounds_error() string {
+	code := "void proc_boundsError(){\n"
+	code += "printf(\"%c\",66);\n"  //b
+	code += "printf(\"%c\",111);\n" //o
+	code += "printf(\"%c\",117);\n" //u
+	code += "printf(\"%c\",110);\n" //n
+	code += "printf(\"%c\",100);\n" //d
+	code += "printf(\"%c\",115);\n" //s
+	code += "printf(\"%c\",69);\n"  //e
+	code += "printf(\"%c\",114);\n" //r
+	code += "printf(\"%c\",114);\n" //r
+	code += "printf(\"%c\",111);\n" //o
+	code += "printf(\"%c\",114);\n" //r
+	code += "printf(\"%c\",110);\n" //r
+	code += "return;\n}"
 	return code
 }
 

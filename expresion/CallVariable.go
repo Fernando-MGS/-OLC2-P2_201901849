@@ -24,11 +24,9 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 	var retorno interfaces.Value
 	retorno.Type = interfaces.NULL
 	result := env.(environment.Environment).GetVariable(p.Id, p.Linea, p.Col)
-	ambito := true
-	if env.(environment.Environment).Control.Id == "GLOBAL" || env.(environment.Environment).Control.Id == "main" {
-		ambito = false
-	}
+	ambito := env.(environment.Environment).DevAmbito()
 	if result.Tipo.Tipo != interfaces.NULL {
+		gen.AddCodes("//INICIO DE LLAMADA", ambito)
 		newTemp := gen.NewTemp()
 		if interfaces.INTEGER == result.Tipo.Tipo || interfaces.FLOAT == result.Tipo.Tipo {
 			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"

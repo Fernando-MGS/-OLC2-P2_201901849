@@ -4,6 +4,7 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
+	"fmt"
 	"strconv"
 )
 
@@ -22,6 +23,10 @@ func NewAssignment(id string, val interfaces.Expresion, line, col int) Assignmen
 func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	result := p.Expresion.Ejecutar(env, gen)
 	ambito := env.(environment.Environment).DevAmbito()
+	fmt.Println("TIPO 1")
+	fmt.Println(result.Value)
+	fmt.Println("tipo2")
+
 	if result.Type == interfaces.NULL {
 		err := "LA EXPRESION NO ES VALIDA"
 		env.(environment.Environment).NewError(err, p.Line, p.Col)
@@ -36,7 +41,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			} else if result.Type == interfaces.STRUCT {
 
 			} else if result.Type == interfaces.BOOLEAN {
-				value := ""
+				value := "//INICIO DE ASIGNACION"
 				l1 := gen.GetTempsB().TrueL
 				l2 := gen.GetTempsB().FalseL
 				l3 := gen.NewLabel()
@@ -50,7 +55,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				gen.SetConf()
 				//env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			} else {
-				if interfaces.CHAR == result.Type {
+				if interfaces.CHAR == result.Type && result.IsTemp == false {
 					runes := []rune(result.Value)
 					var val string
 					for i := 0; i < len(runes); i++ {

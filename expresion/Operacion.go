@@ -147,21 +147,21 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
 
-					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "-", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				} else if retornoDer.Type == interfaces.FLOAT {
 
-					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "-", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				}
 			} else {
 				if retornoIzq.Type == interfaces.INTEGER && retornoDer.Type == interfaces.USIZE {
-					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "-", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 				} else if retornoIzq.Type == interfaces.USIZE && retornoDer.Type == interfaces.INTEGER {
-					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "-", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				}
 			}
@@ -210,13 +210,13 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			if retornoIzq.Type == retornoDer.Type {
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
-
-					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0"), ambito)
+					//gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				} else if retornoDer.Type == interfaces.FLOAT {
-
-					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0.0"), ambito)
+					//gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				}
@@ -694,4 +694,18 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	}
 
 	return interfaces.Value{Value: "0", Type: interfaces.NULL, IsTemp: false, TrueLabel: "", FalseLabel: ""}
+}
+
+func Comprobar_Div(g *generator.Generator, izq, der interfaces.Value, tmp, value string) string {
+	l1 := g.NewLabel()
+	l2 := g.NewLabel()
+	code := "if(" + der.Value + "!=0) goto " + l1 + ";\n"
+	g.AddFuncExtra("DIVZERO")
+	code += "proc_divZero();\n"
+	code += tmp + "=" + value + ";\n"
+	code += "goto " + l2 + ";\n"
+	code += l1 + ":\n"
+	code += tmp + "=" + izq.Value + "/" + der.Value + ";\n"
+	code += l2 + ":"
+	return code
 }
