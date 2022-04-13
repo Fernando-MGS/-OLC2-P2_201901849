@@ -105,34 +105,34 @@ var parserATN = []uint16{
 	53, 2, 2, 176, 177, 7, 34, 2, 2, 177, 178, 7, 46, 2, 2, 178, 179, 7, 26,
 	2, 2, 179, 180, 5, 28, 15, 2, 180, 181, 7, 5, 2, 2, 181, 182, 5, 28, 15,
 	2, 182, 183, 7, 27, 2, 2, 183, 184, 8, 15, 1, 2, 184, 202, 3, 2, 2, 2,
-	185, 186, 7, 7, 2, 2, 186, 187, 5, 28, 15, 12, 187, 188, 8, 15, 1, 2, 188,
-	202, 3, 2, 2, 2, 189, 190, 7, 23, 2, 2, 190, 191, 5, 28, 15, 11, 191, 192,
+	185, 186, 7, 7, 2, 2, 186, 187, 5, 28, 15, 10, 187, 188, 8, 15, 1, 2, 188,
+	202, 3, 2, 2, 2, 189, 190, 7, 23, 2, 2, 190, 191, 5, 28, 15, 9, 191, 192,
 	8, 15, 1, 2, 192, 202, 3, 2, 2, 2, 193, 194, 5, 30, 16, 2, 194, 195, 8,
 	15, 1, 2, 195, 202, 3, 2, 2, 2, 196, 197, 7, 26, 2, 2, 197, 198, 5, 26,
 	14, 2, 198, 199, 7, 27, 2, 2, 199, 200, 8, 15, 1, 2, 200, 202, 3, 2, 2,
 	2, 201, 164, 3, 2, 2, 2, 201, 175, 3, 2, 2, 2, 201, 185, 3, 2, 2, 2, 201,
 	189, 3, 2, 2, 2, 201, 193, 3, 2, 2, 2, 201, 196, 3, 2, 2, 2, 202, 236,
-	3, 2, 2, 2, 203, 204, 12, 10, 2, 2, 204, 205, 9, 2, 2, 2, 205, 206, 5,
-	28, 15, 11, 206, 207, 8, 15, 1, 2, 207, 235, 3, 2, 2, 2, 208, 209, 12,
-	9, 2, 2, 209, 210, 9, 3, 2, 2, 210, 211, 5, 28, 15, 10, 211, 212, 8, 15,
-	1, 2, 212, 235, 3, 2, 2, 2, 213, 214, 12, 8, 2, 2, 214, 215, 9, 4, 2, 2,
-	215, 216, 5, 28, 15, 9, 216, 217, 8, 15, 1, 2, 217, 235, 3, 2, 2, 2, 218,
-	219, 12, 7, 2, 2, 219, 220, 9, 5, 2, 2, 220, 221, 5, 28, 15, 8, 221, 222,
-	8, 15, 1, 2, 222, 235, 3, 2, 2, 2, 223, 224, 12, 4, 2, 2, 224, 225, 7,
-	45, 2, 2, 225, 226, 5, 16, 9, 2, 226, 227, 8, 15, 1, 2, 227, 235, 3, 2,
-	2, 2, 228, 229, 12, 3, 2, 2, 229, 230, 7, 3, 2, 2, 230, 231, 7, 68, 2,
-	2, 231, 232, 7, 26, 2, 2, 232, 233, 7, 27, 2, 2, 233, 235, 8, 15, 1, 2,
-	234, 203, 3, 2, 2, 2, 234, 208, 3, 2, 2, 2, 234, 213, 3, 2, 2, 2, 234,
-	218, 3, 2, 2, 2, 234, 223, 3, 2, 2, 2, 234, 228, 3, 2, 2, 2, 235, 238,
-	3, 2, 2, 2, 236, 234, 3, 2, 2, 2, 236, 237, 3, 2, 2, 2, 237, 29, 3, 2,
-	2, 2, 238, 236, 3, 2, 2, 2, 239, 240, 7, 83, 2, 2, 240, 254, 8, 16, 1,
-	2, 241, 242, 7, 85, 2, 2, 242, 254, 8, 16, 1, 2, 243, 244, 7, 63, 2, 2,
-	244, 254, 8, 16, 1, 2, 245, 246, 7, 64, 2, 2, 246, 254, 8, 16, 1, 2, 247,
-	248, 7, 84, 2, 2, 248, 254, 8, 16, 1, 2, 249, 250, 7, 87, 2, 2, 250, 254,
-	8, 16, 1, 2, 251, 252, 7, 86, 2, 2, 252, 254, 8, 16, 1, 2, 253, 239, 3,
-	2, 2, 2, 253, 241, 3, 2, 2, 2, 253, 243, 3, 2, 2, 2, 253, 245, 3, 2, 2,
-	2, 253, 247, 3, 2, 2, 2, 253, 249, 3, 2, 2, 2, 253, 251, 3, 2, 2, 2, 254,
-	31, 3, 2, 2, 2, 13, 38, 60, 78, 91, 109, 129, 159, 201, 234, 236, 253,
+	3, 2, 2, 2, 203, 204, 12, 8, 2, 2, 204, 205, 9, 2, 2, 2, 205, 206, 5, 28,
+	15, 9, 206, 207, 8, 15, 1, 2, 207, 235, 3, 2, 2, 2, 208, 209, 12, 7, 2,
+	2, 209, 210, 9, 3, 2, 2, 210, 211, 5, 28, 15, 8, 211, 212, 8, 15, 1, 2,
+	212, 235, 3, 2, 2, 2, 213, 214, 12, 6, 2, 2, 214, 215, 9, 4, 2, 2, 215,
+	216, 5, 28, 15, 7, 216, 217, 8, 15, 1, 2, 217, 235, 3, 2, 2, 2, 218, 219,
+	12, 5, 2, 2, 219, 220, 9, 5, 2, 2, 220, 221, 5, 28, 15, 6, 221, 222, 8,
+	15, 1, 2, 222, 235, 3, 2, 2, 2, 223, 224, 12, 12, 2, 2, 224, 225, 7, 45,
+	2, 2, 225, 226, 5, 16, 9, 2, 226, 227, 8, 15, 1, 2, 227, 235, 3, 2, 2,
+	2, 228, 229, 12, 11, 2, 2, 229, 230, 7, 3, 2, 2, 230, 231, 7, 68, 2, 2,
+	231, 232, 7, 26, 2, 2, 232, 233, 7, 27, 2, 2, 233, 235, 8, 15, 1, 2, 234,
+	203, 3, 2, 2, 2, 234, 208, 3, 2, 2, 2, 234, 213, 3, 2, 2, 2, 234, 218,
+	3, 2, 2, 2, 234, 223, 3, 2, 2, 2, 234, 228, 3, 2, 2, 2, 235, 238, 3, 2,
+	2, 2, 236, 234, 3, 2, 2, 2, 236, 237, 3, 2, 2, 2, 237, 29, 3, 2, 2, 2,
+	238, 236, 3, 2, 2, 2, 239, 240, 7, 83, 2, 2, 240, 254, 8, 16, 1, 2, 241,
+	242, 7, 85, 2, 2, 242, 254, 8, 16, 1, 2, 243, 244, 7, 63, 2, 2, 244, 254,
+	8, 16, 1, 2, 245, 246, 7, 64, 2, 2, 246, 254, 8, 16, 1, 2, 247, 248, 7,
+	84, 2, 2, 248, 254, 8, 16, 1, 2, 249, 250, 7, 87, 2, 2, 250, 254, 8, 16,
+	1, 2, 251, 252, 7, 86, 2, 2, 252, 254, 8, 16, 1, 2, 253, 239, 3, 2, 2,
+	2, 253, 241, 3, 2, 2, 2, 253, 243, 3, 2, 2, 2, 253, 245, 3, 2, 2, 2, 253,
+	247, 3, 2, 2, 2, 253, 249, 3, 2, 2, 2, 253, 251, 3, 2, 2, 2, 254, 31, 3,
+	2, 2, 2, 13, 38, 60, 78, 91, 109, 129, 159, 201, 234, 236, 253,
 }
 var literalNames = []string{
 	"", "'.'", "';'", "','", "'\"'", "'!'", "':'", "'='", "'&'", "'<'", "'>='",
@@ -1772,7 +1772,7 @@ func (p *Chems) Tipo_d() (localctx ITipo_dContext) {
 			p.SetState(103)
 			p.Match(ChemsUSIZE)
 		}
-		localctx.(*Tipo_dContext).t = interfaces.ARRAY
+		localctx.(*Tipo_dContext).t = interfaces.USIZE
 
 	case ChemsID:
 		p.EnterOuterAlt(localctx, 8)
@@ -2761,11 +2761,11 @@ type IExpr_aritContext interface {
 	// Set_PUNTO sets the _PUNTO token.
 	Set_PUNTO(antlr.Token)
 
-	// GetOpIz returns the opIz rule contexts.
-	GetOpIz() IExpr_aritContext
-
 	// GetExp returns the exp rule contexts.
 	GetExp() IExpr_aritContext
+
+	// GetOpIz returns the opIz rule contexts.
+	GetOpIz() IExpr_aritContext
 
 	// GetOpDe returns the opDe rule contexts.
 	GetOpDe() IExpr_aritContext
@@ -2779,11 +2779,11 @@ type IExpr_aritContext interface {
 	// Get_tipo_d returns the _tipo_d rule contexts.
 	Get_tipo_d() ITipo_dContext
 
-	// SetOpIz sets the opIz rule contexts.
-	SetOpIz(IExpr_aritContext)
-
 	// SetExp sets the exp rule contexts.
 	SetExp(IExpr_aritContext)
+
+	// SetOpIz sets the opIz rule contexts.
+	SetOpIz(IExpr_aritContext)
 
 	// SetOpDe sets the opDe rule contexts.
 	SetOpDe(IExpr_aritContext)
@@ -2811,8 +2811,8 @@ type Expr_aritContext struct {
 	*antlr.BaseParserRuleContext
 	parser      antlr.Parser
 	p           interfaces.Expresion
-	opIz        IExpr_aritContext
 	exp         IExpr_aritContext
+	opIz        IExpr_aritContext
 	_PARIZQ     antlr.Token
 	opDe        IExpr_aritContext
 	_DIFERENTE  antlr.Token
@@ -2866,9 +2866,9 @@ func (s *Expr_aritContext) SetOp(v antlr.Token) { s.op = v }
 
 func (s *Expr_aritContext) Set_PUNTO(v antlr.Token) { s._PUNTO = v }
 
-func (s *Expr_aritContext) GetOpIz() IExpr_aritContext { return s.opIz }
-
 func (s *Expr_aritContext) GetExp() IExpr_aritContext { return s.exp }
+
+func (s *Expr_aritContext) GetOpIz() IExpr_aritContext { return s.opIz }
 
 func (s *Expr_aritContext) GetOpDe() IExpr_aritContext { return s.opDe }
 
@@ -2878,9 +2878,9 @@ func (s *Expr_aritContext) Get_expression() IExpressionContext { return s._expre
 
 func (s *Expr_aritContext) Get_tipo_d() ITipo_dContext { return s._tipo_d }
 
-func (s *Expr_aritContext) SetOpIz(v IExpr_aritContext) { s.opIz = v }
-
 func (s *Expr_aritContext) SetExp(v IExpr_aritContext) { s.exp = v }
+
+func (s *Expr_aritContext) SetOpIz(v IExpr_aritContext) { s.opIz = v }
 
 func (s *Expr_aritContext) SetOpDe(v IExpr_aritContext) { s.opDe = v }
 
@@ -3149,7 +3149,7 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 			p.SetState(170)
 			p.Match(ChemsPARDER)
 		}
-		localctx.(*Expr_aritContext).p = expresion.NewOperacion(localctx.(*Expr_aritContext).GetOpIz().GetP(), "^", localctx.(*Expr_aritContext).GetOpIz().GetP(), false, localctx.(*Expr_aritContext).Get_PARIZQ().GetLine(), localctx.(*Expr_aritContext).Get_PARIZQ().GetColumn())
+		localctx.(*Expr_aritContext).p = expresion.NewOperacion(localctx.(*Expr_aritContext).GetOpIz().GetP(), "^", localctx.(*Expr_aritContext).GetOpDe().GetP(), false, localctx.(*Expr_aritContext).Get_PARIZQ().GetLine(), localctx.(*Expr_aritContext).Get_PARIZQ().GetColumn())
 
 	case ChemsFLOAT:
 		{
@@ -3193,7 +3193,7 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 			p.SetState(180)
 			p.Match(ChemsPARDER)
 		}
-		localctx.(*Expr_aritContext).p = expresion.NewOperacion(localctx.(*Expr_aritContext).GetOpIz().GetP(), "^", localctx.(*Expr_aritContext).GetOpIz().GetP(), false, localctx.(*Expr_aritContext).Get_PARIZQ().GetLine(), localctx.(*Expr_aritContext).Get_PARIZQ().GetColumn())
+		localctx.(*Expr_aritContext).p = expresion.NewOperacion(localctx.(*Expr_aritContext).GetOpIz().GetP(), "^", localctx.(*Expr_aritContext).GetOpDe().GetP(), false, localctx.(*Expr_aritContext).Get_PARIZQ().GetLine(), localctx.(*Expr_aritContext).Get_PARIZQ().GetColumn())
 
 	case ChemsDIFERENTE:
 		{
@@ -3206,7 +3206,7 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 		{
 			p.SetState(184)
 
-			var _x = p.expr_arit(10)
+			var _x = p.expr_arit(8)
 
 			localctx.(*Expr_aritContext).opIz = _x
 		}
@@ -3223,7 +3223,7 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 		{
 			p.SetState(188)
 
-			var _x = p.expr_arit(9)
+			var _x = p.expr_arit(7)
 
 			localctx.(*Expr_aritContext).opIz = _x
 		}
@@ -3283,8 +3283,8 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				p.PushNewRecursionContext(localctx, _startState, ChemsRULE_expr_arit)
 				p.SetState(201)
 
-				if !(p.Precpred(p.GetParserRuleContext(), 8)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 8)", ""))
+				if !(p.Precpred(p.GetParserRuleContext(), 6)) {
+					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 6)", ""))
 				}
 				{
 					p.SetState(202)
@@ -3307,7 +3307,7 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				{
 					p.SetState(203)
 
-					var _x = p.expr_arit(9)
+					var _x = p.expr_arit(7)
 
 					localctx.(*Expr_aritContext).opDe = _x
 				}
@@ -3325,8 +3325,8 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				p.PushNewRecursionContext(localctx, _startState, ChemsRULE_expr_arit)
 				p.SetState(206)
 
-				if !(p.Precpred(p.GetParserRuleContext(), 7)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 7)", ""))
+				if !(p.Precpred(p.GetParserRuleContext(), 5)) {
+					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 5)", ""))
 				}
 				{
 					p.SetState(207)
@@ -3349,7 +3349,7 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				{
 					p.SetState(208)
 
-					var _x = p.expr_arit(8)
+					var _x = p.expr_arit(6)
 
 					localctx.(*Expr_aritContext).opDe = _x
 				}
@@ -3367,8 +3367,8 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				p.PushNewRecursionContext(localctx, _startState, ChemsRULE_expr_arit)
 				p.SetState(211)
 
-				if !(p.Precpred(p.GetParserRuleContext(), 6)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 6)", ""))
+				if !(p.Precpred(p.GetParserRuleContext(), 4)) {
+					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 4)", ""))
 				}
 				{
 					p.SetState(212)
@@ -3391,7 +3391,7 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				{
 					p.SetState(213)
 
-					var _x = p.expr_arit(7)
+					var _x = p.expr_arit(5)
 
 					localctx.(*Expr_aritContext).opDe = _x
 				}
@@ -3409,8 +3409,8 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				p.PushNewRecursionContext(localctx, _startState, ChemsRULE_expr_arit)
 				p.SetState(216)
 
-				if !(p.Precpred(p.GetParserRuleContext(), 5)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 5)", ""))
+				if !(p.Precpred(p.GetParserRuleContext(), 3)) {
+					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 3)", ""))
 				}
 				{
 					p.SetState(217)
@@ -3433,7 +3433,7 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				{
 					p.SetState(218)
 
-					var _x = p.expr_arit(6)
+					var _x = p.expr_arit(4)
 
 					localctx.(*Expr_aritContext).opDe = _x
 				}
@@ -3451,8 +3451,8 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				p.PushNewRecursionContext(localctx, _startState, ChemsRULE_expr_arit)
 				p.SetState(221)
 
-				if !(p.Precpred(p.GetParserRuleContext(), 2)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 2)", ""))
+				if !(p.Precpred(p.GetParserRuleContext(), 10)) {
+					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 10)", ""))
 				}
 				{
 					p.SetState(222)
@@ -3473,8 +3473,8 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 				p.PushNewRecursionContext(localctx, _startState, ChemsRULE_expr_arit)
 				p.SetState(226)
 
-				if !(p.Precpred(p.GetParserRuleContext(), 1)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 1)", ""))
+				if !(p.Precpred(p.GetParserRuleContext(), 9)) {
+					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 9)", ""))
 				}
 				{
 					p.SetState(227)
@@ -3885,22 +3885,22 @@ func (p *Chems) Expr_arit_Sempred(localctx antlr.RuleContext, predIndex int) boo
 
 	switch predIndex {
 	case 0:
-		return p.Precpred(p.GetParserRuleContext(), 8)
-
-	case 1:
-		return p.Precpred(p.GetParserRuleContext(), 7)
-
-	case 2:
 		return p.Precpred(p.GetParserRuleContext(), 6)
 
-	case 3:
+	case 1:
 		return p.Precpred(p.GetParserRuleContext(), 5)
 
+	case 2:
+		return p.Precpred(p.GetParserRuleContext(), 4)
+
+	case 3:
+		return p.Precpred(p.GetParserRuleContext(), 3)
+
 	case 4:
-		return p.Precpred(p.GetParserRuleContext(), 2)
+		return p.Precpred(p.GetParserRuleContext(), 10)
 
 	case 5:
-		return p.Precpred(p.GetParserRuleContext(), 1)
+		return p.Precpred(p.GetParserRuleContext(), 9)
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))

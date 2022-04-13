@@ -608,7 +608,7 @@ public class Chems extends Parser {
 				{
 				setState(103);
 				match(USIZE);
-				_localctx.t=interfaces.ARRAY
+				_localctx.t=interfaces.USIZE
 				}
 				break;
 			case ID:
@@ -966,8 +966,8 @@ public class Chems extends Parser {
 
 	public static class Expr_aritContext extends ParserRuleContext {
 		public interfaces.Expresion p;
-		public Expr_aritContext opIz;
 		public Expr_aritContext exp;
+		public Expr_aritContext opIz;
 		public Token PARIZQ;
 		public Expr_aritContext opDe;
 		public Token DIFERENTE;
@@ -1060,7 +1060,7 @@ public class Chems extends Parser {
 				((Expr_aritContext)_localctx).opDe = expr_arit(0);
 				setState(170);
 				match(PARDER);
-				_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,"^",((Expr_aritContext)_localctx).opIz.p,false,((Expr_aritContext)_localctx).PARIZQ.GetLine(),((Expr_aritContext)_localctx).PARIZQ.GetColumn())
+				_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,"^",((Expr_aritContext)_localctx).opDe.p,false,((Expr_aritContext)_localctx).PARIZQ.GetLine(),((Expr_aritContext)_localctx).PARIZQ.GetColumn())
 				}
 				break;
 			case FLOAT:
@@ -1081,7 +1081,7 @@ public class Chems extends Parser {
 				((Expr_aritContext)_localctx).opDe = expr_arit(0);
 				setState(180);
 				match(PARDER);
-				_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,"^",((Expr_aritContext)_localctx).opIz.p,false,((Expr_aritContext)_localctx).PARIZQ.GetLine(),((Expr_aritContext)_localctx).PARIZQ.GetColumn())
+				_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,"^",((Expr_aritContext)_localctx).opDe.p,false,((Expr_aritContext)_localctx).PARIZQ.GetLine(),((Expr_aritContext)_localctx).PARIZQ.GetColumn())
 				}
 				break;
 			case DIFERENTE:
@@ -1089,7 +1089,7 @@ public class Chems extends Parser {
 				setState(183);
 				((Expr_aritContext)_localctx).DIFERENTE = match(DIFERENTE);
 				setState(184);
-				((Expr_aritContext)_localctx).opIz = expr_arit(10);
+				((Expr_aritContext)_localctx).opIz = expr_arit(8);
 				_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,"!",((Expr_aritContext)_localctx).opIz.p,true,((Expr_aritContext)_localctx).DIFERENTE.GetLine(),((Expr_aritContext)_localctx).DIFERENTE.GetColumn())
 				}
 				break;
@@ -1098,7 +1098,7 @@ public class Chems extends Parser {
 				setState(187);
 				((Expr_aritContext)_localctx).SUB = match(SUB);
 				setState(188);
-				((Expr_aritContext)_localctx).opIz = expr_arit(9);
+				((Expr_aritContext)_localctx).opIz = expr_arit(7);
 				_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,"°",((Expr_aritContext)_localctx).opIz.p,true,((Expr_aritContext)_localctx).SUB.GetLine(),((Expr_aritContext)_localctx).SUB.GetColumn())
 				}
 				break;
@@ -1148,7 +1148,7 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
 						setState(201);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(202);
 						((Expr_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -1161,7 +1161,7 @@ public class Chems extends Parser {
 							consume();
 						}
 						setState(203);
-						((Expr_aritContext)_localctx).opDe = expr_arit(9);
+						((Expr_aritContext)_localctx).opDe = expr_arit(7);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,((Expr_aritContext)_localctx).op.GetLine(),((Expr_aritContext)_localctx).op.GetColumn())
 						}
 						break;
@@ -1172,7 +1172,7 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
 						setState(206);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(207);
 						((Expr_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -1185,7 +1185,7 @@ public class Chems extends Parser {
 							consume();
 						}
 						setState(208);
-						((Expr_aritContext)_localctx).opDe = expr_arit(8);
+						((Expr_aritContext)_localctx).opDe = expr_arit(6);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,((Expr_aritContext)_localctx).op.GetLine(),((Expr_aritContext)_localctx).op.GetColumn())
 						}
 						break;
@@ -1196,7 +1196,7 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
 						setState(211);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(212);
 						((Expr_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -1209,7 +1209,7 @@ public class Chems extends Parser {
 							consume();
 						}
 						setState(213);
-						((Expr_aritContext)_localctx).opDe = expr_arit(7);
+						((Expr_aritContext)_localctx).opDe = expr_arit(5);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,((Expr_aritContext)_localctx).op.GetLine(),((Expr_aritContext)_localctx).op.GetColumn())
 						}
 						break;
@@ -1220,7 +1220,7 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
 						setState(216);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(217);
 						((Expr_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -1233,7 +1233,7 @@ public class Chems extends Parser {
 							consume();
 						}
 						setState(218);
-						((Expr_aritContext)_localctx).opDe = expr_arit(6);
+						((Expr_aritContext)_localctx).opDe = expr_arit(4);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,((Expr_aritContext)_localctx).op.GetLine(),((Expr_aritContext)_localctx).op.GetColumn())
 						}
 						break;
@@ -1244,7 +1244,7 @@ public class Chems extends Parser {
 						_localctx.exp = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
 						setState(221);
-						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
 						setState(222);
 						match(P_AS);
 						setState(223);
@@ -1259,7 +1259,7 @@ public class Chems extends Parser {
 						_localctx.exp = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
 						setState(226);
-						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
+						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
 						setState(227);
 						((Expr_aritContext)_localctx).PUNTO = match(PUNTO);
 						setState(228);
@@ -1434,17 +1434,17 @@ public class Chems extends Parser {
 	private boolean expr_arit_sempred(Expr_aritContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 8);
-		case 1:
-			return precpred(_ctx, 7);
-		case 2:
 			return precpred(_ctx, 6);
-		case 3:
+		case 1:
 			return precpred(_ctx, 5);
+		case 2:
+			return precpred(_ctx, 4);
+		case 3:
+			return precpred(_ctx, 3);
 		case 4:
-			return precpred(_ctx, 2);
+			return precpred(_ctx, 10);
 		case 5:
-			return precpred(_ctx, 1);
+			return precpred(_ctx, 9);
 		}
 		return true;
 	}
@@ -1508,21 +1508,21 @@ public class Chems extends Parser {
 		"\3\2\2\2\u00af\u00b0\7\65\2\2\u00b0\u00b1\7\"\2\2\u00b1\u00b2\7.\2\2\u00b2"+
 		"\u00b3\7\32\2\2\u00b3\u00b4\5\34\17\2\u00b4\u00b5\7\5\2\2\u00b5\u00b6"+
 		"\5\34\17\2\u00b6\u00b7\7\33\2\2\u00b7\u00b8\b\17\1\2\u00b8\u00ca\3\2\2"+
-		"\2\u00b9\u00ba\7\7\2\2\u00ba\u00bb\5\34\17\f\u00bb\u00bc\b\17\1\2\u00bc"+
-		"\u00ca\3\2\2\2\u00bd\u00be\7\27\2\2\u00be\u00bf\5\34\17\13\u00bf\u00c0"+
+		"\2\u00b9\u00ba\7\7\2\2\u00ba\u00bb\5\34\17\n\u00bb\u00bc\b\17\1\2\u00bc"+
+		"\u00ca\3\2\2\2\u00bd\u00be\7\27\2\2\u00be\u00bf\5\34\17\t\u00bf\u00c0"+
 		"\b\17\1\2\u00c0\u00ca\3\2\2\2\u00c1\u00c2\5\36\20\2\u00c2\u00c3\b\17\1"+
 		"\2\u00c3\u00ca\3\2\2\2\u00c4\u00c5\7\32\2\2\u00c5\u00c6\5\32\16\2\u00c6"+
 		"\u00c7\7\33\2\2\u00c7\u00c8\b\17\1\2\u00c8\u00ca\3\2\2\2\u00c9\u00a4\3"+
 		"\2\2\2\u00c9\u00af\3\2\2\2\u00c9\u00b9\3\2\2\2\u00c9\u00bd\3\2\2\2\u00c9"+
-		"\u00c1\3\2\2\2\u00c9\u00c4\3\2\2\2\u00ca\u00ec\3\2\2\2\u00cb\u00cc\f\n"+
-		"\2\2\u00cc\u00cd\t\2\2\2\u00cd\u00ce\5\34\17\13\u00ce\u00cf\b\17\1\2\u00cf"+
-		"\u00eb\3\2\2\2\u00d0\u00d1\f\t\2\2\u00d1\u00d2\t\3\2\2\u00d2\u00d3\5\34"+
-		"\17\n\u00d3\u00d4\b\17\1\2\u00d4\u00eb\3\2\2\2\u00d5\u00d6\f\b\2\2\u00d6"+
-		"\u00d7\t\4\2\2\u00d7\u00d8\5\34\17\t\u00d8\u00d9\b\17\1\2\u00d9\u00eb"+
-		"\3\2\2\2\u00da\u00db\f\7\2\2\u00db\u00dc\t\5\2\2\u00dc\u00dd\5\34\17\b"+
-		"\u00dd\u00de\b\17\1\2\u00de\u00eb\3\2\2\2\u00df\u00e0\f\4\2\2\u00e0\u00e1"+
+		"\u00c1\3\2\2\2\u00c9\u00c4\3\2\2\2\u00ca\u00ec\3\2\2\2\u00cb\u00cc\f\b"+
+		"\2\2\u00cc\u00cd\t\2\2\2\u00cd\u00ce\5\34\17\t\u00ce\u00cf\b\17\1\2\u00cf"+
+		"\u00eb\3\2\2\2\u00d0\u00d1\f\7\2\2\u00d1\u00d2\t\3\2\2\u00d2\u00d3\5\34"+
+		"\17\b\u00d3\u00d4\b\17\1\2\u00d4\u00eb\3\2\2\2\u00d5\u00d6\f\6\2\2\u00d6"+
+		"\u00d7\t\4\2\2\u00d7\u00d8\5\34\17\7\u00d8\u00d9\b\17\1\2\u00d9\u00eb"+
+		"\3\2\2\2\u00da\u00db\f\5\2\2\u00db\u00dc\t\5\2\2\u00dc\u00dd\5\34\17\6"+
+		"\u00dd\u00de\b\17\1\2\u00de\u00eb\3\2\2\2\u00df\u00e0\f\f\2\2\u00e0\u00e1"+
 		"\7-\2\2\u00e1\u00e2\5\20\t\2\u00e2\u00e3\b\17\1\2\u00e3\u00eb\3\2\2\2"+
-		"\u00e4\u00e5\f\3\2\2\u00e5\u00e6\7\3\2\2\u00e6\u00e7\7D\2\2\u00e7\u00e8"+
+		"\u00e4\u00e5\f\13\2\2\u00e5\u00e6\7\3\2\2\u00e6\u00e7\7D\2\2\u00e7\u00e8"+
 		"\7\32\2\2\u00e8\u00e9\7\33\2\2\u00e9\u00eb\b\17\1\2\u00ea\u00cb\3\2\2"+
 		"\2\u00ea\u00d0\3\2\2\2\u00ea\u00d5\3\2\2\2\u00ea\u00da\3\2\2\2\u00ea\u00df"+
 		"\3\2\2\2\u00ea\u00e4\3\2\2\2\u00eb\u00ee\3\2\2\2\u00ec\u00ea\3\2\2\2\u00ec"+

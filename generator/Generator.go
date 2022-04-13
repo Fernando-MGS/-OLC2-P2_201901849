@@ -165,7 +165,11 @@ func (g *Generator) AddFuncExtra(id string) {
 			g.func_extra[id] = true
 			g.extra_code.Add(print_String(g))
 		} else if id == "POW" {
-
+			g.func_extra[id] = true
+			g.extra_code.Add(pow_num(g))
+		} else if id == "COMPARESTR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(compare_string(g))
 		}
 	}
 
@@ -208,6 +212,34 @@ func print_Null() string {
 	code += "printf(\"%c\",117);\n"
 	code += "printf(\"%c\",108);\n"
 	code += "printf(\"%c\",108);\n"
+	code += "return;\n}"
+	return code
+}
+
+func pow_num(g *Generator) string {
+	t0 := g.NewTemp()
+	t1 := g.NewTemp()
+	t2 := g.NewTemp()
+	t3 := g.NewTemp()
+	t4 := g.NewTemp()
+	l0 := g.NewLabel()
+	l1 := g.NewLabel()
+	l2 := g.NewLabel()
+	code := "void proc_potencia(){\n"
+	code += t0 + "=P+1;\n"
+	code += t1 + " = STACK[(int)" + t0 + "];\n"
+	code += t2 + "= P + 2;\n"
+	code += t3 + " = STACK[(int)" + t2 + "];\n"
+	code += t4 + "=" + t1 + ";\n"
+	code += l2 + ":\n"
+	code += "if(" + t3 + " > 1) goto " + l0 + ";\n"
+	code += "goto " + l1 + ";\n"
+	code += l0 + ":\n"
+	code += t4 + " = " + t4 + "*" + t1 + ";\n"
+	code += t3 + " = " + t3 + "-1;\n"
+	code += "goto " + l2 + ";\n"
+	code += l1 + ":\n"
+	code += "STACK[(int)P] = " + t4 + ";\n"
 	code += "return;\n}"
 	return code
 }
@@ -276,6 +308,55 @@ func print_String(gen *Generator) string {
 	code += "goto " + l5 + ";\n"
 	code += l4 + ":\n"
 	code += "return;\n}"
+	return code
+}
+
+func compare_string(g *Generator) string {
+	code := "void proc_compareString(){\n"
+	t39 := g.NewTemp()
+	t40 := g.NewTemp()
+	t41 := g.NewTemp()
+	t42 := g.NewTemp()
+	t43 := g.NewTemp()
+	t44 := g.NewTemp()
+	t45 := g.NewTemp()
+	l35 := g.NewLabel()
+	l36 := g.NewLabel()
+	l34 := g.NewLabel()
+	l33 := g.NewLabel()
+	l37 := g.NewLabel()
+	l38 := g.NewLabel()
+	l39 := g.NewLabel()
+	code += t39 + "=P+1;\n"
+	code += t40 + "=STACK[(int)" + t39 + "];\n"
+	code += t41 + "=P+2;\n"
+	code += t42 + "=STACK[(int)" + t41 + "];\n"
+	code += t43 + "=1;\n"
+	code += t44 + "=HEAP[(int)" + t40 + "];\n"
+	code += t45 + "=HEAP[(int)" + t42 + "];\n"
+	code += l35 + ":\n"
+	code += "if(" + t44 + "!=-1) goto " + l33 + ";\n"
+	code += "goto " + l34 + ";\n"
+	code += l33 + ":\n"
+	code += "if(" + t44 + "!=" + t45 + ") goto " + l33 + ";\n"
+	code += "goto " + l37 + ";\n"
+	code += l36 + ":\n"
+	code += t43 + "= 0  ;\n"
+	code += "goto " + l34 + ";\n"
+	code += l37 + ":\n"
+	code += t40 + " = " + t40 + " + 1;\n"
+	code += t42 + " = " + t42 + " + 1;\n"
+	code += t44 + " = HEAP[(int)+" + t40 + "];\n"
+	code += t45 + " = HEAP[(int)+" + t42 + "];\n"
+	code += "goto " + l35 + ";\n"
+	code += l34 + ":\n"
+	code += "if(" + t45 + "!=-1) goto " + l38 + ";\n"
+	code += "goto " + l39 + ";\n"
+	code += l38 + ":\n"
+	code += t43 + "=0;\n"
+	code += l39 + ":\n"
+	code += "STACK[(int)P] =" + t43 + ";\n"
+	code += "return ;\n}"
 	return code
 }
 

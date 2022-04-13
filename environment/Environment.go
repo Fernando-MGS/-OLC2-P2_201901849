@@ -124,6 +124,22 @@ func (env Environment) DevErrores() []interface{} {
 	return env.errores.ToArray()
 }
 
+func (env Environment) DevAmbito() bool {
+	if env.Control.Id == "GLOBAL" || env.Control.Id == "main" {
+		return false
+	}
+	return true
+}
+
+func (env Environment) NewError(mess, line, col string) {
+	t := time.Now()
+	fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+		t.Year(), t.Month(), t.Day(),
+		t.Hour(), t.Minute(), t.Second())
+	err := interfaces.Errores{Line: line, Col: col, Mess: mess, Fecha: fecha}
+	env.Errores(err)
+}
+
 func Tipo2(t interfaces.TipoExpresion) string {
 	if t == interfaces.ARRAY {
 		return "ARRAY"

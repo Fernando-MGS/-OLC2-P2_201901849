@@ -67,7 +67,7 @@ tipo_d returns [interfaces.TipoExpresion t]:
   |CHAR     {$t=interfaces.CHAR}
   |STR      {$t=interfaces.STRING}
   |P_STRING {$t=interfaces.STR}
-  |USIZE    {$t=interfaces.ARRAY}
+  |USIZE    {$t=interfaces.USIZE}
   |ID       {$t=interfaces.STRUCT}
 ;
 
@@ -121,8 +121,10 @@ expression returns[interfaces.Expresion p]
 ;
 
 expr_arit returns[interfaces.Expresion p]
-    : INT DDPUNTO POW PARIZQ opIz=expr_arit COMA opDe=expr_arit PARDER {$p = expresion.NewOperacion($opIz.p,"^",$opIz.p,false,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
-    |FLOAT DDPUNTO POWF PARIZQ opIz=expr_arit COMA opDe=expr_arit PARDER {$p = expresion.NewOperacion($opIz.p,"^",$opIz.p,false,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
+    : INT DDPUNTO POW PARIZQ opIz=expr_arit COMA opDe=expr_arit PARDER {$p = expresion.NewOperacion($opIz.p,"^",$opDe.p,false,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
+    |FLOAT DDPUNTO POWF PARIZQ opIz=expr_arit COMA opDe=expr_arit PARDER {$p = expresion.NewOperacion($opIz.p,"^",$opDe.p,false,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
+    | exp=expr_arit P_AS tipo_d  {$p=expresion.NewCast($exp.p,$tipo_d.t)} 
+    |exp=expr_arit PUNTO T_STRING PARIZQ PARDER  {$p=expresion.NewToString($exp.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
     |DIFERENTE  opIz = expr_arit  {$p = expresion.NewOperacion($opIz.p,"!",$opIz.p,true,$DIFERENTE.GetLine(),$DIFERENTE.GetColumn())}
     |SUB  opIz = expr_arit  {$p = expresion.NewOperacion($opIz.p,"°",$opIz.p,true,$SUB.GetLine(),$SUB.GetColumn())}
     | opIz = expr_arit op=('*'|'/'|'%') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$op.GetLine(),$op.GetColumn())}
@@ -131,8 +133,7 @@ expr_arit returns[interfaces.Expresion p]
     | opIz = expr_arit op=('||'|'&&') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$op.GetLine(),$op.GetColumn())} 
     | primitivo {$p = $primitivo.p} 
     | PARIZQ expression PARDER {$p = $expression.p}
-    | exp=expr_arit P_AS tipo_d  {$p=expresion.NewCast($exp.p,$tipo_d.t)} 
-    |exp=expr_arit PUNTO T_STRING PARIZQ PARDER  {$p=expresion.NewToString($exp.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
+    
 ;
 
 primitivo returns[interfaces.Expresion p]

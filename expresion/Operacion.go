@@ -25,7 +25,7 @@ func NewOperacion(Op1 interfaces.Expresion, Operador string, Op2 interfaces.Expr
 }
 
 func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
-	suma_resta_dominante := [5][5]interfaces.TipoExpresion{
+	/*suma_resta_dominante := [5][5]interfaces.TipoExpresion{
 		//INTEGER			//FLOAT			   //STRING			  //BOOLEAN		   //NULL
 		//INTEGER
 		{interfaces.INTEGER, interfaces.FLOAT, interfaces.STRING, interfaces.NULL, interfaces.NULL},
@@ -45,7 +45,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		{interfaces.NULL, interfaces.NULL, interfaces.NULL, interfaces.NULL, interfaces.NULL},
 		{interfaces.NULL, interfaces.NULL, interfaces.NULL, interfaces.NULL, interfaces.NULL},
 		{interfaces.NULL, interfaces.NULL, interfaces.NULL, interfaces.NULL, interfaces.NULL},
-	}
+	}*/
 	var retornoIzq interfaces.Value
 	var retornoDer interfaces.Value
 
@@ -63,7 +63,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	if env.(environment.Environment).Control.Id == "GLOBAL" || env.(environment.Environment).Control.Id == "main" {
 		ambito = false
 	}
-	var dominante interfaces.TipoExpresion
+	//var dominante interfaces.TipoExpresion
 
 	newTemp := gen.NewTemp()
 
@@ -73,15 +73,15 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 			if retornoIzq.Type == retornoDer.Type {
 
-				if dominante == interfaces.INTEGER {
+				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
 
 					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
-					return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
-				} else if dominante == interfaces.FLOAT {
+				} else if retornoDer.Type == interfaces.FLOAT {
 
 					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
-					return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				} else {
 					fmt.Print("ERROR: No es posible sumar")
@@ -125,6 +125,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					gen.AddCodes(code, ambito)
 					gen.AddCodes("//FIN DE CONCATENACION DE STRINGS", ambito)
 					return interfaces.Value{Value: tmp3, IsTemp: true, Type: interfaces.STR, TrueLabel: "", FalseLabel: ""}
+				} else if retornoIzq.Type == interfaces.INTEGER && retornoDer.Type == interfaces.USIZE {
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
+				} else if retornoIzq.Type == interfaces.USIZE && retornoDer.Type == interfaces.INTEGER {
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				}
 				t := time.Now()
 				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
@@ -137,60 +143,117 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 	case "-":
 		{
-			dominante = suma_resta_dominante[retornoIzq.Type][retornoDer.Type]
+			if retornoIzq.Type == retornoDer.Type {
 
-			if dominante == interfaces.INTEGER {
+				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
 
-				gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "-", ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
-			} else if dominante == interfaces.FLOAT {
-				gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "-", ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+				} else if retornoDer.Type == interfaces.FLOAT {
 
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
+
+				}
 			} else {
-				fmt.Print("ERROR: No es posible restar")
+				if retornoIzq.Type == interfaces.INTEGER && retornoDer.Type == interfaces.USIZE {
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
+				} else if retornoIzq.Type == interfaces.USIZE && retornoDer.Type == interfaces.INTEGER {
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+				}
 			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE RESTAR ESTE TIPO DATO", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 		}
 
 	case "*":
 		{
-			dominante = multi_division_dominante[retornoIzq.Type][retornoDer.Type]
+			if retornoIzq.Type == retornoDer.Type {
 
-			if dominante == interfaces.INTEGER {
-				gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "*", ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
 
-			} else if dominante == interfaces.FLOAT {
-				gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "*", ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "*", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
+				} else if retornoDer.Type == interfaces.FLOAT {
+
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "*", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
+
+				}
 			} else {
-				fmt.Print("ERROR: No es posible Multiplicar")
+				if retornoIzq.Type == interfaces.INTEGER && retornoDer.Type == interfaces.USIZE {
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "*", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
+				} else if retornoIzq.Type == interfaces.USIZE && retornoDer.Type == interfaces.INTEGER {
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "*", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+				}
 			}
-
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE RESTAR ESTE TIPO DATO", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 		}
 
 	case "/":
 		{
-			dominante = multi_division_dominante[retornoIzq.Type][retornoDer.Type]
+			if retornoIzq.Type == retornoDer.Type {
 
-			if dominante == interfaces.INTEGER {
-				gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "/", ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
 
-			} else if dominante == interfaces.FLOAT {
-				gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "/", ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: true, Type: dominante, TrueLabel: "", FalseLabel: ""}
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
+				} else if retornoDer.Type == interfaces.FLOAT {
+
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
+
+				}
 			} else {
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN DIVIDIR ENTRE SI", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
+				if retornoIzq.Type == interfaces.STRING && retornoDer.Type == interfaces.STR {
+					gen.AddCodes("//CONCATENACION DE STRINGS", ambito)
+					gen.AddFuncExtra("CONCATSTR")
+					tmp1 := gen.NewTemp()
+					asignacion1 := tmp1 + "=P+1;"
+					gen.AddCodes(asignacion1, ambito)
+					tmp2 := gen.NewTemp()
+					asignacion2 := tmp2 + "=P+2;"
+					gen.AddCodes(asignacion2, ambito)
+					asignacion1 = "STACK[(int)" + tmp1 + "]=" + retornoIzq.Value + ";"
+					asignacion2 = "STACK[(int)" + tmp2 + "]=" + retornoDer.Value + ";"
+					gen.AddCodes(asignacion1, ambito)
+					gen.AddCodes(asignacion2, ambito)
+					gen.AddCodes("proc_concatSTR();", ambito)
+					tmp3 := gen.NewTemp()
+					code := tmp3 + "=STACK[(int)P];\n"
+					gen.AddCodes(code, ambito)
+					gen.AddCodes("//FIN DE CONCATENACION DE STRINGS", ambito)
+					return interfaces.Value{Value: tmp3, IsTemp: true, Type: interfaces.STR, TrueLabel: "", FalseLabel: ""}
+				} else if retornoIzq.Type == interfaces.INTEGER && retornoDer.Type == interfaces.USIZE {
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
+				} else if retornoIzq.Type == interfaces.USIZE && retornoDer.Type == interfaces.INTEGER {
+					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+				}
 			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE DIVIDIR ESTE TIPO DATO", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 
 		}
 	case "<":
@@ -222,6 +285,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					env.(environment.Environment).Errores(err)
 				}
 			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 		}
 
 	case ">":
@@ -253,6 +322,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					env.(environment.Environment).Errores(err)
 				}
 			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 		}
 	case ">=":
 		{
@@ -285,7 +360,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
 				env.(environment.Environment).Errores(err)
 			}
-
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 		}
 
 	case "<=":
@@ -324,6 +404,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
 				env.(environment.Environment).Errores(err)
 			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 		}
 	case "!=":
 		{
@@ -347,6 +433,38 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+				} else if retornoDer.Type == interfaces.STRING || retornoIzq.Type == interfaces.STR {
+					code := "//COMPARACION DE STRING\n"
+					t1 := gen.NewTemp()
+					t4 := gen.NewTemp()
+					t2 := retornoIzq.Value
+					t3 := retornoDer.Value
+					resultado := gen.NewTemp()
+					code += t1 + "=P+1;\n"
+					code += "STACK[(int)" + t1 + "]=" + t2 + ";\n"
+					code += t4 + "=P+2;\n"
+					code += "STACK[(int)" + t4 + "]=" + t3 + ";\n"
+					gen.AddFuncExtra("COMPARESTR")
+					code += "proc_compareString();\n"
+					code += resultado + "=STACK[(int)P];"
+					gen.AddCodes(code, ambito)
+					//
+					l1 := ""
+					l2 := ""
+					if gen.GetConf() == 0 {
+						l1 = gen.NewLabel()
+						l2 = gen.NewLabel()
+						value := "if (" + resultado + "==0) goto " + l1 + ";\n"
+						value += "goto " + l2 + ";\n"
+						gen.AddCodes(value, ambito)
+						gen.AddTempBool(l1, l2)
+						gen.SetConf()
+					} else {
+						l1 = gen.NewLabel()
+						value := "if (" + resultado + "==0) goto "
+						gen.AddTempBool(l1, value)
+					}
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				}
 			} else {
 				t := time.Now()
@@ -356,27 +474,67 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
 				env.(environment.Environment).Errores(err)
 			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 
 		}
 	case "==":
 		{
-			if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
-				l1 := ""
-				l2 := ""
-				if gen.GetConf() == 0 {
-					l1 = gen.NewLabel()
-					l2 = gen.NewLabel()
-					value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto " + l1 + ";\n"
-					value += "goto " + l2 + ";\n"
-					gen.AddCodes(value, ambito)
-					gen.AddTempBool(l1, l2)
-					gen.SetConf()
-				} else if gen.GetConf() == 1 {
-					l1 = gen.NewLabel()
-					value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto "
-					gen.AddTempBool(l1, value)
+			if retornoDer.Type == retornoIzq.Type {
+				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
+					l1 := ""
+					l2 := ""
+					if gen.GetConf() == 0 {
+						l1 = gen.NewLabel()
+						l2 = gen.NewLabel()
+						value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto " + l1 + ";\n"
+						value += "goto " + l2 + ";\n"
+						gen.AddCodes(value, ambito)
+						gen.AddTempBool(l1, l2)
+						gen.SetConf()
+					} else if gen.GetConf() == 1 {
+						l1 = gen.NewLabel()
+						value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto "
+						gen.AddTempBool(l1, value)
+					}
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+				} else if retornoDer.Type == interfaces.STRING || retornoIzq.Type == interfaces.STR {
+					code := "//COMPARACION DE STRING\n"
+					t1 := gen.NewTemp()
+					t4 := gen.NewTemp()
+					t2 := retornoIzq.Value
+					t3 := retornoDer.Value
+					resultado := gen.NewTemp()
+					code += t1 + "=P+1;\n"
+					code += "STACK[(int)" + t1 + "]=" + t2 + ";\n"
+					code += t4 + "=P+2;\n"
+					code += "STACK[(int)" + t4 + "]=" + t3 + ";\n"
+					gen.AddFuncExtra("COMPARESTR")
+					code += "proc_compareString();\n"
+					code += resultado + "=STACK[(int)P];"
+					gen.AddCodes(code, ambito)
+					//
+					l1 := ""
+					l2 := ""
+					if gen.GetConf() == 0 {
+						l1 = gen.NewLabel()
+						l2 = gen.NewLabel()
+						value := "if (" + resultado + "==1) goto " + l1 + ";\n"
+						value += "goto " + l2 + ";\n"
+						gen.AddCodes(value, ambito)
+						gen.AddTempBool(l1, l2)
+						gen.SetConf()
+					} else {
+						l1 = gen.NewLabel()
+						value := "if (" + resultado + "==1) goto "
+						gen.AddTempBool(l1, value)
+					}
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				}
-				return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 			} else {
 				t := time.Now()
 				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
@@ -469,6 +627,69 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "SE ESPERABA UNA EXPRESION BOOLEANA", Fecha: fecha}
 				env.(environment.Environment).Errores(err)
 			}
+		}
+	case "°":
+		{
+			if retornoIzq.Type == interfaces.INTEGER {
+				//tmp:=gen.NewTemp()
+				gen.AddExpression(newTemp, retornoDer.Value, "-1", "*", ambito)
+				return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+			} else if retornoIzq.Type == interfaces.FLOAT {
+				gen.AddExpression(newTemp, retornoDer.Value, "-1", "*", ambito)
+				return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "SE ESPERABA UNA EXPRESION NUMERICA", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
+		}
+	case "^":
+		{
+			if retornoIzq.Type == retornoDer.Type {
+				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
+					tmp2 := gen.NewTemp()
+					resultado := gen.NewTemp()
+					//llamada a la funcion de potencias
+					code := "//INICIO DE CALCULO DE POTENCIAS\n"
+					code += newTemp + "=P+1;\n"
+					code += tmp2 + "=P+2;\n"
+					code += "STACK[(int)" + newTemp + "]=" + retornoIzq.Value + ";\n"
+					code += "STACK[(int)" + tmp2 + "]=" + retornoDer.Value + ";\n"
+					gen.AddFuncExtra("POW")
+					code += "proc_potencia();\n"
+					code += resultado + "=STACK[(int)P];"
+					gen.AddCodes(code, ambito)
+					return interfaces.Value{Value: resultado, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+					//code+=""
+				}
+
+			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE OPERAR ESTE TIPO DATO", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
+		}
+	case "%":
+		{
+			if retornoIzq.Type == retornoDer.Type {
+				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.FLOAT {
+					//resultado:=gen.NewTemp()
+					code := "//CALCULO DE MODULO\n"
+					code += newTemp + "=fmod(" + retornoIzq.Value + "," + retornoDer.Value + ");"
+					gen.AddCodes(code, ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+				}
+			}
+			t := time.Now()
+			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
+			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE OBTENER EL MODULO DE ESTE TIPO DATO", Fecha: fecha}
+			env.(environment.Environment).Errores(err)
 		}
 	}
 

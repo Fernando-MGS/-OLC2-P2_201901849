@@ -4,9 +4,7 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
-	"fmt"
 	"strconv"
-	"time"
 )
 
 type Assignment struct {
@@ -23,57 +21,53 @@ func NewAssignment(id string, val interfaces.Expresion, line, col int) Assignmen
 
 func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	result := p.Expresion.Ejecutar(env, gen)
+	ambito := env.(environment.Environment).DevAmbito()
 	if result.Type == interfaces.NULL {
-		t := time.Now()
-		fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-			t.Year(), t.Month(), t.Day(),
-			t.Hour(), t.Minute(), t.Second())
-		err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LA EXPRESION NO ES VALIDA", Fecha: fecha}
-		env.(environment.Environment).Errores(err)
-	} else if result.Type == interfaces.VOID {
-		t := time.Now()
-		fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-			t.Year(), t.Month(), t.Day(),
-			t.Hour(), t.Minute(), t.Second())
-		err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LAS FUNCIONES DE TIPO VOID NO DEVUELVEN NINGUN VALOR", Fecha: fecha}
-		env.(environment.Environment).Errores(err)
+		err := "LA EXPRESION NO ES VALIDA"
+		env.(environment.Environment).NewError(err, p.Line, p.Col)
 	} else {
 		variable := env.(environment.Environment).GetVariable(p.Id, p.Line, p.Col)
-		if variable.Tipo.Tipo == result.Type {
-			ambito := true
-			if env.(environment.Environment).Control.Id == "GLOBAL" || env.(environment.Environment).Control.Id == "main" {
-				ambito = false
-			}
-			if result.Type == interfaces.STRING {
+		if variable.Tipo.Tipo == result.Type || variable.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
 
-			} else if result.Type == interfaces.STR {
+			if result.Type == interfaces.VECTOR {
 
 			} else if result.Type == interfaces.ARRAY {
 
-			} else if result.Type == interfaces.VECTOR {
-
 			} else if result.Type == interfaces.STRUCT {
 
+			} else if result.Type == interfaces.BOOLEAN {
+				value := ""
+				l1 := gen.GetTempsB().TrueL
+				l2 := gen.GetTempsB().FalseL
+				l3 := gen.NewLabel()
+				value += l1 + ":\n"
+				value += "STACK[" + strconv.Itoa(variable.Posicion) + "]=1;\n"
+				value += "goto " + l3 + ";\n"
+				value += l2 + ":\n"
+				value += "STACK[" + strconv.Itoa(variable.Posicion) + "]=0;\n"
+				value += l3 + ":\n"
+				gen.AddCodes(value, ambito)
+				gen.SetConf()
+				//env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			} else {
-				value := "//---------INICIANDO ASIGNACION-------"
-				value += "STACK[" + strconv.Itoa(variable.Posicion) + "]"
-				value += "=" + result.Value
-				value += "//---------FIN DE ASIGNACION-------"
-				if ambito {
-					gen.AddFunc(value)
-				} else {
-					gen.AddCode(value)
+				if interfaces.CHAR == result.Type {
+					runes := []rune(result.Value)
+					var val string
+					for i := 0; i < len(runes); i++ {
+						val = strconv.Itoa(int(runes[i]))
+					}
+					result.Value = val
 				}
+				value := "//---------INICIANDO ASIGNACION-------\n"
+				value += "STACK[" + strconv.Itoa(variable.Posicion) + "]"
+				value += "=" + result.Value + ";\n"
+				value += "//---------FIN DE ASIGNACION-------"
+				gen.AddCodes(value, ambito)
 			}
 		} else {
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO COINCIDEN", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("LOS TIPOS NO COINCIDEN", p.Line, p.Col)
 		}
 	}
 	result.Type = interfaces.NULL
-	return result.Value
+	return result
 }

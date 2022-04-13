@@ -37,7 +37,10 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 		result.Type = interfaces.NULL
 		return result.Value
 	}
-
+	fmt.Println("TIPO 1")
+	fmt.Println(result.Type)
+	fmt.Println("tipo2")
+	fmt.Println(p.Tipo.Tipo)
 	if conf {
 		if p.Tipo.Tipo == interfaces.ARRAY {
 			fmt.Println(p.Tipo.Tipo)
