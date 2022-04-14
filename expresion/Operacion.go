@@ -259,6 +259,22 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+				} else if retornoIzq.Type == interfaces.STRING {
+					code := "//COMPARACION DE STRING\n"
+					dir1 := gen.NewTemp() //dirección del primer parametro
+					dir2 := gen.NewTemp() //dirección del segundo parametro
+					code += dir1 + "=P+1;\n"
+					code += dir2 + "=P+2;\n"
+					code += "STACK[(int)" + dir1 + "]=" + retornoIzq.Value + ";\n"
+					code += "STACK[(int)" + dir2 + "]=" + retornoDer.Value + ";\n"
+					gen.AddFuncExtra("COMPARELONG")
+					code += "compareLong_String();\n"
+					resultado := gen.NewTemp()
+					//code += "STACK[(int)P]=" + retornoDer.Value + ";\n"
+					code += resultado + "=STACK[(int)P];\n"
+					gen.AddCodes(code, ambito)
+					addCodeBool(gen, "==", "0", resultado, ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				}
 			}
 			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
@@ -284,6 +300,22 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						value := "if (" + retornoIzq.Value + ">" + retornoDer.Value + ") goto "
 						gen.AddTempBool(l1, value)
 					}
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+				} else if retornoIzq.Type == interfaces.STRING {
+					code := "//COMPARACION DE STRING\n"
+					dir1 := gen.NewTemp() //dirección del primer parametro
+					dir2 := gen.NewTemp() //dirección del segundo parametro
+					code += dir1 + "=P+1;\n"
+					code += dir2 + "=P+2;\n"
+					code += "STACK[(int)" + dir1 + "]=" + retornoIzq.Value + ";\n"
+					code += "STACK[(int)" + dir2 + "]=" + retornoDer.Value + ";\n"
+					gen.AddFuncExtra("COMPARELONG")
+					code += "compareLong_String();\n"
+					resultado := gen.NewTemp()
+					//code += "STACK[(int)P]=" + retornoDer.Value + ";\n"
+					code += resultado + "=STACK[(int)P];\n"
+					gen.AddCodes(code, ambito)
+					addCodeBool(gen, "==", "2", resultado, ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				}
 			}
@@ -311,7 +343,21 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				} else if retornoIzq.Type == interfaces.STRING {
-
+					code := "//COMPARACION DE STRING\n"
+					dir1 := gen.NewTemp() //dirección del primer parametro
+					dir2 := gen.NewTemp() //dirección del segundo parametro
+					code += dir1 + "=P+1;\n"
+					code += dir2 + "=P+2;\n"
+					code += "STACK[(int)" + dir1 + "]=" + retornoIzq.Value + ";\n"
+					code += "STACK[(int)" + dir2 + "]=" + retornoDer.Value + ";\n"
+					gen.AddFuncExtra("COMPARELONG")
+					code += "compareLong_String();\n"
+					resultado := gen.NewTemp()
+					//code += "STACK[(int)P]=" + retornoDer.Value + ";\n"
+					code += resultado + "=STACK[(int)P];\n"
+					gen.AddCodes(code, ambito)
+					addCodeBool(gen, ">=", "1", resultado, ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				}
 			}
 			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
@@ -338,6 +384,22 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+				} else if interfaces.STR == retornoDer.Type || interfaces.STRING == retornoIzq.Type {
+					code := "//COMPARACION DE STRING\n"
+					dir1 := gen.NewTemp() //dirección del primer parametro
+					dir2 := gen.NewTemp() //dirección del segundo parametro
+					code += dir1 + "=P+1;\n"
+					code += dir2 + "=P+2;\n"
+					code += "STACK[(int)" + dir1 + "]=" + retornoIzq.Value + ";\n"
+					code += "STACK[(int)" + dir2 + "]=" + retornoDer.Value + ";\n"
+					gen.AddFuncExtra("COMPARELONG")
+					code += "compareLong_String();\n"
+					resultado := gen.NewTemp()
+					//code += "STACK[(int)P]=" + retornoDer.Value + ";\n"
+					code += resultado + "=STACK[(int)P];\n"
+					gen.AddCodes(code, ambito)
+					addCodeBool(gen, "<=", "1", resultado, ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				} else {
 					env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 				}
@@ -348,6 +410,27 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		}
 	case "!=":
 		{
+			resultado := ""
+			resultado2 := ""
+			gen.Conf2()
+			//retornoIzq,retornoDer=DevTipos(p,env,gen)
+			retornoIzq = p.Op1.Ejecutar(env, gen)
+			//gen.AddCodes("//PRACTICA", ambito)
+			if retornoIzq.Type == interfaces.BOOLEAN {
+				gen.SetConf()
+				code, resultado1 := True_NotTrue("!=", retornoIzq, gen)
+				resultado = resultado1
+				gen.AddCodes(code+"\n//FIN DE IZQ", ambito)
+			}
+			retornoDer = p.Op2.Ejecutar(env, gen)
+			if retornoDer.Type == interfaces.BOOLEAN {
+				//gen.SetConf()
+				code, resultado1 := True_NotTrue("!=", retornoIzq, gen)
+				resultado2 = resultado1
+				gen.AddCodes(code+"\n//FIN DE DERTYPE", ambito)
+				fmt.Println("ruta 2")
+				fmt.Println(gen.GetTempsB())
+			}
 			//retornoIzq,retornoDer=DevTipos(p,env,gen)
 			if retornoDer.Type == retornoIzq.Type {
 
@@ -402,6 +485,18 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						value := "if (" + resultado + "==0) goto "
 						gen.AddTempBool(l1, value)
 					}
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+				} else if interfaces.BOOLEAN == retornoDer.Type {
+					l1 := gen.NewLabel()
+					l2 := gen.NewLabel()
+					code := "if(" + resultado + "!=" + resultado2 + ") goto " + l1 + ";\n"
+					code += "goto " + l2 + ";"
+					gen.AddCodes(code, ambito)
+					gen.SetConf()
+					gen.AddTempBool(l1, l2)
+					gen.SetConf()
+					//gen.RotarLabels()
+					//fmt.Println(gen.GetTempsB())
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				}
 			} else {
@@ -489,7 +584,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				} else if interfaces.BOOLEAN == retornoIzq.Type {
 
-					fmt.Println(gen.GetConf())
+					//fmt.Println(gen.GetConf())
 					l1 := gen.NewLabel()
 					l2 := gen.NewLabel()
 					code := "if(" + resultado + "==" + resultado2 + ") goto " + l1 + ";\n"
@@ -499,7 +594,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					gen.AddTempBool(l1, l2)
 					gen.SetConf()
 					//gen.RotarLabels()
-					fmt.Println(gen.GetTempsB())
+					//fmt.Println(gen.GetTempsB())
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 					//gen.AddCodes(code, ambito)*/
 				}
@@ -661,4 +756,24 @@ func DevTipos(p Aritmetica, env interface{}, gen *generator.Generator) (interfac
 		retornoDer = p.Op2.Ejecutar(env, gen)
 	}
 	return retornoIzq, retornoDer
+}
+
+func addCodeBool(gen *generator.Generator, signo, value, temp string, ambito bool) {
+	l1 := ""
+	l2 := ""
+
+	if gen.GetConf() == 0 {
+		l1 = gen.NewLabel()
+		l2 = gen.NewLabel()
+		value := "if (" + temp + signo + value + ") goto " + l1 + ";\n"
+		value += "goto " + l2 + ";\n"
+		gen.AddCodes(value, ambito)
+		gen.AddTempBool(l1, l2)
+		gen.SetConf()
+
+	} else if gen.GetConf() == 1 {
+		l1 = gen.NewLabel()
+		value := "if (" + temp + signo + value + ") goto "
+		gen.AddTempBool(l1, value)
+	}
 }

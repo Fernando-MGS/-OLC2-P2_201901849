@@ -181,6 +181,9 @@ func (g *Generator) AddFuncExtra(id string) {
 		} else if id == "BOUNDS" {
 			g.func_extra[id] = true
 			g.extra_code.Add(bounds_error())
+		} else if id == "COMPARELONG" {
+			g.func_extra[id] = true
+			g.extra_code.Add(compareLong_Str(g))
 		}
 	}
 
@@ -385,6 +388,73 @@ func compare_string(g *Generator) string {
 	code += t43 + "=0;\n"
 	code += l39 + ":\n"
 	code += "STACK[(int)P] =" + t43 + ";\n"
+	code += "return ;\n}"
+	return code
+}
+
+func compareLong_Str(g *Generator) string {
+	//conteo del primer string
+	code := "void compareLong_String(){\n"
+	param1 := g.NewTemp()
+	guia1 := g.NewTemp()
+	code += param1 + "=P+1;\n"
+	code += guia1 + "=STACK[(int)" + param1 + "];\n"
+	l1 := g.NewLabel()
+	l2 := g.NewLabel()
+	l3 := g.NewLabel()
+	size1 := g.NewTemp()
+	code += size1 + "=0;\n"
+	code += l1 + ":\n"
+	chr := g.NewTemp()
+	code += chr + "=HEAP[(int)" + guia1 + "];\n"
+	code += "if (" + chr + "!=-1) goto " + l2 + ";\n"
+	code += "goto " + l3 + ";\n"
+	code += l2 + ":\n"
+	code += guia1 + "=" + guia1 + "+1;\n"
+	code += size1 + "=" + size1 + "+1;\n"
+	code += "goto " + l1 + ";\n"
+	code += l3 + ":\n"
+	//conteo del segundo string
+	param2 := g.NewTemp()
+	guia2 := g.NewTemp()
+	code += param2 + "=P+2;\n"
+	code += guia2 + "=STACK[(int)" + param2 + "];\n"
+	l4 := g.NewLabel()
+	l5 := g.NewLabel()
+	l6 := g.NewLabel()
+	size2 := g.NewTemp()
+	code += size2 + "=0;\n"
+	code += l4 + ":\n"
+	chr1 := g.NewTemp()
+	code += chr1 + "=HEAP[(int)" + guia2 + "];\n"
+	code += "if (" + chr1 + "!=-1) goto " + l5 + ";\n"
+	code += "goto " + l6 + ";\n"
+	code += l5 + ":\n"
+	code += guia2 + "=" + guia2 + "+1;\n"
+	code += size2 + "=" + size2 + "+1;\n"
+	code += "goto " + l4 + ";\n"
+	code += l6 + ":\n"
+	l7 := g.NewLabel()
+	l8 := g.NewLabel()
+	l9 := g.NewLabel()
+	//l10 := g.NewLabel()
+	l11 := g.NewLabel()
+	code += "if(" + size1 + "==" + size2 + ") goto " + l7 + ";\n"
+	code += "if(" + size1 + ">" + size2 + ") goto " + l8 + ";\n"
+	code += "if(" + size1 + "<" + size2 + ") goto " + l9 + ";\n"
+	//code += "if(" + size1 + "<=" + size2 + ") goto " + l10 + ";\n"
+	code += l7 + ":\n"
+	code += "STACK[(int)P] = 1;\n"
+	code += "goto " + l11 + ";\n"
+	code += l8 + ":\n"
+	code += "STACK[(int)P] = 2;\n"
+	code += "goto " + l11 + ";\n"
+	code += l9 + ":\n"
+	code += "STACK[(int)P] = 0;\n"
+	/*code += "goto " + l11 + ";\n"
+	/*code += l10 + ":\n"
+	code += "STACK[(int)P] = 3;\n"*/
+	code += l11 + ":\n"
 	code += "return ;\n}"
 	return code
 }
