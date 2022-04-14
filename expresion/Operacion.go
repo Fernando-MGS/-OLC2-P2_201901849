@@ -6,7 +6,6 @@ import (
 	"OLC2/interfaces"
 	"fmt"
 	"strconv"
-	"time"
 )
 
 type Aritmetica struct {
@@ -48,8 +47,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	}*/
 	var retornoIzq interfaces.Value
 	var retornoDer interfaces.Value
-
-	if p.Unario == true {
+	/*if p.Unario {
 		retornoIzq = p.Op1.Ejecutar(env, gen)
 
 	} else {
@@ -58,7 +56,8 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	}
 	if retornoIzq.Type == interfaces.NULL || retornoDer.Type == interfaces.NULL {
 		return interfaces.Value{Type: interfaces.NULL}
-	}
+	}*/
+
 	ambito := true
 	if env.(environment.Environment).Control.Id == "GLOBAL" || env.(environment.Environment).Control.Id == "main" {
 		ambito = false
@@ -70,7 +69,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	switch p.Operador {
 	case "+":
 		{
-
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
@@ -84,7 +83,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				} else {
-					fmt.Print("ERROR: No es posible sumar")
+					env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 				}
 			} else {
 				if retornoIzq.Type == interfaces.STR && retornoDer.Type == interfaces.STRING {
@@ -132,17 +131,13 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				}
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE SUMAR ESTE TIPO DATO", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
+				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
 		}
 
 	case "-":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
@@ -165,16 +160,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				}
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE RESTAR ESTE TIPO DATO", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 		}
 
 	case "*":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
@@ -197,25 +188,21 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				}
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE RESTAR ESTE TIPO DATO", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 		}
 
 	case "/":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
-					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0"), ambito)
+					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0", 0), ambito)
 					//gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				} else if retornoDer.Type == interfaces.FLOAT {
-					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0.0"), ambito)
+					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0.0", 0), ambito)
 					//gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
@@ -248,16 +235,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				}
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE DIVIDIR ESTE TIPO DATO", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("NO ES POSIBLE DIVIDIR ESTE TIPO DE DATO", p.Line, p.Col)
 
 		}
 	case "<":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
 					l1 := ""
@@ -276,25 +259,14 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
-				} else {
-					t := time.Now()
-					fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-						t.Year(), t.Month(), t.Day(),
-						t.Hour(), t.Minute(), t.Second())
-					err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-					env.(environment.Environment).Errores(err)
 				}
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 		}
 
 	case ">":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
 					l1 := ""
@@ -313,24 +285,13 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
-				} else {
-					t := time.Now()
-					fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-						t.Year(), t.Month(), t.Day(),
-						t.Hour(), t.Minute(), t.Second())
-					err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-					env.(environment.Environment).Errores(err)
 				}
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 		}
 	case ">=":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
 					l1 := ""
@@ -352,24 +313,13 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				} else if retornoIzq.Type == interfaces.STRING {
 
 				}
-			} else {
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 		}
 
 	case "<=":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoDer.Type == retornoIzq.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
 					l1 := ""
@@ -389,30 +339,16 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				} else {
-					t := time.Now()
-					fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-						t.Year(), t.Month(), t.Day(),
-						t.Hour(), t.Minute(), t.Second())
-					err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-					env.(environment.Environment).Errores(err)
+					env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 				}
 			} else {
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
+				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 		}
 	case "!=":
 		{
+			//retornoIzq,retornoDer=DevTipos(p,env,gen)
 			if retornoDer.Type == retornoIzq.Type {
 
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
@@ -430,7 +366,9 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						l1 = gen.NewLabel()
 						value := "if (" + retornoIzq.Value + "!=" + retornoDer.Value + ") goto "
 						gen.AddTempBool(l1, value)
-
+						if gen.GetConf2() {
+							gen.AddCodes("//practica", ambito)
+						}
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				} else if retornoDer.Type == interfaces.STRING || retornoIzq.Type == interfaces.STR {
@@ -467,27 +405,41 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 				}
 			} else {
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
+				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 
 		}
 	case "==":
 		{
+			resultado := ""
+			resultado2 := ""
+			gen.Conf2()
+			//retornoIzq,retornoDer=DevTipos(p,env,gen)
+			retornoIzq = p.Op1.Ejecutar(env, gen)
+			//gen.AddCodes("//PRACTICA", ambito)
+			if retornoIzq.Type == interfaces.BOOLEAN {
+				gen.SetConf()
+				code, resultado1 := True_NotTrue("==", retornoIzq, gen)
+				resultado = resultado1
+				gen.AddCodes(code+"\n//FIN DE IZQ", ambito)
+			}
+			retornoDer = p.Op2.Ejecutar(env, gen)
+			if retornoDer.Type == interfaces.BOOLEAN {
+				//gen.SetConf()
+				code, resultado1 := True_NotTrue("==", retornoIzq, gen)
+				resultado2 = resultado1
+				gen.AddCodes(code+"\n//FIN DE DERTYPE", ambito)
+				fmt.Println("ruta 2")
+				fmt.Println(gen.GetTempsB())
+			}
+			/*fmt.Println(resultado)
+			fmt.Println(resultado2)*/
 			if retornoDer.Type == retornoIzq.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
 					l1 := ""
 					l2 := ""
+
 					if gen.GetConf() == 0 {
 						l1 = gen.NewLabel()
 						l2 = gen.NewLabel()
@@ -496,6 +448,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.AddCodes(value, ambito)
 						gen.AddTempBool(l1, l2)
 						gen.SetConf()
+
 					} else if gen.GetConf() == 1 {
 						l1 = gen.NewLabel()
 						value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto "
@@ -534,119 +487,91 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 						gen.AddTempBool(l1, value)
 					}
 					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+				} else if interfaces.BOOLEAN == retornoIzq.Type {
+
+					fmt.Println(gen.GetConf())
+					l1 := gen.NewLabel()
+					l2 := gen.NewLabel()
+					code := "if(" + resultado + "==" + resultado2 + ") goto " + l1 + ";\n"
+					code += "goto " + l2 + ";"
+					gen.AddCodes(code, ambito)
+					gen.SetConf()
+					gen.AddTempBool(l1, l2)
+					gen.SetConf()
+					//gen.RotarLabels()
+					fmt.Println(gen.GetTempsB())
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					//gen.AddCodes(code, ambito)*/
 				}
 			} else {
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
+				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
 
 		}
 	case "||":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type && retornoDer.Type == interfaces.BOOLEAN {
 				anterior := gen.GetTempsB()
-				/*fmt.Println("entro||-" + anterior.TrueL)
-				fmt.Println(anterior.FalseL)
-				fmt.Println(anterior.TrueL1)
-				fmt.Println(anterior.FalseL1)
-				fmt.Println("============")*/
 				l2 := gen.NewLabel()
-				value := anterior.FalseL + ":\n"
+				value := "//INICIO DE ||\n" + anterior.FalseL + ":\n"
 				value += anterior.FalseL1 + anterior.TrueL + ";\n"
 				value += "goto " + l2 + ";"
 				fmt.Println(value)
 				gen.LabelsOr(l2)
 				gen.AddCodes(value, ambito)
-				//gen.RotarLabels()
-				/*anterior = gen.GetTempsB()
-				fmt.Println("salio-" + anterior.TrueL)
-				fmt.Println(anterior.FalseL)
-				fmt.Println(anterior.TrueL1)
-				fmt.Println(anterior.FalseL1)
-				fmt.Println("============")*/
 				return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
 			} else {
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
+				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
 
 		}
 	case "&&":
 		{
-			fmt.Println("&&")
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
+			/*fmt.Println("&&")
 			fmt.Println(retornoDer)
-			fmt.Println(retornoIzq)
+			fmt.Println(retornoIzq)*/
 			if retornoIzq.Type == retornoDer.Type && retornoDer.Type == interfaces.BOOLEAN {
 				anterior := gen.GetTempsB()
-				/*fmt.Println("entro-" + anterior.TrueL)
-				fmt.Println(anterior.FalseL)
-				fmt.Println(anterior.TrueL1)
-				fmt.Println(anterior.FalseL1)
-				fmt.Println("============")*/
-				value := anterior.TrueL + ":\n"
+				value := "//INICIO DE &&\n" + anterior.TrueL + ":\n"
 				value += anterior.FalseL1 + anterior.TrueL1 + ";\n"
 				value += "goto " + anterior.FalseL + ";"
 				gen.AddCodes(value, ambito)
 				gen.RotarLabels()
-				/*anterior = gen.GetTempsB()
-				fmt.Println("salio-" + anterior.TrueL)
-				fmt.Println(anterior.FalseL)
-				fmt.Println(anterior.TrueL1)
-				fmt.Println(anterior.FalseL1)
-				fmt.Println("============")*/
 				return interfaces.Value{Value: newTemp, IsTemp: false, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				//gen.AddTempBool(anterior.TrueL1, anterior.FalseL1)
 			} else {
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
+				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
 
 		}
 	case "!":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == interfaces.BOOLEAN {
 				gen.InvertirLabels()
 				return interfaces.Value{Value: newTemp, IsTemp: false, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 			} else {
-				t := time.Now()
-				fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-					t.Year(), t.Month(), t.Day(),
-					t.Hour(), t.Minute(), t.Second())
-				err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "SE ESPERABA UNA EXPRESION BOOLEANA", Fecha: fecha}
-				env.(environment.Environment).Errores(err)
+				env.(environment.Environment).NewError("SE ESPERABA UNA EXPRESION BOOLEANA", p.Line, p.Col)
 			}
 		}
 	case "°":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == interfaces.INTEGER {
 				//tmp:=gen.NewTemp()
-				gen.AddExpression(newTemp, retornoDer.Value, "-1", "*", ambito)
+				gen.AddExpression(newTemp, retornoIzq.Value, "-1", "*", ambito)
 				return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 			} else if retornoIzq.Type == interfaces.FLOAT {
-				gen.AddExpression(newTemp, retornoDer.Value, "-1", "*", ambito)
+				gen.AddExpression(newTemp, retornoIzq.Value, "-1", "*", ambito)
 				return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "SE ESPERABA UNA EXPRESION NUMERICA", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("SE ESPERABA UNA EXPRESION NUMERICA", p.Line, p.Col)
 		}
 	case "^":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
 					tmp2 := gen.NewTemp()
@@ -666,37 +591,29 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				}
 
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE OPERAR ESTE TIPO DATO", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("NO ES POSIBLE OPERAR ESTE TIPO DATO", p.Line, p.Col)
 		}
 	case "%":
 		{
+			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
-				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.FLOAT {
+				if retornoDer.Type == interfaces.INTEGER {
 					//resultado:=gen.NewTemp()
-					code := "//CALCULO DE MODULO\n"
-					code += newTemp + "=fmod(" + retornoIzq.Value + "," + retornoDer.Value + ");"
-					gen.AddCodes(code, ambito)
+					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0", 1), ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+				} else if retornoDer.Type == interfaces.FLOAT {
+					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0.0", 1), ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				}
 			}
-			t := time.Now()
-			fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-				t.Year(), t.Month(), t.Day(),
-				t.Hour(), t.Minute(), t.Second())
-			err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "NO ES POSIBLE OBTENER EL MODULO DE ESTE TIPO DATO", Fecha: fecha}
-			env.(environment.Environment).Errores(err)
+			env.(environment.Environment).NewError("NO ES POSIBLE OBTENER EL MODULO DE ESTE TIPO DATO", p.Line, p.Col)
 		}
 	}
 
 	return interfaces.Value{Value: "0", Type: interfaces.NULL, IsTemp: false, TrueLabel: "", FalseLabel: ""}
 }
 
-func Comprobar_Div(g *generator.Generator, izq, der interfaces.Value, tmp, value string) string {
+func Comprobar_Div(g *generator.Generator, izq, der interfaces.Value, tmp, value string, tipo int) string {
 	l1 := g.NewLabel()
 	l2 := g.NewLabel()
 	code := "if(" + der.Value + "!=0) goto " + l1 + ";\n"
@@ -705,7 +622,43 @@ func Comprobar_Div(g *generator.Generator, izq, der interfaces.Value, tmp, value
 	code += tmp + "=" + value + ";\n"
 	code += "goto " + l2 + ";\n"
 	code += l1 + ":\n"
-	code += tmp + "=" + izq.Value + "/" + der.Value + ";\n"
+	if tipo == 0 {
+		code += tmp + "=" + izq.Value + "/" + der.Value + ";\n"
+	} else {
+		code += tmp + "=fmod(" + izq.Value + "," + der.Value + ");\n"
+	}
 	code += l2 + ":"
 	return code
+}
+
+func True_NotTrue(signo string, izq interfaces.Value, g *generator.Generator) (string, string) {
+	anterior := g.GetTempsB()
+	fmt.Println(anterior)
+	tmpIzq := g.NewTemp()
+	//tmpDer:=g.NewTemp()
+	l1 := anterior.TrueL
+	l2 := anterior.FalseL
+	l3 := g.NewLabel() //salida de la primera asignacion
+	/*l4:=anterior.TrueL1
+	l5:=g.NewLabel()//FALSE 2*/
+	value := "//INICIO DE " + signo + "\n" + l1 + ":\n"
+	value += tmpIzq + "=1;\ngoto " + l3 + ";\n"
+	value += l2 + ":\n"
+	value += tmpIzq + "=0;\n"
+	value += l3 + ":\n"
+
+	return value, tmpIzq
+}
+
+func DevTipos(p Aritmetica, env interface{}, gen *generator.Generator) (interfaces.Value, interfaces.Value) {
+	var retornoIzq interfaces.Value
+	var retornoDer interfaces.Value
+	if p.Unario {
+		retornoIzq = p.Op1.Ejecutar(env, gen)
+
+	} else {
+		retornoIzq = p.Op1.Ejecutar(env, gen)
+		retornoDer = p.Op2.Ejecutar(env, gen)
+	}
+	return retornoIzq, retornoDer
 }

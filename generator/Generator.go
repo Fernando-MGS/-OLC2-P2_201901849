@@ -26,6 +26,7 @@ type Booleans struct {
 
 type temporals struct {
 	Conf    int
+	Cequal  bool
 	TrueL   string
 	FalseL  string
 	TrueL1  string
@@ -34,7 +35,7 @@ type temporals struct {
 
 func NewGenerator() *Generator {
 	//fmt.Println("neuvo generator")
-	generator := Generator{temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: ""}}
+	generator := Generator{temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}}
 	return &generator
 }
 
@@ -87,6 +88,13 @@ func (g Generator) InvertirLabels() {
 func (g Generator) LabelsOr(l2 string) {
 	g.temp_Bools.FalseL = l2
 }
+func (g Generator) Conf2() {
+	g.temp_Bools.Cequal = !g.temp_Bools.Cequal
+}
+func (g Generator) GetConf2() bool {
+	return g.temp_Bools.Cequal
+}
+
 func (g Generator) RotarLabels() {
 	g.temp_Bools.TrueL = g.temp_Bools.TrueL1
 }
@@ -359,7 +367,7 @@ func compare_string(g *Generator) string {
 	code += "if(" + t44 + "!=-1) goto " + l33 + ";\n"
 	code += "goto " + l34 + ";\n"
 	code += l33 + ":\n"
-	code += "if(" + t44 + "!=" + t45 + ") goto " + l33 + ";\n"
+	code += "if(" + t44 + "!=" + t45 + ") goto " + l36 + ";\n"
 	code += "goto " + l37 + ";\n"
 	code += l36 + ":\n"
 	code += t43 + "= 0  ;\n"

@@ -102,8 +102,8 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 					var val string
 					for i := 0; i < len(runes); i++ {
 						val = strconv.Itoa(int(runes[i]))
-						fmt.Println("VAL")
-						fmt.Println(val)
+						/*fmt.Println("VAL")
+						fmt.Println(val)*/
 					}
 					result.Value = val
 				}
@@ -122,12 +122,13 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				l2 := gen.GetTempsB().FalseL
 				l3 := gen.NewLabel()
 				value += l1 + ":\n"
-				value += "STACK[" + guia + "]=1;\n"
+				value += "STACK[" + guia + "]=1;\n" + incremento + "\n"
 				value += "goto " + l3 + ";\n"
 				value += l2 + ":\n"
-				value += "STACK[" + guia + "]=0;\n"
+				value += "STACK[" + guia + "]=0;\n" + incremento + "\n"
 				value += l3 + ":\n"
-				gen.AddCodes(value, ambito)
+				gen.AddCodes(value+"//FIN DE DECLARACION", ambito)
+
 				gen.SetConf()
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			}

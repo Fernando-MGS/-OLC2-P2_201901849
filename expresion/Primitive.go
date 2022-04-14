@@ -34,7 +34,7 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 		if p.Tipo == interfaces.STRING {
 			tmp := gen.NewTemp()
 			p.Valor = tmp
-			declarar := tmp + "=H;"
+			declarar := "//INICIO DE STRING\n" + tmp + "=H;"
 			gen.AddCodes(declarar, ambito)
 			chars := gen.Array_char(cadena)
 			for _, s := range chars {
