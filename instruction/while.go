@@ -43,8 +43,7 @@ func (p While) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		gen.SetConf()
 		value := l1 + ":\n" // si es verdadera irá de nuevo a entrada para repetir el proceso
 		gen.AddCodes(value, ambito)
-		var tmpEnv environment.Environment
-		tmpEnv = environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, l2, true)
+		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, l2, true)
 		for _, s := range p.Bloque.ToArray() {
 			s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
 		}

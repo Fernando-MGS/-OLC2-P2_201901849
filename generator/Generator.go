@@ -11,6 +11,7 @@ type Generator struct {
 	label      int
 	Stack      int
 	Heap       int
+	salida     string
 	code       *arrayList.List
 	func_code  *arrayList.List
 	tempList   *arrayList.List
@@ -35,7 +36,7 @@ type temporals struct {
 
 func NewGenerator() *Generator {
 	//fmt.Println("neuvo generator")
-	generator := Generator{temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}}
+	generator := Generator{salida: "", temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}}
 	return &generator
 }
 
@@ -67,6 +68,14 @@ func (g Generator) AddTempBool(labelT, labelF string) {
 		g.temp_Bools.TrueL1 = labelT
 		g.temp_Bools.FalseL1 = labelF
 	}
+}
+
+func (g *Generator) SetSalida(exit string) {
+	//gen := Generator{salida: exit}
+	g.salida = exit
+}
+func (g Generator) GetSalida() string {
+	return g.salida
 }
 
 func (g Generator) GetConf() int {

@@ -37,6 +37,7 @@ instruccion returns [interfaces.Instruction instr]
   | P_WHILE  expression  LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewWhile($expression.p, $instrucciones.l,$LLAVEIZQ.GetLine(),$LLAVEDER.GetColumn())}
   |breaks {$instr=$breaks.i}
   |continues  {$instr=$continues.i}
+  |ifs  {$instr=$ifs.p}
 ;
 
 asignacion_var  returns [interfaces.Instruction i]:
@@ -113,6 +114,16 @@ vectores returns [*arrayList.List l]:
     $vectores.l.Add(interfaces.VECTOR)
     $l=$vectores.l
   }
+;
+
+ifs returns[interfaces.Instruction p]:
+  P_IF  expression LLAVEIZQ  instrucciones LLAVEDER elses {$p=instruction.NewIf($expression.p,$instrucciones.l,$elses.e,$P_IF.GetLine(),$P_IF.GetColumn(),0)}
+;
+
+elses returns[interfaces.Instruction e]:
+  P_ELSE LLAVEIZQ  instrucciones LLAVEDER {$e=instruction.NewIf(expresion.NewPrimitivo(1,interfaces.BOOLEAN,0,0),$instrucciones.l,instruction.NewElseNull("null"),0,0,3)}
+  |P_ELSE P_IF  expression LLAVEIZQ  instrucciones LLAVEDER elses {$e=instruction.NewIf($expression.p,$instrucciones.l,$elses.e,$P_IF.GetLine(),$P_IF.GetColumn(),2)}
+  |             {$e= instruction.NewElseNull("null")}
 ;
 
 breaks returns [interfaces.Instruction i]:

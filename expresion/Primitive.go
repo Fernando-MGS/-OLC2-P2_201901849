@@ -47,13 +47,14 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 			save := "HEAP[(int)H]=-1;\n"
 			save += "H=H+1;"
 			gen.AddCodes(save, ambito)
+			gen.AddCodes("//FIN DE STRING", ambito)
 		}
 		//fmt.Println(p.Valor)
 	} else if p.Tipo == interfaces.BOOLEAN {
 
 		l1 := gen.NewLabel()
 		l2 := ""
-
+		gen.AddCodes("//INICIO DE BOOLEANO", ambito)
 		conf := gen.GetConf()
 		if conf == 0 {
 			l2 = gen.NewLabel()
@@ -68,7 +69,7 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 			l1 = gen.NewLabel()
 			gen.AddTempBool(l1, "goto ")
 		}
-
+		gen.AddCodes("//FIN DE BOOLEANO", ambito)
 		/*gen.AddTempBool(l1, l2)
 		gen.SetConf()*/
 
