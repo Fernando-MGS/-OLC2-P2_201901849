@@ -34,6 +34,9 @@ instruccion returns [interfaces.Instruction instr]
   : CONSOLE '.' LOG PARIZQ expression PARDER ';' {$instr = instruction.NewImprimir($expression.p)}
   |declaracion_var PTCOMA {$instr=$declaracion_var.i}
   |asignacion_var PTCOMA  {$instr=$asignacion_var.i}
+  | P_WHILE  expression  LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewWhile($expression.p, $instrucciones.l,$LLAVEIZQ.GetLine(),$LLAVEDER.GetColumn())}
+  |breaks {$instr=$breaks.i}
+  |continues  {$instr=$continues.i}
 ;
 
 asignacion_var  returns [interfaces.Instruction i]:
@@ -112,6 +115,14 @@ vectores returns [*arrayList.List l]:
   }
 ;
 
+breaks returns [interfaces.Instruction i]:
+  BREAK expression  PTCOMA  {$i=instruction.NewBreak($expression.p,true,$BREAK.GetLine(),$BREAK.GetColumn())}
+  |BREAK PTCOMA {$i=instruction.NewBreak(expresion.NewPrimitivo(1,interfaces.INTEGER,0,0),false,$BREAK.GetLine(),$BREAK.GetColumn())}
+;
+
+continues returns [interfaces.Instruction i]:
+  CONTINUE PTCOMA {$i=instruction.NewContinue("continue",$CONTINUE.GetLine(),$CONTINUE.GetColumn())}
+;
 
 
 

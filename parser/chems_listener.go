@@ -44,6 +44,12 @@ type ChemsListener interface {
 	// EnterVectores is called when entering the vectores production.
 	EnterVectores(c *VectoresContext)
 
+	// EnterBreaks is called when entering the breaks production.
+	EnterBreaks(c *BreaksContext)
+
+	// EnterContinues is called when entering the continues production.
+	EnterContinues(c *ContinuesContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -88,6 +94,12 @@ type ChemsListener interface {
 
 	// ExitVectores is called when exiting the vectores production.
 	ExitVectores(c *VectoresContext)
+
+	// ExitBreaks is called when exiting the breaks production.
+	ExitBreaks(c *BreaksContext)
+
+	// ExitContinues is called when exiting the continues production.
+	ExitContinues(c *ContinuesContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)

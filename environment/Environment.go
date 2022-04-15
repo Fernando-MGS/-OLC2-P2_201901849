@@ -19,13 +19,16 @@ type Environment struct {
 }
 
 type EnvControl struct {
-	Id    string
-	Stack int
-	Heap  int
+	Id      string
+	Stack   int
+	Heap    int
+	Entrada string
+	Salida  string
+	Ciclo   bool
 }
 
-func NewEnvironment(father interface{}, id string) Environment {
-	env := Environment{&EnvControl{Id: id, Stack: 1, Heap: 1}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New()}
+func NewEnvironment(father interface{}, id, in, out string, ciclo bool) Environment {
+	env := Environment{&EnvControl{Id: id, Stack: 1, Heap: 1, Entrada: in, Salida: out, Ciclo: ciclo}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New()}
 	return env
 }
 

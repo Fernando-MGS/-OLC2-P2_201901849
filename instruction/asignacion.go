@@ -26,12 +26,16 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	fmt.Println("TIPO 1")
 	fmt.Println(result.Value)
 	fmt.Println("tipo2")
-
 	if result.Type == interfaces.NULL {
 		err := "LA EXPRESION NO ES VALIDA"
 		env.(environment.Environment).NewError(err, p.Line, p.Col)
 	} else {
 		variable := env.(environment.Environment).GetVariable(p.Id, p.Line, p.Col)
+		if !variable.Mutable {
+			env.(environment.Environment).NewError("LA VARIABLE \""+variable.Id+"\" NO ES MUTABLE", p.Line, p.Col)
+			result.Type = interfaces.NULL
+			return result
+		}
 		if variable.Tipo.Tipo == result.Type || variable.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
 
 			if result.Type == interfaces.VECTOR {

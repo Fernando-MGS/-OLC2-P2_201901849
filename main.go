@@ -40,7 +40,7 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	result := ctx.GetLista()
 
 	var globalEnv environment.Environment
-	globalEnv = environment.NewEnvironment(nil, "GLOBAL")
+	globalEnv = environment.NewEnvironment(nil, "GLOBAL", "", "", false)
 
 	var gen *generator.Generator
 	gen = generator.NewGenerator()

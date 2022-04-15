@@ -93,6 +93,18 @@ func (s *BaseChemsListener) EnterVectores(ctx *VectoresContext) {}
 // ExitVectores is called when production vectores is exited.
 func (s *BaseChemsListener) ExitVectores(ctx *VectoresContext) {}
 
+// EnterBreaks is called when production breaks is entered.
+func (s *BaseChemsListener) EnterBreaks(ctx *BreaksContext) {}
+
+// ExitBreaks is called when production breaks is exited.
+func (s *BaseChemsListener) ExitBreaks(ctx *BreaksContext) {}
+
+// EnterContinues is called when production continues is entered.
+func (s *BaseChemsListener) EnterContinues(ctx *ContinuesContext) {}
+
+// ExitContinues is called when production continues is exited.
+func (s *BaseChemsListener) ExitContinues(ctx *ContinuesContext) {}
+
 // EnterExpression is called when production expression is entered.
 func (s *BaseChemsListener) EnterExpression(ctx *ExpressionContext) {}
 
