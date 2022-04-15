@@ -51,7 +51,10 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		loop := env.(environment.Environment).Control.Ciclo
 		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, in, out, loop)
 		for _, s := range p.Cuerpo.ToArray() {
-			s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
+			res := s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
+			if res.(interfaces.Value).Type != interfaces.NULL {
+				ret = res.(interfaces.Value)
+			}
 		}
 		value = "goto " + salida + ";\n//FIN DE IF\n"
 		value += l2 + ":"

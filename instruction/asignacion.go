@@ -45,7 +45,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			} else if result.Type == interfaces.STRUCT {
 
 			} else if result.Type == interfaces.BOOLEAN {
-				value := "//INICIO DE ASIGNACION"
+				value := "//INICIO DE ASIGNACION\n"
 				l1 := gen.GetTempsB().TrueL
 				l2 := gen.GetTempsB().FalseL
 				l3 := gen.NewLabel()
@@ -59,7 +59,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				gen.SetConf()
 				//env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			} else {
-				if interfaces.CHAR == result.Type && result.IsTemp == false {
+				if interfaces.CHAR == result.Type && !result.IsTemp {
 					runes := []rune(result.Value)
 					var val string
 					for i := 0; i < len(runes); i++ {

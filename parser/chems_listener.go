@@ -44,6 +44,9 @@ type ChemsListener interface {
 	// EnterVectores is called when entering the vectores production.
 	EnterVectores(c *VectoresContext)
 
+	// EnterLoops is called when entering the loops production.
+	EnterLoops(c *LoopsContext)
+
 	// EnterIfs is called when entering the ifs production.
 	EnterIfs(c *IfsContext)
 
@@ -100,6 +103,9 @@ type ChemsListener interface {
 
 	// ExitVectores is called when exiting the vectores production.
 	ExitVectores(c *VectoresContext)
+
+	// ExitLoops is called when exiting the loops production.
+	ExitLoops(c *LoopsContext)
 
 	// ExitIfs is called when exiting the ifs production.
 	ExitIfs(c *IfsContext)

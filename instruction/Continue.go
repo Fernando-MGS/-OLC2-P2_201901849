@@ -29,5 +29,5 @@ func (c Continue) Ejecutar(env interface{}, gen *generator.Generator) interface{
 	}
 	//code:="goto "+env.(environment.Environment)
 	ret.Type = interfaces.NULL
-	return c
+	return ret
 }

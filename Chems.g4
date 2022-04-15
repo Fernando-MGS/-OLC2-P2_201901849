@@ -38,6 +38,7 @@ instruccion returns [interfaces.Instruction instr]
   |breaks {$instr=$breaks.i}
   |continues  {$instr=$continues.i}
   |ifs  {$instr=$ifs.p}
+  |loops  {$instr=$loops.i}
 ;
 
 asignacion_var  returns [interfaces.Instruction i]:
@@ -116,6 +117,12 @@ vectores returns [*arrayList.List l]:
   }
 ;
 
+loops returns [interfaces.Instruction i]:
+  LOOP  LLAVEIZQ instrucciones LLAVEDER {$i=instruction.NewLoop($instrucciones.l)
+    fmt.Println("TOY EN EL ANALISIS")
+  }
+;
+
 ifs returns[interfaces.Instruction p]:
   P_IF  expression LLAVEIZQ  instrucciones LLAVEDER elses {$p=instruction.NewIf($expression.p,$instrucciones.l,$elses.e,$P_IF.GetLine(),$P_IF.GetColumn(),0)}
 ;
@@ -155,8 +162,10 @@ expr_arit returns[interfaces.Expresion p]
     | opIz = expr_arit op=('||'|'&&') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$op.GetLine(),$op.GetColumn())} 
     | primitivo {$p = $primitivo.p} 
     | PARIZQ expression PARDER {$p = $expression.p}
-    
+    | loops {$p=expresion.NewDevLoop($loops.i)}
 ;
+
+
 
 primitivo returns[interfaces.Expresion p]
     :NUMBER {

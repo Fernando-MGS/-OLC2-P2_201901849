@@ -58,7 +58,7 @@ func (p Imprimir) Ejecutar(env interface{}, gen *generator.Generator) interface{
 		code += "STACK[(int)" + t1 + "] =" + result.Value + ";\n"
 		code += "proc_printString();\n"
 		code += "P=P-1;\n"
-		//gen.Stack--
+		gen.Stack--
 		code += "goto " + l2 + ";\n"
 		code += l1 + ":\n"
 		code += l2 + ":\n"
@@ -68,7 +68,7 @@ func (p Imprimir) Ejecutar(env interface{}, gen *generator.Generator) interface{
 	//gen.AddPrintf("c", fmt.Sprintf("%v", result.Value))
 	//salto de línea
 	gen.AddPrintf("c", "10", ambito)
-	var retorno interfaces.Symbol
-	retorno.Tipo.Tipo = interfaces.NULL
+	var retorno interfaces.Value
+	retorno.Type = interfaces.NULL
 	return retorno
 }
