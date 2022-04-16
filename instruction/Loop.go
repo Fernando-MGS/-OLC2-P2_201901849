@@ -21,7 +21,7 @@ func NewLoop(body *arrayList.List) Loop {
 
 func (l Loop) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	var retorno interfaces.Value
-	fmt.Println("ENTRO A LOOP")
+	//fmt.Println("ENTRO A LOOP")
 	retorno.Type = interfaces.NULL
 	entrada := gen.NewLabel()
 	salida := gen.NewLabel()
@@ -31,17 +31,17 @@ func (l Loop) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, salida, true)
 	for _, s := range l.Cuerpo.ToArray() {
 		res := s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
-		fmt.Println("//////LOOP")
-		fmt.Println("SE ENCONTRO UN RETORNO")
+		/*fmt.Println("//////LOOP")
+		fmt.Println("SE ENCONTRO UN RETORNO")*/
 
 		ret := res.(interfaces.Value)
 		fmt.Println(ret)
 		if ret.Type != interfaces.NULL {
-			fmt.Println("SE ENCONTRO UN RETORNO2")
-			fmt.Println(res)
+			/*fmt.Println("SE ENCONTRO UN RETORNO2")
+			fmt.Println(res)*/
 			retorno = ret
 		}
-		fmt.Println("//////ENDLOOP")
+		//fmt.Println("//////ENDLOOP")
 	}
 	gen.AddCodes("goto "+entrada+";", ambito)
 	gen.AddCodes(salida+":", ambito)

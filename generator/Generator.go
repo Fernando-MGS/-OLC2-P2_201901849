@@ -82,6 +82,11 @@ func (g Generator) GetConf() int {
 	return g.temp_Bools.Conf
 }
 
+func (g Generator) SetTrueFalse(v, f string) {
+	g.temp_Bools.TrueL = v
+	g.temp_Bools.FalseL = f
+}
+
 func (g Generator) SetConf() {
 	if g.temp_Bools.Conf == 1 {
 		g.temp_Bools.Conf = 0

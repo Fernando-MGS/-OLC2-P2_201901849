@@ -26,7 +26,7 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 	result := env.(environment.Environment).GetVariable(p.Id, p.Linea, p.Col)
 	ambito := env.(environment.Environment).DevAmbito()
 	if result.Tipo.Tipo != interfaces.NULL {
-		gen.AddCodes("//INICIO DE LLAMADA", ambito)
+		gen.AddCodes("//INICIO DE LLAMADA"+p.Id+"", ambito)
 		newTemp := gen.NewTemp()
 		if interfaces.INTEGER == result.Tipo.Tipo || interfaces.FLOAT == result.Tipo.Tipo {
 			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"

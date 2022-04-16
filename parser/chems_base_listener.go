@@ -105,6 +105,12 @@ func (s *BaseChemsListener) EnterIfs(ctx *IfsContext) {}
 // ExitIfs is called when production ifs is exited.
 func (s *BaseChemsListener) ExitIfs(ctx *IfsContext) {}
 
+// EnterLlaves_if is called when production llaves_if is entered.
+func (s *BaseChemsListener) EnterLlaves_if(ctx *Llaves_ifContext) {}
+
+// ExitLlaves_if is called when production llaves_if is exited.
+func (s *BaseChemsListener) ExitLlaves_if(ctx *Llaves_ifContext) {}
+
 // EnterElses is called when production elses is entered.
 func (s *BaseChemsListener) EnterElses(ctx *ElsesContext) {}
 
@@ -123,6 +129,18 @@ func (s *BaseChemsListener) EnterContinues(ctx *ContinuesContext) {}
 // ExitContinues is called when production continues is exited.
 func (s *BaseChemsListener) ExitContinues(ctx *ContinuesContext) {}
 
+// EnterImpr is called when production impr is entered.
+func (s *BaseChemsListener) EnterImpr(ctx *ImprContext) {}
+
+// ExitImpr is called when production impr is exited.
+func (s *BaseChemsListener) ExitImpr(ctx *ImprContext) {}
+
+// EnterFormato is called when production formato is entered.
+func (s *BaseChemsListener) EnterFormato(ctx *FormatoContext) {}
+
+// ExitFormato is called when production formato is exited.
+func (s *BaseChemsListener) ExitFormato(ctx *FormatoContext) {}
+
 // EnterExpression is called when production expression is entered.
 func (s *BaseChemsListener) EnterExpression(ctx *ExpressionContext) {}
 
@@ -140,3 +158,9 @@ func (s *BaseChemsListener) EnterPrimitivo(ctx *PrimitivoContext) {}
 
 // ExitPrimitivo is called when production primitivo is exited.
 func (s *BaseChemsListener) ExitPrimitivo(ctx *PrimitivoContext) {}
+
+// EnterListValues is called when production listValues is entered.
+func (s *BaseChemsListener) EnterListValues(ctx *ListValuesContext) {}
+
+// ExitListValues is called when production listValues is exited.
+func (s *BaseChemsListener) ExitListValues(ctx *ListValuesContext) {}

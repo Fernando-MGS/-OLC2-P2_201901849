@@ -39,6 +39,7 @@ instruccion returns [interfaces.Instruction instr]
   |continues  {$instr=$continues.i}
   |ifs  {$instr=$ifs.p}
   |loops  {$instr=$loops.i}
+  |impr PTCOMA{$instr=$impr.p}
 ;
 
 asignacion_var  returns [interfaces.Instruction i]:
@@ -90,6 +91,8 @@ dimensiones  returns [interfaces.Dimensions d]:
                                                 } 
 ;
 
+
+
 tipo_vector returns [interfaces.TipoSimbolo t]:
   VECT MENOR vectores MAYOR {$t=interfaces.TipoSimbolo{interfaces.VECTOR,$vectores.l}}
 ;
@@ -124,12 +127,29 @@ loops returns [interfaces.Instruction i]:
 ;
 
 ifs returns[interfaces.Instruction p]:
-  P_IF  expression LLAVEIZQ  instrucciones LLAVEDER elses {$p=instruction.NewIf($expression.p,$instrucciones.l,$elses.e,$P_IF.GetLine(),$P_IF.GetColumn(),0)}
+  P_IF  expression LLAVEIZQ  llaves_if LLAVEDER elses {$p=instruction.NewIf($expression.p,$llaves_if.l,$elses.e,$P_IF.GetLine(),$P_IF.GetColumn(),0)}
+;
+
+llaves_if returns[*arrayList.List l]:
+  expression              {$l=arrayList.New()
+                            i:=interfaces.OpcionIf{0,$expression.p}
+                            $l.Add(i)}
+  |instruccion            {$l=arrayList.New()
+                            i:=interfaces.OpcionIf{1,$instruccion.instr}
+                            $l.Add(i)}
+  |k=llaves_if expression {
+                            i:=interfaces.OpcionIf{0,$expression.p}
+                            $k.l.Add(i)
+                            $l=$k.l}
+  |k=llaves_if instruccion{
+                            i:=interfaces.OpcionIf{1,$instruccion.instr}
+                            $k.l.Add(i)
+                            $l=$k.l}
 ;
 
 elses returns[interfaces.Instruction e]:
-  P_ELSE LLAVEIZQ  instrucciones LLAVEDER {$e=instruction.NewIf(expresion.NewPrimitivo(1,interfaces.BOOLEAN,0,0),$instrucciones.l,instruction.NewElseNull("null"),0,0,3)}
-  |P_ELSE P_IF  expression LLAVEIZQ  instrucciones LLAVEDER elses {$e=instruction.NewIf($expression.p,$instrucciones.l,$elses.e,$P_IF.GetLine(),$P_IF.GetColumn(),2)}
+  P_ELSE LLAVEIZQ  llaves_if LLAVEDER {$e=instruction.NewIf(expresion.NewPrimitivo(1,interfaces.BOOLEAN,0,0),$llaves_if.l,instruction.NewElseNull("null"),0,0,3)}
+  |P_ELSE P_IF  expression LLAVEIZQ  llaves_if LLAVEDER elses {$e=instruction.NewIf($expression.p,$llaves_if.l,$elses.e,$P_IF.GetLine(),$P_IF.GetColumn(),2)}
   |             {$e= instruction.NewElseNull("null")}
 ;
 
@@ -142,7 +162,16 @@ continues returns [interfaces.Instruction i]:
   CONTINUE PTCOMA {$i=instruction.NewContinue("continue",$CONTINUE.GetLine(),$CONTINUE.GetColumn())}
 ;
 
+impr returns[interfaces.Instruction p]:
+  PRINTLN PARIZQ formato listValues PARDER   {$p=instruction.NewPrint($listValues.l,$formato.s,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
+;
 
+formato returns [string s]:
+  STRING COMA {str:= $STRING.text[1:len($STRING.text)-1]
+      $s=str
+   }
+  |         {$s=""}  
+;
 
 //EXPRESIONES
 expression returns[interfaces.Expresion p]
@@ -163,6 +192,7 @@ expr_arit returns[interfaces.Expresion p]
     | primitivo {$p = $primitivo.p} 
     | PARIZQ expression PARDER {$p = $expression.p}
     | loops {$p=expresion.NewDevLoop($loops.i)}
+    | ifs   {$p=expresion.NewDevLoop($ifs.p)}
 ;
 
 
@@ -208,4 +238,15 @@ primitivo returns[interfaces.Expresion p]
       col:=$ctx.id.GetColumn()
       $p=expresion.NewCallVariable($id.text,linea,col)
     }
+;
+
+listValues returns[*arrayList.List l]
+    : list=listValues ',' expression { 
+                                        $list.l.Add($expression.p)
+                                        $l = $list.l
+                                    }
+    | expression { 
+                    $l = arrayList.New()
+                    $l.Add($expression.p)
+                }
 ;

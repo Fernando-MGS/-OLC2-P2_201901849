@@ -5,6 +5,8 @@ import (
 	"OLC2/generator"
 	"OLC2/interfaces"
 	"fmt"
+
+	//"fmt"
 	"strconv"
 
 	arrayList "github.com/colegno/arraylist"
@@ -27,23 +29,35 @@ func NewIf(condition interfaces.Expresion, bloque *arrayList.List, Else interfac
 func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	var ret interfaces.Value
 	ret.Type = interfaces.NULL
-
+	if gen.GetConf() == 1 {
+		gen.SetConf()
+	}
 	condicion := p.Condicion.Ejecutar(env, gen)
 	ambito := env.(environment.Environment).DevAmbito()
-	gen.AddCodes("//INICIO DE IF", ambito)
+
 	if condicion.Type == interfaces.BOOLEAN {
 		salida := ""
+
 		l2 := gen.GetTempsB().FalseL
 		if p.Tipo == 0 {
 			salida = gen.NewLabel()
 			gen.SetSalida(salida)
+			gen.AddCodes("//INICIO DE IF PRIMARIO", ambito)
+			fmt.Println("if primario")
 			fmt.Println("la salida se set" + gen.GetSalida() + "-" + salida)
 		} else {
+			fmt.Println("else if o else")
+			if p.Tipo == 2 {
+				gen.AddCodes("//INICIO DE IF ELSE", ambito)
+			} else {
+				gen.AddCodes("//INICIO DE ELSE", ambito)
+			}
 			salida = gen.GetSalida()
 		}
 		l1 := gen.GetTempsB().TrueL
-
+		fmt.Println("El conf es " + strconv.Itoa(gen.GetConf()) + l1)
 		gen.SetConf()
+		fmt.Println("El conf luego es " + strconv.Itoa(gen.GetConf()) + l1)
 		value := l1 + ":\n" // si es verdadera irá de nuevo a entrada para repetir el proceso
 		gen.AddCodes(value, ambito)
 		in := env.(environment.Environment).Control.Entrada
@@ -51,20 +65,35 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		loop := env.(environment.Environment).Control.Ciclo
 		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, in, out, loop)
 		for _, s := range p.Cuerpo.ToArray() {
-			res := s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
+			i := s.(interfaces.OpcionIf)
+			//fmt.Println(i)
+			var res interface{}
+			if i.Tipo == 0 {
+				res = s.(interfaces.OpcionIf).Ejecucion.(interfaces.Expresion).Ejecutar(tmpEnv, gen)
+			} else {
+				res = s.(interfaces.OpcionIf).Ejecucion.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
+			}
 			if res.(interfaces.Value).Type != interfaces.NULL {
+				fmt.Println("RES IF")
+				fmt.Println(res)
 				ret = res.(interfaces.Value)
 			}
 		}
 		value = "goto " + salida + ";\n//FIN DE IF\n"
 		value += l2 + ":"
 		gen.AddCodes(value, ambito)
-		p.Else.Ejecutar(env, gen)
+		res := p.Else.Ejecutar(env, gen)
+
+		if res.(interfaces.Value).Type != interfaces.NULL {
+			fmt.Println("RES ELSE")
+			fmt.Println(res)
+			ret = res.(interfaces.Value)
+		}
 	} else {
 		env.(environment.Environment).NewError("SE ESPERABA UNA EXPRESION BOOLEANA", p.line, p.col)
 	}
 	if p.Tipo == 0 {
-		fmt.Println("LA salida es " + gen.GetSalida())
+		//fmt.Println("LA salida es " + gen.GetSalida())
 		gen.AddCodes("//SALIDA DEL IF", ambito)
 		gen.AddCodes(gen.GetSalida()+":", ambito)
 	}

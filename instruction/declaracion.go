@@ -38,10 +38,10 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 		result.Type = interfaces.NULL
 		return result.Value
 	}
-	fmt.Println("TIPO 1")
+	/*fmt.Println("TIPO 1")
 	fmt.Println(result.Type)
 	fmt.Println("tipo2")
-	fmt.Println(p.Tipo.Tipo)
+	fmt.Println(p.Tipo.Tipo)*/
 	if conf {
 		if p.Tipo.Tipo == interfaces.ARRAY {
 			fmt.Println(p.Tipo.Tipo)
@@ -51,7 +51,7 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			fmt.Println(p.Tipo.Tipo)
 			fmt.Println(p.Tipo.Tipo2.ToArray()...)
 		} else if p.Tipo.Tipo == interfaces.STR || p.Tipo.Tipo == interfaces.STRING {
-			code := "//--------------INICIO DE DECLARACION--------\n"
+			code := "//--------------INICIO DE DECLARACION--------" + p.Id + "\n"
 			tam := env.(environment.Environment).Control.Stack
 			guia := ""
 			incremento := ""
@@ -72,11 +72,11 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			code += "STACK[" + guia + " ]=" + result.Value + ";\n"
 			code += incremento + "\n"
-			code += "//--------------FIN DE DECLARACION--------"
+			code += "//--------------FIN DE DECLARACION--------" + p.Id + ""
 			gen.AddCodes(code, ambito)
 		} else {
 
-			codigo := "//--------------INICIO DE DECLARACION--------\n"
+			codigo := "//--------------INICIO DE DECLARACION--------" + p.Id + "\n"
 			tam := env.(environment.Environment).Control.Stack
 			guia := ""
 			incremento := ""
@@ -109,7 +109,7 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				}
 				codigo += "STACK[" + guia + "]=" + fmt.Sprintf("%v", result.Value) + ";\n"
 				codigo += incremento + "\n"
-				codigo += "//------FIN DE DECLARACION--------"
+				codigo += "//------FIN DE DECLARACION--------" + p.Id
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 				if ambito {
 					gen.AddFunc(codigo)

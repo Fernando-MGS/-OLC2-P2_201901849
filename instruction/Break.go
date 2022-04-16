@@ -4,7 +4,8 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
-	"fmt"
+
+	//"fmt"
 	"strconv"
 )
 
@@ -28,10 +29,10 @@ func (b Break) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		if b.Tipo {
 			gen.AddCodes("//INICIO DEL BREAK", ambito)
 			res := b.Retorno.Ejecutar(env, gen)
-			fmt.Println("EL RETORNO ES-BREAK ")
+			//fmt.Println("EL RETORNO ES-BREAK ")
 			ret = res
-			fmt.Println(res)
-			fmt.Println("FIN-BREAK ")
+			/*fmt.Println(res)
+			fmt.Println("FIN-BREAK ")*/
 			code := "goto " + env.(environment.Environment).Control.Salida + ";"
 			gen.AddCodes(code, ambito)
 			gen.AddCodes("//FIN DEL BREAK", ambito)
@@ -44,6 +45,6 @@ func (b Break) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		env.(environment.Environment).NewError("NO SE PUEDE USAR UN CONTINUE FUERA DE UN CICLO", b.line, b.col)
 	}
 
-	fmt.Println("El retorno 2 es ")
+	//fmt.Println("El retorno 2 es ")
 	return ret
 }

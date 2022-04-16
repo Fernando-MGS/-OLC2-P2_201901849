@@ -240,6 +240,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		}
 	case "<":
 		{
+			gen.AddCodes("//--------<", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
@@ -282,6 +283,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 	case ">":
 		{
+			gen.AddCodes("//-------->", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
@@ -323,6 +325,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		}
 	case ">=":
 		{
+			gen.AddCodes("//-------->=", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
@@ -365,6 +368,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 	case "<=":
 		{
+			gen.AddCodes("//--------<=", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoDer.Type == retornoIzq.Type {
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
@@ -410,6 +414,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		}
 	case "!=":
 		{
+			gen.AddCodes("//--------!=", ambito)
 			resultado := ""
 			resultado2 := ""
 			gen.Conf2()
@@ -507,6 +512,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		}
 	case "==":
 		{
+			gen.AddCodes("//--------==", ambito)
 			resultado := ""
 			resultado2 := ""
 			gen.Conf2()
@@ -605,6 +611,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		}
 	case "||":
 		{
+			gen.AddCodes("//--------||", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type && retornoDer.Type == interfaces.BOOLEAN {
 				anterior := gen.GetTempsB()
@@ -623,17 +630,23 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 		}
 	case "&&":
 		{
+			gen.AddCodes("//--------&&", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			/*fmt.Println("&&")
 			fmt.Println(retornoDer)
 			fmt.Println(retornoIzq)*/
 			if retornoIzq.Type == retornoDer.Type && retornoDer.Type == interfaces.BOOLEAN {
 				anterior := gen.GetTempsB()
+				newTrue := gen.NewLabel()
 				value := "//INICIO DE &&\n" + anterior.TrueL + ":\n"
-				value += anterior.FalseL1 + anterior.TrueL1 + ";\n"
+				value += anterior.FalseL1 + newTrue + ";\n"
 				value += "goto " + anterior.FalseL + ";"
 				gen.AddCodes(value, ambito)
-				gen.RotarLabels()
+				fmt.Println(gen.GetTempsB())
+				//gen.RotarLabels()
+
+				gen.SetTrueFalse(newTrue, anterior.FalseL)
+				fmt.Println(gen.GetTempsB())
 				return interfaces.Value{Value: newTemp, IsTemp: false, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
 				//gen.AddTempBool(anterior.TrueL1, anterior.FalseL1)
 			} else {

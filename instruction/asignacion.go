@@ -4,7 +4,8 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
-	"fmt"
+
+	//"fmt"
 	"strconv"
 )
 
@@ -23,9 +24,9 @@ func NewAssignment(id string, val interfaces.Expresion, line, col int) Assignmen
 func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	result := p.Expresion.Ejecutar(env, gen)
 	ambito := env.(environment.Environment).DevAmbito()
-	fmt.Println("TIPO 1")
+	/*fmt.Println("TIPO 1")
 	fmt.Println(result.Value)
-	fmt.Println("tipo2")
+	fmt.Println("tipo2")*/
 	if result.Type == interfaces.NULL {
 		err := "LA EXPRESION NO ES VALIDA"
 		env.(environment.Environment).NewError(err, p.Line, p.Col)
@@ -45,7 +46,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			} else if result.Type == interfaces.STRUCT {
 
 			} else if result.Type == interfaces.BOOLEAN {
-				value := "//INICIO DE ASIGNACION\n"
+				value := "//INICIO DE ASIGNACION" + p.Id + "\n"
 				l1 := gen.GetTempsB().TrueL
 				l2 := gen.GetTempsB().FalseL
 				l3 := gen.NewLabel()
@@ -67,10 +68,10 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					}
 					result.Value = val
 				}
-				value := "//---------INICIANDO ASIGNACION-------\n"
+				value := "//---------INICIANDO ASIGNACION-------" + p.Id + "\n"
 				value += "STACK[" + strconv.Itoa(variable.Posicion) + "]"
 				value += "=" + result.Value + ";\n"
-				value += "//---------FIN DE ASIGNACION-------"
+				value += "//---------FIN DE ASIGNACION-------" + p.Id + ""
 				gen.AddCodes(value, ambito)
 			}
 		} else {

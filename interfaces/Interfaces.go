@@ -76,3 +76,8 @@ type Dimensions struct {
 	Tipo       TipoExpresion
 	Dimensions *arraylist.List
 }
+
+type OpcionIf struct {
+	Tipo      int
+	Ejecucion interface{}
+}

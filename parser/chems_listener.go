@@ -50,6 +50,9 @@ type ChemsListener interface {
 	// EnterIfs is called when entering the ifs production.
 	EnterIfs(c *IfsContext)
 
+	// EnterLlaves_if is called when entering the llaves_if production.
+	EnterLlaves_if(c *Llaves_ifContext)
+
 	// EnterElses is called when entering the elses production.
 	EnterElses(c *ElsesContext)
 
@@ -59,6 +62,12 @@ type ChemsListener interface {
 	// EnterContinues is called when entering the continues production.
 	EnterContinues(c *ContinuesContext)
 
+	// EnterImpr is called when entering the impr production.
+	EnterImpr(c *ImprContext)
+
+	// EnterFormato is called when entering the formato production.
+	EnterFormato(c *FormatoContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -67,6 +76,9 @@ type ChemsListener interface {
 
 	// EnterPrimitivo is called when entering the primitivo production.
 	EnterPrimitivo(c *PrimitivoContext)
+
+	// EnterListValues is called when entering the listValues production.
+	EnterListValues(c *ListValuesContext)
 
 	// ExitStart is called when exiting the start production.
 	ExitStart(c *StartContext)
@@ -110,6 +122,9 @@ type ChemsListener interface {
 	// ExitIfs is called when exiting the ifs production.
 	ExitIfs(c *IfsContext)
 
+	// ExitLlaves_if is called when exiting the llaves_if production.
+	ExitLlaves_if(c *Llaves_ifContext)
+
 	// ExitElses is called when exiting the elses production.
 	ExitElses(c *ElsesContext)
 
@@ -119,6 +134,12 @@ type ChemsListener interface {
 	// ExitContinues is called when exiting the continues production.
 	ExitContinues(c *ContinuesContext)
 
+	// ExitImpr is called when exiting the impr production.
+	ExitImpr(c *ImprContext)
+
+	// ExitFormato is called when exiting the formato production.
+	ExitFormato(c *FormatoContext)
+
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)
 
@@ -127,4 +148,7 @@ type ChemsListener interface {
 
 	// ExitPrimitivo is called when exiting the primitivo production.
 	ExitPrimitivo(c *PrimitivoContext)
+
+	// ExitListValues is called when exiting the listValues production.
+	ExitListValues(c *ListValuesContext)
 }

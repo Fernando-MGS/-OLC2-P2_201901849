@@ -6,6 +6,8 @@ import (
 	"OLC2/interfaces"
 	"OLC2/parser"
 	"fmt"
+	"log"
+	"os"
 
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
@@ -53,11 +55,11 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 
 	//Escribir salida
 
-	/*f, err := os.Create("salida.txt")
+	f, err := os.Create("salida.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()*/
+	defer f.Close()
 
 	salida += "#include <stdio.h>\n"
 	salida += "#include <math.h>\n"
@@ -120,12 +122,12 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	for _, s := range errores {
 		RepErr = append(RepErr, s.(interfaces.Errores))
 	}
-	/*_, err2 := f.WriteString(salida)
+	_, err2 := f.WriteString(salida)
 
 	if err2 != nil {
 		log.Fatal(err2)
 	}
-	*/
+
 }
 
 func ejecutar_antlr() {
@@ -179,7 +181,7 @@ func main() {
 		widget.NewToolbarAction(theme.MediaPlayIcon(), func() {
 			consola = editor.Text
 			ejecutar_antlr()
-			result.SetText(salida)
+			//result.SetText(salida)
 			list.Refresh()
 			list1.Refresh()
 			list2.Refresh()
