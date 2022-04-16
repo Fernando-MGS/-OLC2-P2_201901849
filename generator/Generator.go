@@ -11,7 +11,7 @@ type Generator struct {
 	label      int
 	Stack      int
 	Heap       int
-	salida     string
+	salida     *arrayList.List
 	code       *arrayList.List
 	func_code  *arrayList.List
 	tempList   *arrayList.List
@@ -36,7 +36,7 @@ type temporals struct {
 
 func NewGenerator() *Generator {
 	//fmt.Println("neuvo generator")
-	generator := Generator{salida: "", temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}}
+	generator := Generator{salida: arrayList.New(), temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}}
 	return &generator
 }
 
@@ -72,10 +72,18 @@ func (g Generator) AddTempBool(labelT, labelF string) {
 
 func (g *Generator) SetSalida(exit string) {
 	//gen := Generator{salida: exit}
-	g.salida = exit
+	g.salida.Add(exit)
 }
 func (g Generator) GetSalida() string {
-	return g.salida
+	index := g.salida.Len() - 1
+	r1 := fmt.Sprintf("%v", g.salida.GetValue(index))
+	fmt.Println(r1 + "salida")
+	fmt.Println()
+	return r1
+}
+func (g Generator) DelSalida() {
+	index := g.salida.Len() - 1
+	g.salida.RemoveAtIndex(index)
 }
 
 func (g Generator) GetConf() int {

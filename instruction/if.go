@@ -97,5 +97,11 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		gen.AddCodes("//SALIDA DEL IF", ambito)
 		gen.AddCodes(gen.GetSalida()+":", ambito)
 	}
+	if gen.GetConf() == 1 {
+		gen.SetConf()
+	}
+	if p.Tipo == 0 {
+		gen.DelSalida()
+	}
 	return ret
 }

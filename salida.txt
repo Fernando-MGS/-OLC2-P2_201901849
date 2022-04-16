@@ -4,8 +4,22 @@ float HEAP[82000];
 float STACK[82000];
 float P;
 float H;
-float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11;
+float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, t60, t61, t62, t63, t64, t65, t66, t67, t68, t69, t70, t71, t72, t73, t74, t75, t76, t77, t78, t79, t80, t81, t82, t83, t84, t85, t86, t87, t88, t89, t90, t91, t92, t93, t94, t95, t96, t97, t98, t99, t100, t101, t102, t103, t104, t105, t106, t107, t108, t109, t110, t111, t112, t113, t114, t115, t116, t117, t118, t119, t120, t121, t122, t123, t124, t125, t126, t127, t128, t129, t130, t131, t132, t133, t134, t135, t136, t137, t138, t139, t140, t141, t142, t143, t144, t145, t146, t147, t148, t149, t150, t151, t152, t153, t154, t155, t156, t157, t158, t159, t160, t161, t162, t163, t164, t165, t166, t167, t168, t169, t170, t171, t172, t173, t174, t175, t176, t177;
 
+void proc_printString(){
+t2=P+1;
+t3=STACK[(int)t2];
+L2:
+t4=HEAP[(int)t3];
+if(t4!=-1) goto L3;
+goto L4;
+L3:
+printf("%c",(int)t4);
+t3=t3 + 1;
+goto L2;
+L4:
+return;
+}
 void proc_divZero(){
 printf("%c",77);
 printf("%c",97);
@@ -19,251 +33,5336 @@ printf("%c",114);
 printf("%c",10);
 return;
 }
-void proc_printString(){
-t5=P+1;
-t6=STACK[(int)t5];
-L7:
-t7=HEAP[(int)t6];
-if(t7!=-1) goto L8;
-goto L9;
-L8:
-printf("%c",(int)t7);
-t6=t6 + 1;
-goto L7;
-L9:
-return;
-}
 
 
 void main(){
-//--------------INICIO DE DECLARACION--------x1
-STACK[(int)P]=15;
+//--------------INICIO DE DECLARACION--------a
+STACK[(int)P]=909;
 P=P+1;
-//------FIN DE DECLARACION--------x1
-//--------==
-//INICIO DE LLAMADAx1
-t2 =  STACK[0] ;
-if(2!=0) goto L0;
-proc_divZero();
-t1=0;
-goto L1;
-L0:
-t1=fmod(t2,2);
-L1:
-if (t1==0) goto L2;
-goto L3;
-
-//INICIO DE IF PRIMARIO
-L2:
-
+//------FIN DE DECLARACION--------a
 //INICIO DE PRINT
 //INICIO DE STRING
-t3=H;
-HEAP[(int)H]=62;
+t0=H;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=62;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=62;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=62;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=62;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=110;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=117;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=109;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=101;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=114;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=111;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=80;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=97;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=114;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=105;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=110;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=103;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=114;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=101;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=115;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=111;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=97;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=105;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=102;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=118;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=101;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=114;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=100;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=97;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=100;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=101;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=114;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=111;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=44;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
 H=H+1;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if (t3==-1) goto L5;
+if (t0==-1) goto L0;
 P=P+1;
-t4=P+1;
-STACK[(int)t4] =t3;
+t1=P+1;
+STACK[(int)t1] =t0;
+proc_printString();
+P=P-1;
+goto L1;
+L0:
+L1:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t5=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t5==-1) goto L5;
+P=P+1;
+t6=P+1;
+STACK[(int)t6] =t5;
 proc_printString();
 P=P-1;
 goto L6;
 L5:
 L6:
 
-//INICIO DE LLAMADAx1
-t8 =  STACK[0] ;
-printf("%d",(int)t8);
 printf("%c",10);
 //FIN DE PRINT
-goto L4;
-//FIN DE IF
-L3:
-//INICIO DE BOOLEANO
-goto L10;
-
-//FIN DE BOOLEANO
-//INICIO DE ELSE
-L10:
-
 //INICIO DE PRINT
 //INICIO DE STRING
-t9=H;
-HEAP[(int)H]=62;
+t7=H;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=62;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=62;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=62;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=62;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=110;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=117;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=109;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=101;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=114;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=111;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=80;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=97;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=114;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=105;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=110;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=103;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=114;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=101;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=115;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=111;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=97;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=105;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=102;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=102;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=97;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=108;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=115;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=111;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=44;
+HEAP[(int)H]=61;
 H=H+1;
-HEAP[(int)H]=32;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
 H=H+1;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if (t9==-1) goto L12;
+if (t7==-1) goto L7;
 P=P+1;
-t10=P+1;
-STACK[(int)t10] =t9;
+t8=P+1;
+STACK[(int)t8] =t7;
+proc_printString();
+P=P-1;
+goto L8;
+L7:
+L8:
+
+printf("%c",10);
+//FIN DE PRINT
+//-------->
+//INICIO DE LLAMADAa
+t10 =  STACK[0] ;
+if (t10>50) goto L9;
+goto L10;
+
+//INICIO DE IF PRIMARIO
+L9:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t11=H;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t11==-1) goto L12;
+P=P+1;
+t12=P+1;
+STACK[(int)t12] =t11;
 proc_printString();
 P=P-1;
 goto L13;
 L12:
 L13:
 
-//INICIO DE LLAMADAx1
-t11 =  STACK[0] ;
-printf("%d",(int)t11);
 printf("%c",10);
 //FIN DE PRINT
-goto L4;
+goto L11;
 //FIN DE IF
-L11:
+L10:
+//--------==
+//INICIO DE LLAMADAa
+t14 =  STACK[0] ;
+if (t14==56) goto L14;
+goto L15;
+
+//INICIO DE IF ELSE
+L14:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t15=H;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t15==-1) goto L16;
+P=P+1;
+t16=P+1;
+STACK[(int)t16] =t15;
+proc_printString();
+P=P-1;
+goto L17;
+L16:
+L17:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L11;
+//FIN DE IF
+L15:
+//INICIO DE BOOLEANO
+goto L18;
+
+//FIN DE BOOLEANO
+//INICIO DE ELSE
+L18:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t17=H;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t17==-1) goto L20;
+P=P+1;
+t18=P+1;
+STACK[(int)t18] =t17;
+proc_printString();
+P=P-1;
+goto L21;
+L20:
+L21:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L11;
+//FIN DE IF
+L19:
 //SALIDA DEL IF
-L4:
+L11:
+//INICIO DE PRINT
+//INICIO DE STRING
+t19=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t19==-1) goto L22;
+P=P+1;
+t20=P+1;
+STACK[(int)t20] =t19;
+proc_printString();
+P=P-1;
+goto L23;
+L22:
+L23:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t21=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t21==-1) goto L24;
+P=P+1;
+t22=P+1;
+STACK[(int)t22] =t21;
+proc_printString();
+P=P-1;
+goto L25;
+L24:
+L25:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t23=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=115;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=65;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=65;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t23==-1) goto L26;
+P=P+1;
+t24=P+1;
+STACK[(int)t24] =t23;
+proc_printString();
+P=P-1;
+goto L27;
+L26:
+L27:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t25=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t25==-1) goto L28;
+P=P+1;
+t26=P+1;
+STACK[(int)t26] =t25;
+proc_printString();
+P=P-1;
+goto L29;
+L28:
+L29:
+
+printf("%c",10);
+//FIN DE PRINT
+//--------------INICIO DE DECLARACION--------aux
+STACK[(int)P]=10;
+P=P+1;
+//------FIN DE DECLARACION--------aux
+//-------->
+//INICIO DE LLAMADAaux
+t28 =  STACK[1] ;
+if (t28>0) goto L30;
+goto L31;
+
+//INICIO DE IF PRIMARIO
+L30:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t29=H;
+HEAP[(int)H]=80;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=77;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t29==-1) goto L33;
+P=P+1;
+t30=P+1;
+STACK[(int)t30] =t29;
+proc_printString();
+P=P-1;
+goto L34;
+L33:
+L34:
+
+printf("%c",10);
+//FIN DE PRINT
+//--------&&
+//INICIO DE BOOLEANO
+goto L35;
+
+//FIN DE BOOLEANO
+//--------==
+//INICIO DE LLAMADAaux
+t33 =  STACK[1] ;
+//INICIO DE &&
+L35:
+if (t33==1) goto L38;
+goto L36;
+//INICIO DE IF PRIMARIO
+L38:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t34=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t34==-1) goto L40;
+P=P+1;
+t35=P+1;
+STACK[(int)t35] =t34;
+proc_printString();
+P=P-1;
+goto L41;
+L40:
+L41:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L39;
+//FIN DE IF
+L36:
+//-------->
+//INICIO DE LLAMADAaux
+t37 =  STACK[1] ;
+if (t37>10) goto L42;
+goto L43;
+
+//INICIO DE IF ELSE
+L42:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t38=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t38==-1) goto L44;
+P=P+1;
+t39=P+1;
+STACK[(int)t39] =t38;
+proc_printString();
+P=P-1;
+goto L45;
+L44:
+L45:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L39;
+//FIN DE IF
+L43:
+//INICIO DE BOOLEANO
+goto L46;
+
+//FIN DE BOOLEANO
+//INICIO DE ELSE
+L46:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t40=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t40==-1) goto L48;
+P=P+1;
+t41=P+1;
+STACK[(int)t41] =t40;
+proc_printString();
+P=P-1;
+goto L49;
+L48:
+L49:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L39;
+//FIN DE IF
+L47:
+//SALIDA DEL IF
+L39:
+goto L32;
+//FIN DE IF
+L31:
+//--------<=
+//INICIO DE LLAMADAaux
+t43 =  STACK[1] ;
+if (t43<=3) goto L50;
+goto L51;
+
+//INICIO DE IF ELSE
+L50:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t44=H;
+HEAP[(int)H]=80;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=77;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t44==-1) goto L52;
+P=P+1;
+t45=P+1;
+STACK[(int)t45] =t44;
+proc_printString();
+P=P-1;
+goto L53;
+L52:
+L53:
+
+printf("%c",10);
+//FIN DE PRINT
+//--------&&
+//INICIO DE BOOLEANO
+goto L54;
+
+//FIN DE BOOLEANO
+//--------==
+//INICIO DE LLAMADAaux
+t48 =  STACK[1] ;
+//INICIO DE &&
+L54:
+if (t48==1) goto L57;
+goto L55;
+//INICIO DE IF PRIMARIO
+L57:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t49=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t49==-1) goto L59;
+P=P+1;
+t50=P+1;
+STACK[(int)t50] =t49;
+proc_printString();
+P=P-1;
+goto L60;
+L59:
+L60:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L58;
+//FIN DE IF
+L55:
+//-------->
+//INICIO DE LLAMADAaux
+t52 =  STACK[1] ;
+if (t52>10) goto L61;
+goto L62;
+
+//INICIO DE IF ELSE
+L61:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t53=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t53==-1) goto L63;
+P=P+1;
+t54=P+1;
+STACK[(int)t54] =t53;
+proc_printString();
+P=P-1;
+goto L64;
+L63:
+L64:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L58;
+//FIN DE IF
+L62:
+//INICIO DE BOOLEANO
+goto L65;
+
+//FIN DE BOOLEANO
+//INICIO DE ELSE
+L65:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t55=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t55==-1) goto L67;
+P=P+1;
+t56=P+1;
+STACK[(int)t56] =t55;
+proc_printString();
+P=P-1;
+goto L68;
+L67:
+L68:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L58;
+//FIN DE IF
+L66:
+//SALIDA DEL IF
+L58:
+goto L32;
+//FIN DE IF
+L51:
+//--------==
+//INICIO DE LLAMADAaux
+t58 =  STACK[1] ;
+//INICIO DE LLAMADAa
+t59 =  STACK[0] ;
+if (t58==t59) goto L69;
+goto L70;
+
+//INICIO DE IF ELSE
+L69:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t60=H;
+HEAP[(int)H]=80;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=77;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t60==-1) goto L71;
+P=P+1;
+t61=P+1;
+STACK[(int)t61] =t60;
+proc_printString();
+P=P-1;
+goto L72;
+L71:
+L72:
+
+printf("%c",10);
+//FIN DE PRINT
+//--------&&
+//INICIO DE BOOLEANO
+goto L73;
+
+//FIN DE BOOLEANO
+//--------==
+//INICIO DE LLAMADAaux
+t64 =  STACK[1] ;
+//INICIO DE &&
+L73:
+if (t64==1) goto L76;
+goto L74;
+//INICIO DE IF PRIMARIO
+L76:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t65=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t65==-1) goto L78;
+P=P+1;
+t66=P+1;
+STACK[(int)t66] =t65;
+proc_printString();
+P=P-1;
+goto L79;
+L78:
+L79:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L77;
+//FIN DE IF
+L74:
+//-------->
+//INICIO DE LLAMADAaux
+t68 =  STACK[1] ;
+if (t68>10) goto L80;
+goto L81;
+
+//INICIO DE IF ELSE
+L80:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t69=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t69==-1) goto L82;
+P=P+1;
+t70=P+1;
+STACK[(int)t70] =t69;
+proc_printString();
+P=P-1;
+goto L83;
+L82:
+L83:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L77;
+//FIN DE IF
+L81:
+//INICIO DE BOOLEANO
+goto L84;
+
+//FIN DE BOOLEANO
+//INICIO DE ELSE
+L84:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t71=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=71;
+H=H+1;
+HEAP[(int)H]=85;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=68;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=79;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t71==-1) goto L86;
+P=P+1;
+t72=P+1;
+STACK[(int)t72] =t71;
+proc_printString();
+P=P-1;
+goto L87;
+L86:
+L87:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L77;
+//FIN DE IF
+L85:
+//SALIDA DEL IF
+L77:
+goto L32;
+//FIN DE IF
+L70:
+//SALIDA DEL IF
+L32:
+//INICIO DE PRINT
+//INICIO DE STRING
+t73=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t73==-1) goto L88;
+P=P+1;
+t74=P+1;
+STACK[(int)t74] =t73;
+proc_printString();
+P=P-1;
+goto L89;
+L88:
+L89:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t75=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t75==-1) goto L90;
+P=P+1;
+t76=P+1;
+STACK[(int)t76] =t75;
+proc_printString();
+P=P-1;
+goto L91;
+L90:
+L91:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t77=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=87;
+H=H+1;
+HEAP[(int)H]=72;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=76;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t77==-1) goto L92;
+P=P+1;
+t78=P+1;
+STACK[(int)t78] =t77;
+proc_printString();
+P=P-1;
+goto L93;
+L92:
+L93:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t79=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t79==-1) goto L94;
+P=P+1;
+t80=P+1;
+STACK[(int)t80] =t79;
+proc_printString();
+P=P-1;
+goto L95;
+L94:
+L95:
+
+printf("%c",10);
+//FIN DE PRINT
+//--------------INICIO DE DECLARACION--------index
+STACK[(int)P]=0;
+P=P+1;
+//------FIN DE DECLARACION--------index
+//INICIO DE WHILE
+L96:
+//-------->=
+//INICIO DE LLAMADAindex
+t82 =  STACK[2] ;
+if (t82>=0) goto L97;
+goto L98;
+
+L97:
+
+//--------==
+//INICIO DE LLAMADAindex
+t84 =  STACK[2] ;
+if (t84==0) goto L99;
+goto L100;
+
+//INICIO DE IF PRIMARIO
+L99:
+
+//INICIO DE LLAMADAindex
+t86 =  STACK[2] ;
+t85 = t86 + 100;
+//---------INICIANDO ASIGNACION-------index
+STACK[2]=t85;
+//---------FIN DE ASIGNACION-------index
+goto L101;
+//FIN DE IF
+L100:
+//-------->
+//INICIO DE LLAMADAindex
+t88 =  STACK[2] ;
+if (t88>50) goto L102;
+goto L103;
+
+//INICIO DE IF ELSE
+L102:
+
+//INICIO DE LLAMADAindex
+t91 =  STACK[2] ;
+if(2!=0) goto L104;
+proc_divZero();
+t90=0;
+goto L105;
+L104:
+t90=t91/2;
+L105:
+t89 = t90 - 25;
+//---------INICIANDO ASIGNACION-------index
+STACK[2]=t89;
+//---------FIN DE ASIGNACION-------index
+goto L101;
+//FIN DE IF
+L103:
+//INICIO DE BOOLEANO
+goto L106;
+
+//FIN DE BOOLEANO
+//INICIO DE ELSE
+L106:
+
+//INICIO DE LLAMADAindex
+t94 =  STACK[2] ;
+if(2!=0) goto L108;
+proc_divZero();
+t93=0;
+goto L109;
+L108:
+t93=t94/2;
+L109:
+t92 = t93 - 1;
+//---------INICIANDO ASIGNACION-------index
+STACK[2]=t92;
+//---------FIN DE ASIGNACION-------index
+goto L101;
+//FIN DE IF
+L107:
+//SALIDA DEL IF
+L101:
+//INICIO DE PRINT
+//INICIO DE LLAMADAindex
+t95 =  STACK[2] ;
+printf("%d",(int)t95);
+//INICIO DE STRING
+t96=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t96==-1) goto L110;
+P=P+1;
+t97=P+1;
+STACK[(int)t97] =t96;
+proc_printString();
+P=P-1;
+goto L111;
+L110:
+L111:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L96;
+L98:
+//INICIO DE PRINT
+//INICIO DE STRING
+t98=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t98==-1) goto L112;
+P=P+1;
+t99=P+1;
+STACK[(int)t99] =t98;
+proc_printString();
+P=P-1;
+goto L113;
+L112:
+L113:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t100=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t100==-1) goto L114;
+P=P+1;
+t101=P+1;
+STACK[(int)t101] =t100;
+proc_printString();
+P=P-1;
+goto L115;
+L114:
+L115:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t102=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=87;
+H=H+1;
+HEAP[(int)H]=72;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=76;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=45;
+H=H+1;
+HEAP[(int)H]=50;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t102==-1) goto L116;
+P=P+1;
+t103=P+1;
+STACK[(int)t103] =t102;
+proc_printString();
+P=P-1;
+goto L117;
+L116:
+L117:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t104=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t104==-1) goto L118;
+P=P+1;
+t105=P+1;
+STACK[(int)t105] =t104;
+proc_printString();
+P=P-1;
+goto L119;
+L118:
+L119:
+
+printf("%c",10);
+//FIN DE PRINT
+t106 = 2 * -1;
+//---------INICIANDO ASIGNACION-------index
+STACK[2]=t106;
+//---------FIN DE ASIGNACION-------index
+//INICIO DE LLAMADAindex
+t108 =  STACK[2] ;
+t107 = t108 + 1;
+//---------INICIANDO ASIGNACION-------index
+STACK[2]=t107;
+//---------FIN DE ASIGNACION-------index
+//INICIO DE WHILE
+L120:
+//--------!=
+//INICIO DE LLAMADAindex
+t110 =  STACK[2] ;
+if (t110!=12) goto L121;
+goto L122;
+
+L121:
+
+//INICIO DE LLAMADAindex
+t112 =  STACK[2] ;
+t111 = t112 + 1;
+//---------INICIANDO ASIGNACION-------index
+STACK[2]=t111;
+//---------FIN DE ASIGNACION-------index
+//--------||
+//--------||
+//--------||
+//--------==
+//INICIO DE LLAMADAindex
+t117 =  STACK[2] ;
+if (t117==0) goto L123;
+goto L124;
+
+//--------==
+//INICIO DE LLAMADAindex
+t119 =  STACK[2] ;
+//INICIO DE ||
+L124:
+if (t119==1) goto L123;
+goto L126;
+//--------==
+//INICIO DE LLAMADAindex
+t121 =  STACK[2] ;
+//INICIO DE ||
+L126:
+if (t121==11) goto L123;
+goto L128;
+//--------==
+//INICIO DE LLAMADAindex
+t123 =  STACK[2] ;
+//INICIO DE ||
+L128:
+if (t123==12) goto L123;
+goto L130;
+//INICIO DE IF PRIMARIO
+L123:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t124=H;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t124==-1) goto L132;
+P=P+1;
+t125=P+1;
+STACK[(int)t125] =t124;
+proc_printString();
+P=P-1;
+goto L133;
+L132:
+L133:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L131;
+//FIN DE IF
+L130:
+//--------==
+//INICIO DE LLAMADAindex
+t127 =  STACK[2] ;
+if (t127==2) goto L134;
+goto L135;
+
+//INICIO DE IF ELSE
+L134:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t128=H;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t128==-1) goto L136;
+P=P+1;
+t129=P+1;
+STACK[(int)t129] =t128;
+proc_printString();
+P=P-1;
+goto L137;
+L136:
+L137:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L131;
+//FIN DE IF
+L135:
+//--------&&
+//-------->=
+//INICIO DE LLAMADAindex
+t132 =  STACK[2] ;
+if (t132>=3) goto L138;
+goto L139;
+
+//--------<=
+//INICIO DE LLAMADAindex
+t134 =  STACK[2] ;
+//INICIO DE &&
+L138:
+if (t134<=5) goto L141;
+goto L139;
+//INICIO DE IF ELSE
+L141:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t135=H;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t135==-1) goto L142;
+P=P+1;
+t136=P+1;
+STACK[(int)t136] =t135;
+proc_printString();
+P=P-1;
+goto L143;
+L142:
+L143:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L131;
+//FIN DE IF
+L139:
+//--------==
+//INICIO DE LLAMADAindex
+t138 =  STACK[2] ;
+if (t138==6) goto L144;
+goto L145;
+
+//INICIO DE IF ELSE
+L144:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t139=H;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t139==-1) goto L146;
+P=P+1;
+t140=P+1;
+STACK[(int)t140] =t139;
+proc_printString();
+P=P-1;
+goto L147;
+L146:
+L147:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L131;
+//FIN DE IF
+L145:
+//--------&&
+//-------->=
+//INICIO DE LLAMADAindex
+t143 =  STACK[2] ;
+if (t143>=7) goto L148;
+goto L149;
+
+//--------<=
+//INICIO DE LLAMADAindex
+t145 =  STACK[2] ;
+//INICIO DE &&
+L148:
+if (t145<=9) goto L151;
+goto L149;
+//INICIO DE IF ELSE
+L151:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t146=H;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t146==-1) goto L152;
+P=P+1;
+t147=P+1;
+STACK[(int)t147] =t146;
+proc_printString();
+P=P-1;
+goto L153;
+L152:
+L153:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L131;
+//FIN DE IF
+L149:
+//--------==
+//INICIO DE LLAMADAindex
+t149 =  STACK[2] ;
+if (t149==10) goto L154;
+goto L155;
+
+//INICIO DE IF ELSE
+L154:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t150=H;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=42;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t150==-1) goto L156;
+P=P+1;
+t151=P+1;
+STACK[(int)t151] =t150;
+proc_printString();
+P=P-1;
+goto L157;
+L156:
+L157:
+
+printf("%c",10);
+//FIN DE PRINT
+goto L131;
+//FIN DE IF
+L155:
+//SALIDA DEL IF
+L131:
+goto L120;
+L122:
+//INICIO DE PRINT
+//INICIO DE STRING
+t152=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t152==-1) goto L158;
+P=P+1;
+t153=P+1;
+STACK[(int)t153] =t152;
+proc_printString();
+P=P-1;
+goto L159;
+L158:
+L159:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t154=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t154==-1) goto L160;
+P=P+1;
+t155=P+1;
+STACK[(int)t155] =t154;
+proc_printString();
+P=P-1;
+goto L161;
+L160:
+L161:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t156=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=84;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=65;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=70;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=82;
+H=H+1;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=78;
+H=H+1;
+HEAP[(int)H]=67;
+H=H+1;
+HEAP[(int)H]=73;
+H=H+1;
+HEAP[(int)H]=65;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t156==-1) goto L162;
+P=P+1;
+t157=P+1;
+STACK[(int)t157] =t156;
+proc_printString();
+P=P-1;
+goto L163;
+L162:
+L163:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t158=H;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=61;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t158==-1) goto L164;
+P=P+1;
+t159=P+1;
+STACK[(int)t159] =t158;
+proc_printString();
+P=P-1;
+goto L165;
+L164:
+L165:
+
+printf("%c",10);
+//FIN DE PRINT
+t160 = 1 * -1;
+//---------INICIANDO ASIGNACION-------a
+STACK[0]=t160;
+//---------FIN DE ASIGNACION-------a
+//INICIO DE WHILE
+L166:
+//--------<
+//INICIO DE LLAMADAa
+t162 =  STACK[0] ;
+if (t162<5) goto L167;
+goto L168;
+
+L167:
+
+//INICIO DE LLAMADAa
+t164 =  STACK[0] ;
+t163 = t164 + 1;
+//---------INICIANDO ASIGNACION-------a
+STACK[0]=t163;
+//---------FIN DE ASIGNACION-------a
+//--------==
+//INICIO DE LLAMADAa
+t166 =  STACK[0] ;
+if (t166==3) goto L169;
+goto L170;
+
+//INICIO DE IF PRIMARIO
+L169:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t167=H;
+HEAP[(int)H]=97;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t167==-1) goto L172;
+P=P+1;
+t168=P+1;
+STACK[(int)t168] =t167;
+proc_printString();
+P=P-1;
+goto L173;
+L172:
+L173:
+
+printf("%c",10);
+//FIN DE PRINT
+//CONTINUE
+goto L166;
+//FIN DE CONTINUE
+
+goto L171;
+//FIN DE IF
+L170:
+//--------==
+//INICIO DE LLAMADAa
+t170 =  STACK[0] ;
+if (t170==4) goto L174;
+goto L175;
+
+//INICIO DE IF ELSE
+L174:
+
+//INICIO DE PRINT
+//INICIO DE STRING
+t171=H;
+HEAP[(int)H]=98;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t171==-1) goto L176;
+P=P+1;
+t172=P+1;
+STACK[(int)t172] =t171;
+proc_printString();
+P=P-1;
+goto L177;
+L176:
+L177:
+
+printf("%c",10);
+//FIN DE PRINT
+//BREAK
+goto L168;
+//FIN DE BREAK
+
+goto L171;
+//FIN DE IF
+L175:
+//SALIDA DEL IF
+L171:
+//INICIO DE PRINT
+//INICIO DE STRING
+t173=H;
+HEAP[(int)H]=69;
+H=H+1;
+HEAP[(int)H]=108;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=118;
+H=H+1;
+HEAP[(int)H]=97;
+H=H+1;
+HEAP[(int)H]=108;
+H=H+1;
+HEAP[(int)H]=111;
+H=H+1;
+HEAP[(int)H]=114;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=100;
+H=H+1;
+HEAP[(int)H]=101;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=97;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=101;
+H=H+1;
+HEAP[(int)H]=115;
+H=H+1;
+HEAP[(int)H]=58;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t173==-1) goto L178;
+P=P+1;
+t174=P+1;
+STACK[(int)t174] =t173;
+proc_printString();
+P=P-1;
+goto L179;
+L178:
+L179:
+
+//INICIO DE LLAMADAa
+t175 =  STACK[0] ;
+printf("%d",(int)t175);
+printf("%c",10);
+//FIN DE PRINT
+goto L166;
+L168:
+//INICIO DE PRINT
+//INICIO DE STRING
+t176=H;
+HEAP[(int)H]=83;
+H=H+1;
+HEAP[(int)H]=101;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=100;
+H=H+1;
+HEAP[(int)H]=101;
+H=H+1;
+HEAP[(int)H]=98;
+H=H+1;
+HEAP[(int)H]=105;
+H=H+1;
+HEAP[(int)H]=243;
+H=H+1;
+HEAP[(int)H]=32;
+H=H+1;
+HEAP[(int)H]=105;
+H=H+1;
+HEAP[(int)H]=109;
+H=H+1;
+HEAP[(int)H]=112;
+H=H+1;
+HEAP[(int)H]=114;
+H=H+1;
+HEAP[(int)H]=105;
+H=H+1;
+HEAP[(int)H]=109;
+H=H+1;
+HEAP[(int)H]=105;
+H=H+1;
+HEAP[(int)H]=114;
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t176==-1) goto L180;
+P=P+1;
+t177=P+1;
+STACK[(int)t177] =t176;
+proc_printString();
+P=P-1;
+goto L181;
+L180:
+L181:
+
+printf("%c",10);
+//FIN DE PRINT
 return;
 }
