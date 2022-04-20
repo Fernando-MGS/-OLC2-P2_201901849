@@ -433,8 +433,8 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				code, resultado1 := True_NotTrue("!=", retornoIzq, gen)
 				resultado2 = resultado1
 				gen.AddCodes(code+"\n//FIN DE DERTYPE", ambito)
-				fmt.Println("ruta 2")
-				fmt.Println(gen.GetTempsB())
+				/*fmt.Println("ruta 2")
+				fmt.Println(gen.GetTempsB())*/
 			}
 			//retornoIzq,retornoDer=DevTipos(p,env,gen)
 			if retornoDer.Type == retornoIzq.Type {
@@ -642,7 +642,7 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				value += anterior.FalseL1 + newTrue + ";\n"
 				value += "goto " + anterior.FalseL + ";"
 				gen.AddCodes(value, ambito)
-				fmt.Println(gen.GetTempsB())
+				//fmt.Println(gen.GetTempsB())
 				//gen.RotarLabels()
 
 				gen.SetTrueFalse(newTrue, anterior.FalseL)
@@ -733,7 +733,11 @@ func Comprobar_Div(g *generator.Generator, izq, der interfaces.Value, tmp, value
 	if tipo == 0 {
 		code += tmp + "=" + izq.Value + "/" + der.Value + ";\n"
 	} else {
-		code += tmp + "=fmod(" + izq.Value + "," + der.Value + ");\n"
+		code += "STACK[(int)P+1]=" + izq.Value + ";\n"
+		code += "STACK[(int)P+2]=" + der.Value + ";\n"
+		g.AddFuncExtra("MOD")
+		code += "proc_calcularMod();"
+		code += tmp + "=STACK[(int)P];\n"
 	}
 	code += l2 + ":"
 	return code

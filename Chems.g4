@@ -40,7 +40,20 @@ instruccion returns [interfaces.Instruction instr]
   |ifs  {$instr=$ifs.p}
   |loops  {$instr=$loops.i}
   |impr PTCOMA{$instr=$impr.p}
+  |matches    {$instr=$matches.m}
 ;
+instruccion_wc returns [interfaces.Instruction instr]:
+  CONSOLE '.' LOG PARIZQ expression PARDER {$instr = instruction.NewImprimir($expression.p)}
+  |declaracion_var  {$instr=$declaracion_var.i}
+  |asignacion_var   {$instr=$asignacion_var.i}
+  | P_WHILE  expression  LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewWhile($expression.p, $instrucciones.l,$LLAVEIZQ.GetLine(),$LLAVEDER.GetColumn())}
+  |breaks {$instr=$breaks.i}
+  |continues  {$instr=$continues.i}
+  |ifs  {$instr=$ifs.p}
+  |loops  {$instr=$loops.i}
+  |impr {$instr=$impr.p}
+;
+
 
 asignacion_var  returns [interfaces.Instruction i]:
   id=ID IGUAL expression {
@@ -172,6 +185,40 @@ formato returns [string s]:
    }
   |         {$s=""}  
 ;
+matches returns [interfaces.Instruction m]:
+  MATCH expression LLAVEIZQ  casos LLAVEDER {$m=instruction.NewMatch($expression.p,$casos.l,$MATCH.GetLine(),$MATCH.GetColumn())}
+;
+casos returns [*arrayList.List l]:
+  cs=casos cases      {$cs.l.Add($cases.c)
+                        $l=$cs.l}
+  |cs=casos defaults  {$cs.l.Add($defaults.c)
+                        $l=$cs.l}
+  |cases      {$l=arrayList.New()
+                $l.Add($cases.c)}
+  |defaults   {$l=arrayList.New()
+                $l.Add($defaults.c)}    
+;
+cases returns [interfaces.Cases c]:
+  conditions OPMATCH set_match {$c=interfaces.Cases{$conditions.l,$set_match.cs.Cuerpo,$set_match.cs.Retorno,0,false}}
+;
+conditions returns [*arrayList.List l]:
+ cond=conditions OR_COND expression {$cond.l.Add($expression.p)
+                                      $l=$cond.l}               
+  |expression                       {$l=arrayList.New() 
+                                      $l.Add($expression.p) }
+;
+defaults returns [interfaces.Cases c]:
+  DEF OPMATCH set_match {$c=interfaces.Cases{$set_match.cs.Condicion,$set_match.cs.Cuerpo,$set_match.cs.Retorno,1,false}}
+;
+set_match returns [interfaces.Cases cs]:
+  expression COMA      {arr:=arrayList.New()
+    arr.Add(instruction.NewElseNull("null"))
+    $cs=interfaces.Cases{ arrayList.New(),arr,$expression.p,0,false}}
+  |LLAVEIZQ instrucciones LLAVEDER  {$cs=interfaces.Cases{ arrayList.New(),$instrucciones.l,expresion.NewPrimitivo (1,interfaces.INTEGER,0,0),0,false}}
+  |instruccion_wc COMA {arr:=arrayList.New()
+    arr.Add($instruccion_wc.instr)
+    $cs=interfaces.Cases{ arrayList.New(),arr,expresion.NewPrimitivo (1,interfaces.INTEGER,0,0),0,false}}
+;
 
 //EXPRESIONES
 expression returns[interfaces.Expresion p]
@@ -193,6 +240,7 @@ expr_arit returns[interfaces.Expresion p]
     | PARIZQ expression PARDER {$p = $expression.p}
     | loops {$p=expresion.NewDevLoop($loops.i)}
     | ifs   {$p=expresion.NewDevLoop($ifs.p)}
+    |matches {$p=expresion.NewDevLoop($matches.m)}
 ;
 
 

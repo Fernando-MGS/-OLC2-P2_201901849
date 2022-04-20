@@ -33,7 +33,7 @@ func (p Print) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	if len(p.Formato) >= 1 {
 		index := 0
 		textos, formato, conf := Analisis_Print(p.Formato)
-
+		fmt.Println(formato)
 		if conf {
 			str := textos[index]
 			prim := expresion.Primitivo{str, interfaces.STRING, "0", "0"}
@@ -43,7 +43,7 @@ func (p Print) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		for _, s := range p.List_Expresion.ToArray() {
 			expr := s.(interfaces.Expresion)
 			console(expr, env, gen)
-			if index < len(formato) {
+			if index < len(textos) {
 				str := textos[index]
 				prim := expresion.Primitivo{str, interfaces.STRING, "0", "0"}
 				console(prim, env, gen)

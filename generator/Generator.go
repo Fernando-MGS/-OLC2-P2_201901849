@@ -12,6 +12,7 @@ type Generator struct {
 	Stack      int
 	Heap       int
 	salida     *arrayList.List
+	retornos   *arrayList.List
 	code       *arrayList.List
 	func_code  *arrayList.List
 	tempList   *arrayList.List
@@ -36,7 +37,7 @@ type temporals struct {
 
 func NewGenerator() *Generator {
 	//fmt.Println("neuvo generator")
-	generator := Generator{salida: arrayList.New(), temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}}
+	generator := Generator{salida: arrayList.New(), temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}, retornos: arrayList.New()}
 	return &generator
 }
 
@@ -77,13 +78,31 @@ func (g *Generator) SetSalida(exit string) {
 func (g Generator) GetSalida() string {
 	index := g.salida.Len() - 1
 	r1 := fmt.Sprintf("%v", g.salida.GetValue(index))
-	fmt.Println(r1 + "salida")
-	fmt.Println()
+	/*fmt.Println(r1 + "salida")
+	fmt.Println()*/
 	return r1
 }
 func (g Generator) DelSalida() {
 	index := g.salida.Len() - 1
 	g.salida.RemoveAtIndex(index)
+}
+
+func (g *Generator) SetRetorno(retorno string) {
+	//gen := Generator{salida: exit}
+	g.retornos.Add(retorno)
+}
+func (g Generator) GetRetorno() string {
+	index := g.retornos.Len() - 1
+	r1 := fmt.Sprintf("%v", g.retornos.GetValue(index))
+	/*fmt.Println(r1 + "salida")
+	fmt.Println()*/
+	return r1
+}
+func (g Generator) DelRetorno() {
+	index := g.retornos.Len() - 1
+	if index >= 0 {
+		g.retornos.RemoveAtIndex(index)
+	}
 }
 
 func (g Generator) GetConf() int {
@@ -206,6 +225,9 @@ func (g *Generator) AddFuncExtra(id string) {
 		} else if id == "COMPARELONG" {
 			g.func_extra[id] = true
 			g.extra_code.Add(compareLong_Str(g))
+		} else if id == "MOD" {
+			g.func_extra[id] = true
+			g.extra_code.Add(calcularMod(g))
 		}
 	}
 
@@ -338,6 +360,27 @@ func concat_STR(gen *Generator) string {
 	code += "H=H+1;\n"
 	gen.Heap++
 	code += "STACK[(int)P] = " + tmp1 + ";\n"
+	code += "return;\n}"
+	return code
+}
+
+func calcularMod(gen *Generator) string {
+	code := "void proc_calcularMod(){\n"
+	par1 := gen.NewTemp()
+	par2 := gen.NewTemp()
+	dir1 := gen.NewTemp()
+	dir2 := gen.NewTemp()
+	pre_res := gen.NewTemp()
+	res1 := gen.NewTemp()
+	res := gen.NewTemp()
+	code += dir1 + "=P+1;\n"
+	code += dir2 + "=P+2;\n"
+	code += par1 + "=STACK[(int)" + dir1 + "];\n"
+	code += par2 + "=STACK[(int)" + dir2 + "];\n"
+	code += pre_res + "=" + par1 + "/" + par2 + ";\n"
+	code += res1 + "=" + par2 + "*" + "(int)" + pre_res + ";\n"
+	code += res + "=" + par1 + "-" + res1 + ";\n"
+	code += "STACK[(int)P]=" + res + ";\n"
 	code += "return;\n}"
 	return code
 }

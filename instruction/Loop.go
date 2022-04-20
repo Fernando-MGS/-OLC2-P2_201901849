@@ -14,7 +14,7 @@ type Loop struct {
 }
 
 func NewLoop(body *arrayList.List) Loop {
-	fmt.Println("ENTRO A LOOP1")
+	//fmt.Println("ENTRO A LOOP1")
 	instr := Loop{body}
 	return instr
 }

@@ -17,6 +17,9 @@ type ChemsListener interface {
 	// EnterInstruccion is called when entering the instruccion production.
 	EnterInstruccion(c *InstruccionContext)
 
+	// EnterInstruccion_wc is called when entering the instruccion_wc production.
+	EnterInstruccion_wc(c *Instruccion_wcContext)
+
 	// EnterAsignacion_var is called when entering the asignacion_var production.
 	EnterAsignacion_var(c *Asignacion_varContext)
 
@@ -68,6 +71,24 @@ type ChemsListener interface {
 	// EnterFormato is called when entering the formato production.
 	EnterFormato(c *FormatoContext)
 
+	// EnterMatches is called when entering the matches production.
+	EnterMatches(c *MatchesContext)
+
+	// EnterCasos is called when entering the casos production.
+	EnterCasos(c *CasosContext)
+
+	// EnterCases is called when entering the cases production.
+	EnterCases(c *CasesContext)
+
+	// EnterConditions is called when entering the conditions production.
+	EnterConditions(c *ConditionsContext)
+
+	// EnterDefaults is called when entering the defaults production.
+	EnterDefaults(c *DefaultsContext)
+
+	// EnterSet_match is called when entering the set_match production.
+	EnterSet_match(c *Set_matchContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -88,6 +109,9 @@ type ChemsListener interface {
 
 	// ExitInstruccion is called when exiting the instruccion production.
 	ExitInstruccion(c *InstruccionContext)
+
+	// ExitInstruccion_wc is called when exiting the instruccion_wc production.
+	ExitInstruccion_wc(c *Instruccion_wcContext)
 
 	// ExitAsignacion_var is called when exiting the asignacion_var production.
 	ExitAsignacion_var(c *Asignacion_varContext)
@@ -139,6 +163,24 @@ type ChemsListener interface {
 
 	// ExitFormato is called when exiting the formato production.
 	ExitFormato(c *FormatoContext)
+
+	// ExitMatches is called when exiting the matches production.
+	ExitMatches(c *MatchesContext)
+
+	// ExitCasos is called when exiting the casos production.
+	ExitCasos(c *CasosContext)
+
+	// ExitCases is called when exiting the cases production.
+	ExitCases(c *CasesContext)
+
+	// ExitConditions is called when exiting the conditions production.
+	ExitConditions(c *ConditionsContext)
+
+	// ExitDefaults is called when exiting the defaults production.
+	ExitDefaults(c *DefaultsContext)
+
+	// ExitSet_match is called when exiting the set_match production.
+	ExitSet_match(c *Set_matchContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)

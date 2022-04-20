@@ -81,3 +81,11 @@ type OpcionIf struct {
 	Tipo      int
 	Ejecucion interface{}
 }
+
+type Cases struct {
+	Condicion *arraylist.List //las condiciones
+	Cuerpo    *arraylist.List //si lo que tiene es un conjunto de instrucciones
+	Retorno   Expresion       //si tiene un retorno en la expresion
+	Tipo      int             //si es case o def
+	Multiples bool            //si tiene mu
+}

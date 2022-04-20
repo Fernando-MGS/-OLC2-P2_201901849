@@ -3,7 +3,7 @@ package expresion
 import (
 	"OLC2/generator"
 	"OLC2/interfaces"
-	"fmt"
+	//"fmt"
 )
 
 type DevLoop struct {
@@ -19,10 +19,10 @@ func (l DevLoop) Ejecutar(env interface{}, gen *generator.Generator) interfaces.
 	var retorno interfaces.Value
 	retorno.Type = interfaces.NULL
 	res := l.loop.Ejecutar(env, gen).(interfaces.Value)
-	fmt.Println("//////")
+	/*fmt.Println("//////")
 	fmt.Println("EL RET EN EXPR")
 	fmt.Println(res)
-	fmt.Println("//////")
+	fmt.Println("//////")*/
 	if res.Type != interfaces.NULL {
 		retorno = res
 	}

@@ -39,6 +39,12 @@ func (s *BaseChemsListener) EnterInstruccion(ctx *InstruccionContext) {}
 // ExitInstruccion is called when production instruccion is exited.
 func (s *BaseChemsListener) ExitInstruccion(ctx *InstruccionContext) {}
 
+// EnterInstruccion_wc is called when production instruccion_wc is entered.
+func (s *BaseChemsListener) EnterInstruccion_wc(ctx *Instruccion_wcContext) {}
+
+// ExitInstruccion_wc is called when production instruccion_wc is exited.
+func (s *BaseChemsListener) ExitInstruccion_wc(ctx *Instruccion_wcContext) {}
+
 // EnterAsignacion_var is called when production asignacion_var is entered.
 func (s *BaseChemsListener) EnterAsignacion_var(ctx *Asignacion_varContext) {}
 
@@ -140,6 +146,42 @@ func (s *BaseChemsListener) EnterFormato(ctx *FormatoContext) {}
 
 // ExitFormato is called when production formato is exited.
 func (s *BaseChemsListener) ExitFormato(ctx *FormatoContext) {}
+
+// EnterMatches is called when production matches is entered.
+func (s *BaseChemsListener) EnterMatches(ctx *MatchesContext) {}
+
+// ExitMatches is called when production matches is exited.
+func (s *BaseChemsListener) ExitMatches(ctx *MatchesContext) {}
+
+// EnterCasos is called when production casos is entered.
+func (s *BaseChemsListener) EnterCasos(ctx *CasosContext) {}
+
+// ExitCasos is called when production casos is exited.
+func (s *BaseChemsListener) ExitCasos(ctx *CasosContext) {}
+
+// EnterCases is called when production cases is entered.
+func (s *BaseChemsListener) EnterCases(ctx *CasesContext) {}
+
+// ExitCases is called when production cases is exited.
+func (s *BaseChemsListener) ExitCases(ctx *CasesContext) {}
+
+// EnterConditions is called when production conditions is entered.
+func (s *BaseChemsListener) EnterConditions(ctx *ConditionsContext) {}
+
+// ExitConditions is called when production conditions is exited.
+func (s *BaseChemsListener) ExitConditions(ctx *ConditionsContext) {}
+
+// EnterDefaults is called when production defaults is entered.
+func (s *BaseChemsListener) EnterDefaults(ctx *DefaultsContext) {}
+
+// ExitDefaults is called when production defaults is exited.
+func (s *BaseChemsListener) ExitDefaults(ctx *DefaultsContext) {}
+
+// EnterSet_match is called when production set_match is entered.
+func (s *BaseChemsListener) EnterSet_match(ctx *Set_matchContext) {}
+
+// ExitSet_match is called when production set_match is exited.
+func (s *BaseChemsListener) ExitSet_match(ctx *Set_matchContext) {}
 
 // EnterExpression is called when production expression is entered.
 func (s *BaseChemsListener) EnterExpression(ctx *ExpressionContext) {}
