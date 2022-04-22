@@ -9,56 +9,29 @@ float t0, t1, t2, t3, t4, t5, t6, t7, t8;
 void proc_printString(){
 t6=P+1;
 t7=STACK[(int)t6];
-L7:
+L5:
 t8=HEAP[(int)t7];
-if(t8!=-1) goto L8;
-goto L9;
-L8:
+if(t8!=-1) goto L6;
+goto L7;
+L6:
 printf("%c",(int)t8);
 t7=t7 + 1;
-goto L7;
-L9:
+goto L5;
+L7:
 return;
 }
 
 
 void main(){
-//--------------INICIO DE DECLARACION--------x
-STACK[(int)P]=90;
-P=P+1;
-//------FIN DE DECLARACION--------x
-//--------!=
-//INICIO DE LLAMADAx
-t1 =  STACK[0] ;
-if (t1!=5) goto L0;
-goto L1;
-
-//INICIO DE IF PRIMARIO
+//INICIO DE FOR-----
+STACK[1]=1;
 L0:
-
-t2=10;
+t2=STACK[1];
+if(t2<4) goto L1;
 goto L2;
-//FIN DE IF
 L1:
-//INICIO DE BOOLEANO
-goto L3;
-
-//FIN DE BOOLEANO
-//INICIO DE ELSE
-L3:
-
-t2=15;
-goto L2;
-//FIN DE IF
-L4:
-//SALIDA DEL IF
-L2:
-//--------------INICIO DE DECLARACION--------y
-STACK[(int)P]=t2;
-P=P+1;
-//------FIN DE DECLARACION--------y
 //INICIO DE PRINT
-//INICIO DE LLAMADAy
+//INICIO DE LLAMADAn
 t3 =  STACK[1] ;
 printf("%d",(int)t3);
 //INICIO DE STRING
@@ -66,17 +39,23 @@ t4=H;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if (t4==-1) goto L5;
+if (t4==-1) goto L3;
 P=P+1;
 t5=P+1;
 STACK[(int)t5] =t4;
 proc_printString();
 P=P-1;
-goto L6;
-L5:
-L6:
+goto L4;
+L3:
+L4:
 
 printf("%c",10);
 //FIN DE PRINT
+t1=STACK[1];
+t0=t1+1;
+STACK[1]=t0;
+goto L0;
+L2:
+//FIN DE FOR-----
 return;
 }

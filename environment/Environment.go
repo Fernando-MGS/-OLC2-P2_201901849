@@ -27,8 +27,8 @@ type EnvControl struct {
 	Ciclo   bool
 }
 
-func NewEnvironment(father interface{}, id, in, out string, ciclo bool) Environment {
-	env := Environment{&EnvControl{Id: id, Stack: 1, Heap: 1, Entrada: in, Salida: out, Ciclo: ciclo}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New()}
+func NewEnvironment(father interface{}, id, in, out string, ciclo bool, stack int) Environment {
+	env := Environment{&EnvControl{Id: id, Stack: stack, Heap: 1, Entrada: in, Salida: out, Ciclo: ciclo}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New()}
 	return env
 }
 

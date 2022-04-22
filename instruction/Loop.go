@@ -28,7 +28,8 @@ func (l Loop) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	ambito := env.(environment.Environment).DevAmbito()
 	gen.AddCodes("//INICIO DE LOOP", ambito)
 	gen.AddCodes(entrada+":", ambito)
-	tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, salida, true)
+	stack := env.(environment.Environment).Control.Stack
+	tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, salida, true, stack)
 	for _, s := range l.Cuerpo.ToArray() {
 		res := s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
 		/*fmt.Println("//////LOOP")

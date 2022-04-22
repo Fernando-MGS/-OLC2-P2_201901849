@@ -89,6 +89,12 @@ type ChemsListener interface {
 	// EnterSet_match is called when entering the set_match production.
 	EnterSet_match(c *Set_matchContext)
 
+	// EnterRfor is called when entering the rfor production.
+	EnterRfor(c *RforContext)
+
+	// EnterIter_for is called when entering the iter_for production.
+	EnterIter_for(c *Iter_forContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -181,6 +187,12 @@ type ChemsListener interface {
 
 	// ExitSet_match is called when exiting the set_match production.
 	ExitSet_match(c *Set_matchContext)
+
+	// ExitRfor is called when exiting the rfor production.
+	ExitRfor(c *RforContext)
+
+	// ExitIter_for is called when exiting the iter_for production.
+	ExitIter_for(c *Iter_forContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)

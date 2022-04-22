@@ -183,6 +183,18 @@ func (s *BaseChemsListener) EnterSet_match(ctx *Set_matchContext) {}
 // ExitSet_match is called when production set_match is exited.
 func (s *BaseChemsListener) ExitSet_match(ctx *Set_matchContext) {}
 
+// EnterRfor is called when production rfor is entered.
+func (s *BaseChemsListener) EnterRfor(ctx *RforContext) {}
+
+// ExitRfor is called when production rfor is exited.
+func (s *BaseChemsListener) ExitRfor(ctx *RforContext) {}
+
+// EnterIter_for is called when production iter_for is entered.
+func (s *BaseChemsListener) EnterIter_for(ctx *Iter_forContext) {}
+
+// ExitIter_for is called when production iter_for is exited.
+func (s *BaseChemsListener) ExitIter_for(ctx *Iter_forContext) {}
+
 // EnterExpression is called when production expression is entered.
 func (s *BaseChemsListener) EnterExpression(ctx *ExpressionContext) {}
 

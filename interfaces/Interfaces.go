@@ -89,3 +89,9 @@ type Cases struct {
 	Tipo      int             //si es case o def
 	Multiples bool            //si tiene mu
 }
+
+type For_Range struct {
+	Range1 Expresion
+	Range2 Expresion
+	Tipo   int
+}

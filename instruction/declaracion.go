@@ -6,7 +6,6 @@ import (
 	"OLC2/interfaces"
 	"fmt"
 	"strconv"
-	"time"
 )
 
 type Declaracion struct {
@@ -28,7 +27,7 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	//fmt.Println("DECLARACION")
 	result := p.Expresion.Ejecutar(env, gen)
 	conf := false
-	ambito := false
+	ambito := env.(environment.Environment).DevAmbito()
 	//index := 0
 	if p.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
 		conf = true
@@ -36,7 +35,7 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 		conf = true
 	} else if result.Type == interfaces.NULL {
 		result.Type = interfaces.NULL
-		return result.Value
+		return result
 	}
 	/*fmt.Println("TIPO 1")
 	fmt.Println(result.Type)
@@ -55,17 +54,26 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			tam := env.(environment.Environment).Control.Stack
 			guia := ""
 			incremento := ""
-			if env.(environment.Environment).Control.Id == "main" || env.(environment.Environment).Control.Id == "GLOBAL" {
-				guia = "(int)P"
-				tam = gen.Stack
-				incremento = "P=P+1;"
-				gen.Stack++
+			if !env.(environment.Environment).Control.Ciclo {
+				if env.(environment.Environment).Control.Id == "main" || env.(environment.Environment).Control.Id == "GLOBAL" {
+					guia = "(int)P"
+					tam = gen.Stack
+					incremento = "P=P+1;"
+					gen.Stack++
+				} else {
+					tmp := gen.NewTemp()
+					tam = gen.Stack + tam
+					gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", true)
+					guia = "(int)" + tmp
+					//ambito = true
+					env.(environment.Environment).Control.Stack++
+				}
 			} else {
 				tmp := gen.NewTemp()
 				tam = gen.Stack + tam
 				gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", true)
 				guia = "(int)" + tmp
-				ambito = true
+				//ambito = true
 				env.(environment.Environment).Control.Stack++
 			}
 			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: tam, Mutable: p.Mutable}
@@ -80,20 +88,38 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			tam := env.(environment.Environment).Control.Stack
 			guia := ""
 			incremento := ""
-			if env.(environment.Environment).Control.Id == "main" || env.(environment.Environment).Control.Id == "GLOBAL" {
-				guia = "(int)P"
-				incremento = "P=P+1;"
+			if !env.(environment.Environment).Control.Ciclo {
+				if env.(environment.Environment).Control.Id == "main" || env.(environment.Environment).Control.Id == "GLOBAL" {
+					guia = "(int)P"
+					incremento = "P=P+1;"
 
-				tam = gen.Stack
-				gen.Stack++
+					tam = gen.Stack
+					gen.Stack++
+				} else {
+					tmp := gen.NewTemp()
+					tam = gen.Stack + tam
+					gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", ambito)
+					guia = "(int)" + tmp
+					//ambito = true
+					env.(environment.Environment).Control.Stack++
+				}
 			} else {
+				fmt.Println("=========")
+				fmt.Println(env.(environment.Environment).Control.Stack)
+				fmt.Println(gen.Stack)
 				tmp := gen.NewTemp()
-				tam = gen.Stack + tam
-				gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", true)
+				tam = gen.Stack + env.(environment.Environment).Control.Stack
+				fmt.Println(tam)
+				gen.AddExpression(tmp, strconv.Itoa(gen.Stack), strconv.Itoa(env.(environment.Environment).Control.Stack), "+", ambito)
 				guia = "(int)" + tmp
-				ambito = true
+				gen.Stack++
+				fmt.Println("////////" + p.Id)
+				fmt.Println(env.(environment.Environment).Control.Stack)
+				fmt.Println(gen.Stack)
+				//ambito = true
 				env.(environment.Environment).Control.Stack++
 			}
+
 			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: tam, Mutable: p.Mutable}
 			if result.Type == interfaces.INTEGER || result.Type == interfaces.FLOAT || result.Type == interfaces.CHAR || result.Type == interfaces.USIZE {
 
@@ -134,14 +160,36 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			}
 		}
 	} else {
-		t := time.Now()
-		fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-			t.Year(), t.Month(), t.Day(),
-			t.Hour(), t.Minute(), t.Second())
-		err := interfaces.Errores{Line: p.Line, Col: p.Col, Mess: "LOS TIPOS NO CONCUERDAN EN LA DECLARACION", Fecha: fecha}
-		env.(environment.Environment).Errores(err)
+		env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN", p.Line, p.Col)
 		//fmt.Println(err)
 	}
 	result.Type = interfaces.NULL
-	return result.Value
+	return result
 }
+
+/*func declaracionStack(env interface{},gen *generator.Generator){
+	if !env.(environment.Environment).Control.Ciclo {
+		if env.(environment.Environment).Control.Id == "main" || env.(environment.Environment).Control.Id == "GLOBAL" {
+			guia = "(int)P"
+			incremento = "P=P+1;"
+
+			tam = gen.Stack
+			gen.Stack++
+		} else {
+			tmp := gen.NewTemp()
+			tam = gen.Stack + tam
+			gen.AddExpression(tmp, "(int)P", strconv.Itoa(tam), "+", ambito)
+			guia = "(int)" + tmp
+			//ambito = true
+			env.(environment.Environment).Control.Stack++
+		}
+	} else {
+		tmp := gen.NewTemp()
+		tam = gen.Stack + tam
+		gen.AddExpression(tmp, strconv.Itoa(gen.Stack), strconv.Itoa(tam), "+", ambito)
+		guia = "(int)" + tmp
+		gen.Stack++
+		//ambito = true
+		env.(environment.Environment).Control.Stack++
+	}
+}*/

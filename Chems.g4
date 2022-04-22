@@ -41,6 +41,7 @@ instruccion returns [interfaces.Instruction instr]
   |loops  {$instr=$loops.i}
   |impr PTCOMA{$instr=$impr.p}
   |matches    {$instr=$matches.m}
+  |rfor {$instr=$rfor.p}
 ;
 instruccion_wc returns [interfaces.Instruction instr]:
   CONSOLE '.' LOG PARIZQ expression PARDER {$instr = instruction.NewImprimir($expression.p)}
@@ -52,6 +53,7 @@ instruccion_wc returns [interfaces.Instruction instr]:
   |ifs  {$instr=$ifs.p}
   |loops  {$instr=$loops.i}
   |impr {$instr=$impr.p}
+  |rfor {$instr=$rfor.p}
 ;
 
 
@@ -219,6 +221,15 @@ set_match returns [interfaces.Cases cs]:
     arr.Add($instruccion_wc.instr)
     $cs=interfaces.Cases{ arrayList.New(),arr,expresion.NewPrimitivo (1,interfaces.INTEGER,0,0),0,false}}
 ;
+
+rfor returns[interfaces.Instruction p]:
+  P_FOR id=ID P_IN iter_for LLAVEIZQ instrucciones LLAVEDER {$p=instruction.NewFor($instrucciones.l,$id.text,$iter_for.p,$P_FOR.GetLine(),$P_FOR.GetColumn())}
+;
+iter_for returns[interfaces.For_Range p]:
+  exp1=expression PUNTO PUNTO exp2=expression{$p=interfaces.For_Range{$exp1.p,$exp2.p,0}}
+  |exp1=expression {$p=interfaces.For_Range{$exp1.p,expresion.NewPrimitivo (1,interfaces.INTEGER,0,0),1}}
+;
+
 
 //EXPRESIONES
 expression returns[interfaces.Expresion p]

@@ -4,6 +4,7 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
+	"fmt"
 
 	//"fmt"
 
@@ -34,7 +35,7 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	if gen.GetConf() == 1 {
 		gen.SetConf()
 	}
-
+	fmt.Println("HOLA")
 	//ret.Value = retorno
 	condicion := p.Condicion.Ejecutar(env, gen)
 	ambito := env.(environment.Environment).DevAmbito()
@@ -70,19 +71,23 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		in := env.(environment.Environment).Control.Entrada
 		out := env.(environment.Environment).Control.Salida
 		loop := env.(environment.Environment).Control.Ciclo
-		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, in, out, loop)
+		stack := env.(environment.Environment).Control.Stack
+		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, in, out, loop, stack)
 		for _, s := range p.Cuerpo.ToArray() {
 			i := s.(interfaces.OpcionIf)
-			//fmt.Println(i)
+			fmt.Println(i)
 			var res interface{}
+			fmt.Println("aver si es aqui")
 			if i.Tipo == 0 {
 				res = s.(interfaces.OpcionIf).Ejecucion.(interfaces.Expresion).Ejecutar(tmpEnv, gen)
 			} else {
 				res = s.(interfaces.OpcionIf).Ejecucion.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
 			}
+			fmt.Println("simon")
+			fmt.Println(res)
 			if res.(interfaces.Value).Type != interfaces.NULL {
-				//fmt.Println("RES IF")
-				//fmt.Println(res)
+				fmt.Println("RES IF")
+				fmt.Println(res)
 				retorno := ""
 				if p.Tipo == 0 {
 					retorno = gen.NewTemp()
@@ -102,15 +107,15 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		res := p.Else.Ejecutar(env, gen)
 
 		if res.(interfaces.Value).Type != interfaces.NULL {
-			//fmt.Println("RES ELSE")
-			//fmt.Println(res)
+			fmt.Println("RES ELSE")
+			fmt.Println(res)
 			ret = res.(interfaces.Value)
 		}
 	} else {
 		env.(environment.Environment).NewError("SE ESPERABA UNA EXPRESION BOOLEANA", p.line, p.col)
 	}
 	if p.Tipo == 0 {
-		//fmt.Println("LA salida es " + gen.GetSalida())
+		fmt.Println("LA salida es " + gen.GetSalida())
 		gen.AddCodes("//SALIDA DEL IF", ambito)
 		gen.AddCodes(gen.GetSalida()+":", ambito)
 	}
