@@ -4,6 +4,8 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
+	"fmt"
+	"reflect"
 
 	//"fmt"
 	"strconv"
@@ -23,6 +25,9 @@ func NewAssignment(id string, val interfaces.Expresion, line, col int) Assignmen
 
 func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	result := p.Expresion.Ejecutar(env, gen)
+	tipo := reflect.TypeOf(p.Expresion)
+	t := fmt.Sprintf("%v", tipo)
+	//fmt.Println(t)
 	ambito := env.(environment.Environment).DevAmbito()
 	/*fmt.Println("TIPO 1")
 	fmt.Println(result.Value)
@@ -42,7 +47,33 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			if result.Type == interfaces.VECTOR {
 
 			} else if result.Type == interfaces.ARRAY {
-
+				//posicion2:=""
+				if t == "expresion.CallVariable" {
+					entrada := gen.NewLabel()
+					salida := gen.NewLabel()
+					//gen.AddCodes("if("+bounds.TrueLabel+") ",ambito)
+					iterador := gen.NewTemp()
+					contador := gen.NewTemp()
+					contador2 := gen.NewTemp()
+					aux := gen.NewTemp()
+					gen.AddCodes(iterador+"=0;//iterador", ambito)
+					gen.AddCodes(contador+"="+variable.Posicion2+";//contador1", ambito)
+					gen.AddCodes(contador2+"="+result.Value+";//contador2", ambito)
+					gen.AddCodes(entrada+":", ambito)
+					gen.AddCodes("if("+iterador+"=="+variable.Longitud+") goto "+salida+";", ambito)
+					gen.AddCodes(aux+"=HEAP[(int)"+contador2+"];", ambito)
+					gen.AddCodes("HEAP[(int)"+contador+"]="+aux+";", ambito)
+					gen.AddCodes(contador+"="+contador+"+1;", ambito)
+					gen.AddCodes(contador2+"="+contador2+"+1;", ambito)
+					gen.AddCodes(iterador+"="+iterador+"+1;", ambito)
+					gen.AddCodes("goto "+entrada+";", ambito)
+					gen.AddCodes(salida+":", ambito)
+					//posicion2 = contador
+				} else {
+					//posicion2=result.Value
+					gen.AddCodes(variable.Posicion2+"="+result.Value+";", ambito)
+				}
+				//env.(environment.Environment).
 			} else if result.Type == interfaces.STRUCT {
 
 			} else if result.Type == interfaces.BOOLEAN {

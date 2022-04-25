@@ -5,6 +5,7 @@ import (
 	"OLC2/generator"
 	"OLC2/interfaces"
 	"fmt"
+	"reflect"
 	"strconv"
 
 	"github.com/colegno/arraylist"
@@ -31,6 +32,8 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	conf := false
 	ambito := env.(environment.Environment).DevAmbito()
 	//index := 0
+	tipo := reflect.TypeOf(p.Expresion)
+	t := fmt.Sprintf("%v", tipo)
 	if p.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
 		conf = true
 	} else if p.Tipo.Tipo == result.Type {
@@ -69,8 +72,33 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				}
 				size.Add(p.Tipo.Tipo)*/
 				//fmt.Println(size.ToArray()...)
+				posicion2 := ""
+				if t == "expresion.CallVariable" {
+					entrada := gen.NewLabel()
+					salida := gen.NewLabel()
+					//gen.AddCodes("if("+bounds.TrueLabel+") ",ambito)
+					iterador := gen.NewTemp()
+					contador := gen.NewTemp()
+					contador2 := gen.NewTemp()
+					aux := gen.NewTemp()
+					gen.AddCodes(iterador+"=0;//iterador", ambito)
+					gen.AddCodes(contador+"=H;//contador1", ambito)
+					gen.AddCodes(contador2+"="+result.Value+";//contador2", ambito)
+					gen.AddCodes(entrada+":", ambito)
+					gen.AddCodes("if("+iterador+"=="+result.TrueLabel+") goto "+salida+";", ambito)
+					gen.AddCodes(aux+"=HEAP[(int)"+contador2+"];", ambito)
+					gen.AddCodes("HEAP[(int)"+contador+"]="+aux+";", ambito)
+					gen.AddCodes(contador+"="+contador+"+1;", ambito)
+					gen.AddCodes(contador2+"="+contador2+"+1;", ambito)
+					gen.AddCodes(iterador+"="+iterador+"+1;", ambito)
+					gen.AddCodes("goto "+entrada+";", ambito)
+					gen.AddCodes(salida+":", ambito)
+					posicion2 = contador
+				} else {
+					posicion2 = result.Value
+				}
 				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.ARRAY, Tipo2: result.Tipo2}
-				variable := interfaces.Symbol{Id: p.Id, Posicion2: result.Value, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
+				variable := interfaces.Symbol{Id: p.Id, Posicion2: posicion2, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, variable, variable.Tipo)
 				fmt.Println("se guardo")
 			} else {

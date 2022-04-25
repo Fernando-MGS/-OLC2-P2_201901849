@@ -42,6 +42,7 @@ instruccion returns [interfaces.Instruction instr]
   |impr PTCOMA{$instr=$impr.p}
   |matches    {$instr=$matches.m}
   |rfor {$instr=$rfor.p}
+  |mod_Array PTCOMA {$instr=$mod_Array.p}
 ;
 instruccion_wc returns [interfaces.Instruction instr]:
   CONSOLE '.' LOG PARIZQ expression PARDER {$instr = instruction.NewImprimir($expression.p)}
@@ -54,6 +55,7 @@ instruccion_wc returns [interfaces.Instruction instr]:
   |loops  {$instr=$loops.i}
   |impr {$instr=$impr.p}
   |rfor {$instr=$rfor.p}
+  |mod_Array  {$instr=$mod_Array.p}
 ;
 
 
@@ -230,7 +232,9 @@ iter_for returns[interfaces.For_Range p]:
   exp1=expression PUNTO PUNTO exp2=expression{$p=interfaces.For_Range{$exp1.p,$exp2.p,0}}
   |exp1=expression {$p=interfaces.For_Range{$exp1.p,expresion.NewPrimitivo (1,interfaces.INTEGER,0,0),1}}
 ;
-
+mod_Array returns[interfaces.Instruction p]:
+  id=ID list=listArray IGUAL expression {$p=instruction.NewModArray($id.text,expresion.NewArrayAccess($id.text,$list.l,$id.GetLine(),$id.GetColumn()),$expression.p,$IGUAL.GetLine(),$IGUAL.GetColumn())} 
+;
 
 //EXPRESIONES
 expression returns[interfaces.Expresion p]

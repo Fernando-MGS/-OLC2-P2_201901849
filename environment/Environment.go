@@ -48,6 +48,29 @@ func (env Environment) SaveVariable(line, col, id string, value interfaces.Symbo
 	//env.size = env.size + 1
 }
 
+func inutil(v interfaces.Symbol) {
+
+}
+
+func (env Environment) AlterVariable(id string, value interfaces.Symbol) {
+	var tmpEnv Environment
+	tmpEnv = env
+
+	for {
+		if variable, ok := tmpEnv.variable[id]; ok {
+			inutil(variable)
+			tmpEnv.variable[id] = value
+			return
+		}
+
+		if tmpEnv.father == nil {
+			break
+		} else {
+			tmpEnv = tmpEnv.father.(Environment)
+		}
+	}
+}
+
 func (env Environment) GetVariable(id, line, col string) interfaces.Symbol {
 
 	var tmpEnv Environment

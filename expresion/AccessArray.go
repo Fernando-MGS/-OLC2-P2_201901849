@@ -100,7 +100,7 @@ func (p ArrayAccess) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	if p.Access.Len() == 1 {
 		valor := p.Access.GetValue(0).(interfaces.Expresion).Ejecutar(env, gen).Value
 		if tipos.Dimensions.Len() == 1 {
-			gen.AddCodes(coordenada+"="+valor, ambito)
+			gen.AddCodes(coordenada+"="+valor+";", ambito)
 		} else {
 			//valor_d:=p.Access.GetValue(1).(interfaces.Expresion).Ejecutar(env,gen).Value
 			if tipos.Dimensions.Len() == 2 {
@@ -156,13 +156,17 @@ func (p ArrayAccess) Ejecutar(env interface{}, gen *generator.Generator) interfa
 		gen.AddCodes(pos+"="+array.Posicion2+"+"+coordenada+";", ambito)
 		resultado := gen.NewTemp()
 		gen.AddCodes(resultado+"=HEAP[(int)"+pos+"];", ambito)
+		retorno.TrueLabel = pos
 		pos = resultado
 	} else {
 		gen.AddCodes(pos+"="+array.Posicion2+"+"+coordenada+";", ambito)
+		retorno.TrueLabel = first_iter
 	}
 	retorno.Value = pos // si es un array o un vector manda la posicion dentro del heap
-	retorno.TrueLabel = first_iter
+
 	//retorno.Type=array.Tipo.Tipo
+	fmt.Println("lA POS ES " + pos)
+	fmt.Println("La long es " + first_iter)
 	gen.AddCodes("//ACCESO CREADO", ambito)
 	return retorno
 }

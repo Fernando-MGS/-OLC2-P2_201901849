@@ -95,6 +95,9 @@ type ChemsListener interface {
 	// EnterIter_for is called when entering the iter_for production.
 	EnterIter_for(c *Iter_forContext)
 
+	// EnterMod_Array is called when entering the mod_Array production.
+	EnterMod_Array(c *Mod_ArrayContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -202,6 +205,9 @@ type ChemsListener interface {
 
 	// ExitIter_for is called when exiting the iter_for production.
 	ExitIter_for(c *Iter_forContext)
+
+	// ExitMod_Array is called when exiting the mod_Array production.
+	ExitMod_Array(c *Mod_ArrayContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)

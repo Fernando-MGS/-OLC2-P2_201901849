@@ -39,7 +39,7 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 			chars := gen.Array_char(cadena)
 			for _, s := range chars {
 				val := strconv.Itoa(int(s))
-				save := "HEAP[(int)H]=" + val + ";\n"
+				save := "HEAP[(int)H]=" + val + ";//" + string(s) + "\n"
 				save += "H=H+1;"
 				gen.Heap++
 				gen.AddCodes(save, ambito)

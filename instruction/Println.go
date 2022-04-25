@@ -208,15 +208,19 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator) 
 		gen.AddCodes("STACK[(int)"+tmp1+"]="+result.Value+";", ambito)
 		gen.AddCodes("STACK[(int)"+tmp2+"]="+result.TrueLabel+";", ambito)
 		if dimension.Tipo == interfaces.INTEGER {
+			gen.AddCodes("//IMPRIMIENDO ARRAY DE INT", ambito)
 			gen.AddFuncExtra("PRINTINT")
 			gen.AddCodes("proc_printSetNumbers();", ambito)
 		} else if dimension.Tipo == interfaces.FLOAT {
 			gen.AddFuncExtra("PRINTFLOAT")
+			gen.AddCodes("//IMPRIMIENDO ARRAY DE FLOAT", ambito)
 			gen.AddCodes("proc_printSetFloat();", ambito)
 		} else if dimension.Tipo == interfaces.CHAR {
 			gen.AddFuncExtra("PRINTCHAR")
+			gen.AddCodes("//IMPRIMIENDO ARRAY DE CHAR", ambito)
 			gen.AddCodes("proc_printSetChar();", ambito)
 		} else if dimension.Tipo == interfaces.STR || dimension.Tipo == interfaces.STRING {
+			gen.AddCodes("//IMPRIMIENDO ARRAY DE STRING", ambito)
 			gen.AddFuncExtra("PRINTSTRING")
 			gen.AddCodes("proc_printSetString();", ambito)
 		}

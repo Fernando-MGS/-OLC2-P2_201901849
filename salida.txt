@@ -4,108 +4,61 @@ float HEAP[82000];
 float STACK[82000];
 float P;
 float H;
-float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17;
+float t0, t1, t2, t3, t4, t5;
 
-void proc_printString(){
-t13=P+1;
-t14=STACK[(int)t13];
-L2:
-t15=HEAP[(int)t14];
-if(t15!=-1) goto L3;
-goto L4;
-L3:
-printf("%c",(int)t15);
-t14=t14 + 1;
-goto L2;
-L4:
-return;
-}
-void proc_printSetString(){
-printf("%c",91);
-t6=P+1;
-t7=P+2;
-t9=0;
-t10=STACK[(int)t6];
-t8=STACK[(int)t7];
-L0:
-if(t9==t8) goto L1;
-t11=HEAP[(int)t10];
-t12=P+1;
-printf("%c",34);
-STACK[(int)t12]=t11;
-proc_printString();
-printf("%c",44);
-t10=t10+1;
-printf("%c",44);
-t9=t9+1;
-goto L0;
-L1:
-printf("%c",93);
-return ;}
 
 
 void main(){
 //CREANDO ARRAY
-//INICIO DE STRING
-t1=H;
-HEAP[(int)H]=72;
-H=H+1;
-HEAP[(int)H]=111;
-H=H+1;
-HEAP[(int)H]=108;
-H=H+1;
-HEAP[(int)H]=97;
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-//INICIO DE STRING
-t2=H;
-HEAP[(int)H]=77;
-H=H+1;
-HEAP[(int)H]=117;
-H=H+1;
-HEAP[(int)H]=110;
-H=H+1;
-HEAP[(int)H]=100;
-H=H+1;
-HEAP[(int)H]=111;
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
 t0=H;
-HEAP[(int)H]=t1;
+HEAP[(int)H]=1;
 H=H+1;
-HEAP[(int)H]=t2;
+HEAP[(int)H]=3;
+H=H+1;
+HEAP[(int)H]=5;
+H=H+1;
+HEAP[(int)H]=7;
+H=H+1;
+HEAP[(int)H]=9;
+H=H+1;
+HEAP[(int)H]=11;
+H=H+1;
+HEAP[(int)H]=13;
+H=H+1;
+HEAP[(int)H]=15;
+H=H+1;
+HEAP[(int)H]=2;
+H=H+1;
+HEAP[(int)H]=4;
+H=H+1;
+HEAP[(int)H]=6;
+H=H+1;
+HEAP[(int)H]=8;
+H=H+1;
+HEAP[(int)H]=10;
+H=H+1;
+HEAP[(int)H]=12;
+H=H+1;
+HEAP[(int)H]=14;
+H=H+1;
+HEAP[(int)H]=16;
 H=H+1;
 HEAP[(int)H]=-123456;
 H=H+1;
 //ARRAY CREADO
-//INICIO DE DECLARACION arr1
-//INICIO DE PRINT
-//INICIO DE LLAMADAarr1
-t4=1+P;
-t5=2+P;
-STACK[(int)t4]=t0;
-STACK[(int)t5]=2;
-proc_printSetString();
-//INICIO DE STRING
-t16=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if (t16==-1) goto L5;
-P=P+1;
-t17=P+1;
-STACK[(int)t17] =t16;
-proc_printString();
-P=P-1;
-goto L6;
-L5:
-L6:
-
-printf("%c",10);
-//FIN DE PRINT
+//INICIO DE DECLARACION arr3
+//INICIO DE LLAMADAarr3
+t2=0;//iterador
+t3=t0;//contador1
+t4=t0;//contador2
+L0:
+if(t2==16) goto L1;
+t5=HEAP[(int)t4];
+HEAP[(int)t3]=t5;
+t3=t3+1;
+t4=t4+1;
+t2=t2+1;
+goto L0;
+L1:
 return;
 }
