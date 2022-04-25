@@ -48,6 +48,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 			} else if result.Type == interfaces.ARRAY {
 				//posicion2:=""
+				gen.AddCodes("//INICIANDO ASIGNACION DE"+p.Id, ambito)
 				if t == "expresion.CallVariable" {
 					entrada := gen.NewLabel()
 					salida := gen.NewLabel()
@@ -73,6 +74,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					//posicion2=result.Value
 					gen.AddCodes(variable.Posicion2+"="+result.Value+";", ambito)
 				}
+				gen.AddCodes("//FINALIZANDO ASIGNACION DE"+p.Id, ambito)
 				//env.(environment.Environment).
 			} else if result.Type == interfaces.STRUCT {
 

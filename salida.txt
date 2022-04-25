@@ -4,8 +4,40 @@ float HEAP[82000];
 float STACK[82000];
 float P;
 float H;
-float t0, t1, t2, t3, t4, t5;
+float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45;
 
+void proc_printSetNumbers(){
+printf("%c",91);
+t9=P+1;
+t10=P+2;
+t12=0;
+t13=STACK[(int)t9];
+t11=STACK[(int)t10];
+L2:
+if(t12==t11) goto L3;
+t14=HEAP[(int)t13];
+printf("%d",(int)t14);
+t13=t13+1;
+printf("%c",44);
+t12=t12+1;
+goto L2;
+L3:
+printf("%c",93);
+return ;}
+void proc_printString(){
+t17=P+1;
+t18=STACK[(int)t17];
+L6:
+t19=HEAP[(int)t18];
+if(t19!=-1) goto L7;
+goto L8;
+L7:
+printf("%c",(int)t19);
+t18=t18 + 1;
+goto L6;
+L8:
+return;
+}
 
 
 void main(){
@@ -48,17 +80,186 @@ H=H+1;
 //ARRAY CREADO
 //INICIO DE DECLARACION arr3
 //INICIO DE LLAMADAarr3
+//INICIO DE DECLARACION arr4
 t2=0;//iterador
-t3=t0;//contador1
+t3=H;//contador1
 t4=t0;//contador2
 L0:
 if(t2==16) goto L1;
 t5=HEAP[(int)t4];
-HEAP[(int)t3]=t5;
-t3=t3+1;
+HEAP[(int)H]=t5;
+H=H+1;
 t4=t4+1;
 t2=t2+1;
 goto L0;
 L1:
+//INICIO DE PRINT
+//INICIO DE LLAMADAarr4
+t7=1+P;
+t8=2+P;
+STACK[(int)t7]=t3;
+STACK[(int)t8]=16;
+//IMPRIMIENDO ARRAY DE INT
+proc_printSetNumbers();
+//INICIO DE STRING
+t15=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t15==-1) goto L4;
+P=P+1;
+t16=P+1;
+STACK[(int)t16] =t15;
+proc_printString();
+P=P-1;
+goto L5;
+L4:
+L5:
+
+printf("%c",10);
+//FIN DE PRINT
+//CREANDO ARRAY
+t20=H;
+HEAP[(int)H]=21;
+H=H+1;
+HEAP[(int)H]=23;
+H=H+1;
+HEAP[(int)H]=25;
+H=H+1;
+HEAP[(int)H]=27;
+H=H+1;
+HEAP[(int)H]=9;
+H=H+1;
+HEAP[(int)H]=11;
+H=H+1;
+HEAP[(int)H]=13;
+H=H+1;
+HEAP[(int)H]=15;
+H=H+1;
+HEAP[(int)H]=2;
+H=H+1;
+HEAP[(int)H]=4;
+H=H+1;
+HEAP[(int)H]=6;
+H=H+1;
+HEAP[(int)H]=8;
+H=H+1;
+HEAP[(int)H]=10;
+H=H+1;
+HEAP[(int)H]=12;
+H=H+1;
+HEAP[(int)H]=14;
+H=H+1;
+HEAP[(int)H]=16;
+H=H+1;
+HEAP[(int)H]=-123456;
+H=H+1;
+//ARRAY CREADO
+//INICIO DE DECLARACION arr5
+//INICIO DE PRINT
+//INICIO DE LLAMADAarr5
+t22=1+P;
+t23=2+P;
+STACK[(int)t22]=t20;
+STACK[(int)t23]=16;
+//IMPRIMIENDO ARRAY DE INT
+proc_printSetNumbers();
+//INICIO DE STRING
+t24=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t24==-1) goto L9;
+P=P+1;
+t25=P+1;
+STACK[(int)t25] =t24;
+proc_printString();
+P=P-1;
+goto L10;
+L9:
+L10:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE LLAMADAarr5
+//INICIANDO ASIGNACION DEarr4
+t27=0;//iterador
+t28=t3;//contador1
+t29=t20;//contador2
+L11:
+if(t27==16) goto L12;
+t30=HEAP[(int)t29];
+HEAP[(int)t28]=t30;
+t28=t28+1;
+t29=t29+1;
+t27=t27+1;
+goto L11;
+L12:
+//FINALIZANDO ASIGNACION DEarr4
+//INICIO DE PRINT
+//INICIO DE LLAMADAarr4
+t32=1+P;
+t33=2+P;
+STACK[(int)t32]=t3;
+STACK[(int)t33]=16;
+//IMPRIMIENDO ARRAY DE INT
+proc_printSetNumbers();
+//INICIO DE STRING
+t34=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t34==-1) goto L13;
+P=P+1;
+t35=P+1;
+STACK[(int)t35] =t34;
+proc_printString();
+P=P-1;
+goto L14;
+L13:
+L14:
+
+printf("%c",10);
+//FIN DE PRINT
+//INICIO DE LLAMADAarr3
+//INICIANDO ASIGNACION DEarr5
+t37=0;//iterador
+t38=t20;//contador1
+t39=t0;//contador2
+L15:
+if(t37==16) goto L16;
+t40=HEAP[(int)t39];
+HEAP[(int)t38]=t40;
+t38=t38+1;
+t39=t39+1;
+t37=t37+1;
+goto L15;
+L16:
+//FINALIZANDO ASIGNACION DEarr5
+//INICIO DE PRINT
+//INICIO DE LLAMADAarr5
+t42=1+P;
+t43=2+P;
+STACK[(int)t42]=t20;
+STACK[(int)t43]=16;
+//IMPRIMIENDO ARRAY DE INT
+proc_printSetNumbers();
+//INICIO DE STRING
+t44=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t44==-1) goto L17;
+P=P+1;
+t45=P+1;
+STACK[(int)t45] =t44;
+proc_printString();
+P=P-1;
+goto L18;
+L17:
+L18:
+
+printf("%c",10);
+//FIN DE PRINT
 return;
 }
