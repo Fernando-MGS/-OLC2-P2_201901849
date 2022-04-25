@@ -41,11 +41,13 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 				val := strconv.Itoa(int(s))
 				save := "HEAP[(int)H]=" + val + ";\n"
 				save += "H=H+1;"
+				gen.Heap++
 				gen.AddCodes(save, ambito)
 
 			}
 			save := "HEAP[(int)H]=-1;\n"
 			save += "H=H+1;"
+			gen.Heap++
 			gen.AddCodes(save, ambito)
 			gen.AddCodes("//FIN DE STRING", ambito)
 		}

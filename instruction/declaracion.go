@@ -6,6 +6,8 @@ import (
 	"OLC2/interfaces"
 	"fmt"
 	"strconv"
+
+	"github.com/colegno/arraylist"
 )
 
 type Declaracion struct {
@@ -43,9 +45,45 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	fmt.Println(p.Tipo.Tipo)*/
 	if conf {
 		if p.Tipo.Tipo == interfaces.ARRAY {
-			fmt.Println(p.Tipo.Tipo)
-			fmt.Println(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Tipo)
-			fmt.Println(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.Clone().ToArray()...)
+			gen.AddCodes("//INICIO DE DECLARACION "+p.Id, ambito)
+			fmt.Println(p.Tipo.Tipo2.ToArray()...)
+			tipoArr := p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Tipo
+			fmt.Println("simon")
+			if tipoArr != result.Tipo2.GetValue(0).(interfaces.Dimensions).Tipo {
+				fmt.Println("NEL1")
+				conf = false
+			}
+			if len(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.ToArray()) != len(result.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.ToArray()) {
+				fmt.Println("NEL2")
+				conf = false
+				env.(environment.Environment).NewError("LAS DIMENSIONES DEL ARREGLO NO CONCUERDAN EN LA DECLARACION", p.Line, p.Col)
+				result.Type = interfaces.NULL
+				return result
+			}
+			fmt.Println(conf)
+			if conf {
+				/*size := arraylist.New()
+				for _, s := range p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.ToArray() {
+					tam := s.(interfaces.Expresion).Ejecutar(env, gen)
+					size.Add(tam.Value)
+				}
+				size.Add(p.Tipo.Tipo)*/
+				//fmt.Println(size.ToArray()...)
+				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.ARRAY, Tipo2: result.Tipo2}
+				variable := interfaces.Symbol{Id: p.Id, Posicion2: result.Value, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
+				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, variable, variable.Tipo)
+				fmt.Println("se guardo")
+			} else {
+				env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN EN LA DECLARACION", p.Line, p.Col)
+				result.Type = interfaces.NULL
+				return result
+			}
+			/*fmt.Println(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Tipo)
+			fmt.Print(len(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.ToArray()))
+			fmt.Print("vs")
+			fmt.Println(len(result.Tipo2.ToArray()))
+			/*fmt.Println(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.Clone().ToArray()...)*/
+			//CompararTipos(p.Tipo.Tipo2, result.Tipo2)
 		} else if p.Tipo.Tipo == interfaces.VECTOR {
 			fmt.Println(p.Tipo.Tipo)
 			fmt.Println(p.Tipo.Tipo2.ToArray()...)
@@ -165,6 +203,17 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	}
 	result.Type = interfaces.NULL
 	return result
+}
+
+func CompararTipos(TipoIzq *arraylist.List, TipoDer *arraylist.List) bool {
+	var conf bool
+	fmt.Println("COMPARARTIPOS")
+	//fmt.Println(len(TipoIzq.GetValue()))
+	tipos := TipoIzq.GetValue(0).(interfaces.Dimensions)
+	for _, s := range tipos.Dimensions.ToArray() {
+		fmt.Println(s)
+	}
+	return conf
 }
 
 /*func declaracionStack(env interface{},gen *generator.Generator){

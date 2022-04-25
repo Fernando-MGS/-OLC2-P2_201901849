@@ -32,7 +32,7 @@ func (f For) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	stack := env.(environment.Environment).Control.Stack
 	tmpEnv := environment.NewEnvironment(env, env.(environment.Environment).Control.Id, "", "", true, stack)
 	if f.Iteracion.Tipo == 0 {
-		if rangoInf.Type != interfaces.INTEGER || rangoSup.Type != interfaces.INTEGER {
+		if rangoInf.Type != interfaces.INTEGER || rangoSup.Type != interfaces.INTEGER && rangoInf.Type != interfaces.USIZE || rangoSup.Type != interfaces.USIZE {
 			env.(environment.Environment).NewError("SE ESPERABA UNA EXPRESION NUMERICA", f.line, f.col)
 			return result
 		}

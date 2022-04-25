@@ -198,5 +198,32 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator) 
 		code += l2 + ":\n"
 		gen.AddCodes(code, ambito)
 		gen.AddFuncExtra("PRINTSTR")
+	} else if result.Type == interfaces.ARRAY {
+		dimension := result.Tipo2.GetValue(0).(interfaces.Dimensions)
+
+		tmp1 := gen.NewTemp()
+		gen.AddCodes(tmp1+"=1+P;", ambito)
+		tmp2 := gen.NewTemp()
+		gen.AddCodes(tmp2+"=2+P;", ambito)
+		gen.AddCodes("STACK[(int)"+tmp1+"]="+result.Value+";", ambito)
+		gen.AddCodes("STACK[(int)"+tmp2+"]="+result.TrueLabel+";", ambito)
+		if dimension.Tipo == interfaces.INTEGER {
+			gen.AddFuncExtra("PRINTINT")
+			gen.AddCodes("proc_printSetNumbers();", ambito)
+		} else if dimension.Tipo == interfaces.FLOAT {
+			gen.AddFuncExtra("PRINTFLOAT")
+			gen.AddCodes("proc_printSetFloat();", ambito)
+		} else if dimension.Tipo == interfaces.CHAR {
+			gen.AddFuncExtra("PRINTCHAR")
+			gen.AddCodes("proc_printSetChar();", ambito)
+		} else if dimension.Tipo == interfaces.STR || dimension.Tipo == interfaces.STRING {
+			gen.AddFuncExtra("PRINTSTRING")
+			gen.AddCodes("proc_printSetString();", ambito)
+		}
+
+		//gen.AddCodes(tmp2+"=2+P;",ambito)
+		fmt.Println(result.Value)
+		fmt.Println(result.TrueLabel)
+
 	}
 }

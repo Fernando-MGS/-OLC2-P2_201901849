@@ -7,12 +7,14 @@ import (
 )
 
 type Symbol struct {
-	Id       string
-	Tipo     TipoSimbolo
-	Posicion int
-	Mutable  bool
-	Line     string
-	Col      string
+	Id        string
+	Tipo      TipoSimbolo
+	Posicion  int
+	Posicion2 string
+	Longitud  string
+	Mutable   bool
+	Line      string
+	Col       string
 }
 
 type Value struct {

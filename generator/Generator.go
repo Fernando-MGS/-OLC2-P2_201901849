@@ -228,6 +228,18 @@ func (g *Generator) AddFuncExtra(id string) {
 		} else if id == "MOD" {
 			g.func_extra[id] = true
 			g.extra_code.Add(calcularMod(g))
+		} else if id == "PRINTINT" {
+			g.func_extra[id] = true
+			g.extra_code.Add(printArrayNumbers(g))
+		} else if id == "PRINTFLOAT" {
+			g.func_extra[id] = true
+			g.extra_code.Add(printArrayFloat(g))
+		} else if id == "PRINTSTRING" {
+			g.func_extra[id] = true
+			g.extra_code.Add(printArrayString(g))
+		} else if id == "PRINTCHAR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(printArrayChar(g))
 		}
 	}
 
@@ -341,6 +353,7 @@ func concat_STR(gen *Generator) string {
 	code += l3 + ":\n"
 	code += "HEAP[(int)H] =" + tmp6 + ";\n"
 	code += "H=H+1;\n"
+	gen.Heap++
 	code += tmp3 + "=" + tmp3 + "+1;\n"
 	code += "goto " + l1 + ";\n"
 	code += l2 + ":\n"
@@ -521,6 +534,137 @@ func compareLong_Str(g *Generator) string {
 	code += "STACK[(int)P] = 3;\n"*/
 	code += l11 + ":\n"
 	code += "return ;\n}"
+	return code
+}
+
+func printArrayNumbers(gen *Generator) string {
+	code := "void proc_printSetNumbers(){\n"
+	code += "printf(\"%c\",91);\n" //[
+	param := gen.NewTemp()
+	param2 := gen.NewTemp()
+	i := gen.NewTemp()
+	iterador := gen.NewTemp()
+	contador := gen.NewTemp()
+	entrada := gen.NewLabel()
+	num := gen.NewTemp()
+	salida := gen.NewLabel()
+	code += param + "=P+1;\n"
+	code += param2 + "=P+2;\n"
+	code += iterador + "=0;\n"
+	code += contador + "=STACK[(int)" + param + "];\n"
+	code += i + "=STACK[(int)" + param2 + "];\n"
+	code += entrada + ":\n"
+	code += "if(" + iterador + "==" + i + ") goto " + salida + ";\n"
+	//gen.AddCodes("",am)
+	code += num + "=HEAP[(int)" + contador + "];\n"
+	code += "printf(\"%d\",(int)" + num + ");\n" //[
+	code += contador + "=" + contador + "+1;\n"
+	code += "printf(\"%c\",44);\n" //]
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "printf(\"%c\",93);\n" //]
+	code += "return ;}"
+	return code
+}
+
+func printArrayFloat(gen *Generator) string {
+	code := "void proc_printSetFloat(){\n"
+	code += "printf(\"%c\",91);\n" //[
+	param := gen.NewTemp()
+	param2 := gen.NewTemp()
+	i := gen.NewTemp()
+	iterador := gen.NewTemp()
+	contador := gen.NewTemp()
+	entrada := gen.NewLabel()
+	num := gen.NewTemp()
+	salida := gen.NewLabel()
+	code += param + "=P+1;\n"
+	code += param2 + "=P+2;\n"
+	code += iterador + "=0;\n"
+	code += contador + "=STACK[(int)" + param + "];\n"
+	code += i + "=STACK[(int)" + param2 + "];\n"
+	code += entrada + ":\n"
+	code += "if(" + iterador + "==" + i + ") goto " + salida + ";\n"
+	//gen.AddCodes("",am)
+	code += num + "=HEAP[(int)" + contador + "];\n"
+	code += "printf(\"%f\"," + num + ");\n" //[
+	code += contador + "=" + contador + "+1;\n"
+	code += "printf(\"%c\",44);\n" //]
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "printf(\"%c\",93);\n" //]
+	code += "return ;}"
+	return code
+}
+
+func printArrayString(gen *Generator) string {
+	code := "void proc_printSetString(){\n"
+	code += "printf(\"%c\",91);\n" //[
+	param := gen.NewTemp()
+	param2 := gen.NewTemp()
+	i := gen.NewTemp()
+	iterador := gen.NewTemp()
+	contador := gen.NewTemp()
+	entrada := gen.NewLabel()
+	num := gen.NewTemp()
+	param3 := gen.NewTemp()
+	salida := gen.NewLabel()
+	code += param + "=P+1;\n"
+	code += param2 + "=P+2;\n"
+	code += iterador + "=0;\n"
+	code += contador + "=STACK[(int)" + param + "];\n"
+	code += i + "=STACK[(int)" + param2 + "];\n"
+	code += entrada + ":\n"
+	code += "if(" + iterador + "==" + i + ") goto " + salida + ";\n"
+	//gen.AddCodes("",am)
+	code += num + "=HEAP[(int)" + contador + "];\n"
+	//code += "printf(\"%f\"," + num + ");\n" //[
+	code += param3 + "=P+1;\n"
+	code += "printf(\"%c\",34);\n" //]
+	code += "STACK[(int)" + param3 + "]=" + num + ";\n"
+	gen.AddFuncExtra("PRINTSTR")
+	code += "proc_printString();\n"
+	code += "printf(\"%c\",34);\n" //]
+	code += contador + "=" + contador + "+1;\n"
+	code += "printf(\"%c\",44);\n" //]
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "printf(\"%c\",93);\n" //]
+	code += "return ;}"
+	return code
+}
+
+func printArrayChar(gen *Generator) string {
+	code := "void proc_printSetChar(){\n"
+	code += "printf(\"%c\",91);\n" //[
+	param := gen.NewTemp()
+	param2 := gen.NewTemp()
+	i := gen.NewTemp()
+	iterador := gen.NewTemp()
+	contador := gen.NewTemp()
+	entrada := gen.NewLabel()
+	num := gen.NewTemp()
+	salida := gen.NewLabel()
+	code += param + "=P+1;\n"
+	code += param2 + "=P+2;\n"
+	code += iterador + "=0;\n"
+	code += contador + "=STACK[(int)" + param + "];\n"
+	code += i + "=STACK[(int)" + param2 + "];\n"
+	code += entrada + ":\n"
+	code += "if(" + iterador + "==" + i + ") goto " + salida + ";\n"
+	//gen.AddCodes("",am)
+	code += num + "=HEAP[(int)" + contador + "];\n"
+	code += "printf(\"%c\"," + num + ");\n" //[
+	code += contador + "=" + contador + "+1;\n"
+	code += "printf(\"%c\",44);\n" //]
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "printf(\"%c\",93);\n" //]
+	code += "return ;}"
 	return code
 }
 

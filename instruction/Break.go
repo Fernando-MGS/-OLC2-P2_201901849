@@ -42,7 +42,7 @@ func (b Break) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 			gen.AddCodes(code, ambito)
 		}
 	} else {
-		env.(environment.Environment).NewError("NO SE PUEDE USAR UN CONTINUE FUERA DE UN CICLO", b.line, b.col)
+		env.(environment.Environment).NewError("NO SE PUEDE USAR UN BREAK FUERA DE UN CICLO", b.line, b.col)
 	}
 
 	//fmt.Println("El retorno 2 es ")

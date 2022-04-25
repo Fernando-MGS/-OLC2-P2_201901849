@@ -108,6 +108,7 @@ dimensiones  returns [interfaces.Dimensions d]:
 
 
 
+
 tipo_vector returns [interfaces.TipoSimbolo t]:
   VECT MENOR vectores MAYOR {$t=interfaces.TipoSimbolo{interfaces.VECTOR,$vectores.l}}
 ;
@@ -252,6 +253,9 @@ expr_arit returns[interfaces.Expresion p]
     | loops {$p=expresion.NewDevLoop($loops.i)}
     | ifs   {$p=expresion.NewDevLoop($ifs.p)}
     |matches {$p=expresion.NewDevLoop($matches.m)}
+    | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l) }
+    |arrayAcc {$p=$arrayAcc.p}
+    |creatArray {$p=$creatArray.p}
 ;
 
 
@@ -308,4 +312,23 @@ listValues returns[*arrayList.List l]
                     $l = arrayList.New()
                     $l.Add($expression.p)
                 }
+;
+
+arrayAcc returns [interfaces.Expresion p]:
+  id=ID list=listArray {$p=expresion.NewArrayAccess($id.text,$list.l,$id.GetLine(),$id.GetColumn())}
+;
+
+listArray returns[*arrayList.List l]:
+  CORIZQ expression CORDER {
+    $l=arrayList.New()
+    $l.Add($expression.p)
+  }
+  |lista=listArray CORIZQ expression CORDER{
+    $lista.l.Add($expression.p)
+    $l=$lista.l
+  }
+;
+
+creatArray returns [interfaces.Expresion p]:
+  CORIZQ exp1=expression PTCOMA exp2=expression CORDER {$p=expresion.NewArray2($exp1.p,$exp2.p)}
 ;
