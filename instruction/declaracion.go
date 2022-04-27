@@ -115,7 +115,7 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			//CompararTipos(p.Tipo.Tipo2, result.Tipo2)
 		} else if p.Tipo.Tipo == interfaces.VECTOR {
 			fmt.Print("P.tipo   ")
-			fmt.Println(p.Tipo.Tipo2.ToArray()...)
+			fmt.Println(result.Tipo2.ToArray()...)
 			dimension_res := result.Tipo2.GetValue(0).(interfaces.Dimensions)
 			fmt.Print("res.dimension   ")
 			fmt.Println(dimension_res.Dimensions.ToArray()...)
@@ -124,10 +124,13 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			if dimension_res.Tipo == interfaces.VOID || dimension_res.Tipo == dimension_tipo {
 				posicion2 := ""
 				posicion2 = result.Value
-				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.VECTOR, Tipo2: p.Tipo.Tipo2}
+				dimension := interfaces.Dimensions{Tipo: dimension_tipo, Dimensions: p.Tipo.Tipo2}
+				dimensions_list := arraylist.New()
+				dimensions_list.Add(dimension)
+				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.VECTOR, Tipo2: dimensions_list}
 				variable := interfaces.Symbol{Id: p.Id, Posicion2: posicion2, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, variable, variable.Tipo)
-				fmt.Println("se guardo")
+				fmt.Println("se guardo EN " + posicion2)
 			} else {
 				env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN EN LA DECLARACION", p.Line, p.Col)
 				result.Type = interfaces.NULL

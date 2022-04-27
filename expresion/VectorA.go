@@ -31,7 +31,7 @@ func (v VectorA) Ejecutar(env interface{}, gen *generator.Generator) interfaces.
 	salida := gen.NewLabel()
 	//pos := gen.NewTemp()
 	largo := gen.NewTemp()
-	gen.AddCodes(largo+"=H;", ambito)
+	gen.AddCodes(largo+"=H;//POS DE INICIO VECTOR A", ambito)
 	gen.AddCodes("HEAP[(int)H]="+long.Value+";", ambito)
 	gen.AddCodes("H++;", ambito)
 	gen.AddCodes(iterador+"=0;", ambito)

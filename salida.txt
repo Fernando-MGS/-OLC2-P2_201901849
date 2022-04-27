@@ -4,51 +4,179 @@ float HEAP[82000];
 float STACK[82000];
 float P;
 float H;
-float t0, t1, t2, t3, t4, t5, t6, t7;
+float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28;
 
+void proc_printInt(){
+t13=P+1;//tipo
+t14=P+2;//posicion en heap
+t15=STACK[(int)t13];//TIPO
+t16=STACK[(int)t14];//POSICION EN HEAP
+t18=HEAP[(int)t16];
+t21=t16+1;//POSICION DEL PRIMER ELEMENTO DEL VECTOR
+t17=t15-1;//DISMINUCION DEL TIPO
+t19=0;
+printf("%c",91);
+L10:
+if(t19>=t18) goto L11;
+t20=HEAP[(int)t21];
+if (t17>0) goto L12;
+printf("%d",(int)t20);
+goto L13;
+L12:
+STACK[(int)t13]=t17;
+STACK[(int)t14]=t20;
+t22=STACK[81999];
+t22=1+t22;
+t23=81999-t22;
+STACK[(int)t23]=t21;
+t22=1+t22;
+t23=81999-t22;
+STACK[(int)t23]=t19;
+t22=1+t22;
+t23=81999-t22;
+STACK[(int)t23]=t17;
+t22=1+t22;
+t23=81999-t22;
+STACK[(int)t23]=t18;
+STACK[81999]=t22;
+proc_printInt();
+t22=STACK[81999];
+t23=81999-t22;
+t22=t22-1;
+t18=STACK[(int)t23];
+t23=81999-t22;
+t22=t22-1;
+t17=STACK[(int)t23];
+t23=81999-t22;
+t22=t22-1;
+t19=STACK[(int)t23];
+t23=81999-t22;
+t22=t22-1;
+t21=STACK[(int)t23];
+STACK[81999]=t22;
+L13:
+printf("%c",44);
+t21=t21+1;
+t19=t19+1;
+goto L10;
+L11:
+printf("%c",93);
+return;
+}
+ 
+void proc_printString(){
+t26=P+1;
+t27=STACK[(int)t26];
+L16:
+t28=HEAP[(int)t27];
+if(t28!=-1) goto L17;
+goto L18;
+L17:
+printf("%c",(int)t28);
+t27=t27 + 1;
+goto L16;
+L18:
+return;
+}
 
 
 void main(){
-//CREANDO VECTOR CON CAPACIDAD
-t0=H;
-HEAP[(int)H]=10;
-H=H+1;
-t2:
-if (t1==10) goto t3;
-HEAP[(int)H]=-123456;
-H=H+1;
-t1=t1+1;
-goto t2;
-t3:
-//CREANDO VECTOR VACIO
-t4=H;
-HEAP[(int)H]=0;
-H=H+1;
+//INICIO DE PRINT
 //CREANDO VECTOR CON LISTA DE VALORES
-t5=H;
-HEAP[(int)H]=5;
-H=H+1;
-HEAP[(int)H]=1;
-H=H+1;
-HEAP[(int)H]=2;
-H=H+1;
-HEAP[(int)H]=3;
-H=H+1;
-HEAP[(int)H]=4;
-H=H+1;
-HEAP[(int)H]=5;
-H=H+1;
 //CREANDO VECTOR CON VALORES REPETIDOS
-t7=H;
+t1=H;//POS DE INICIO VECTOR A
 HEAP[(int)H]=10;
 H++;
-t6=0;
+t0=0;
 L0:
-if (t6==10) goto L1;
-HEAP[(int)H]=0;
+if (t0==10) goto L1;
+HEAP[(int)H]=1;
 H=H+1;
-t6=t6+1;
+t0=t0+1;
 goto L0;
 L1:
+//CREANDO VECTOR CON VALORES REPETIDOS
+t3=H;//POS DE INICIO VECTOR A
+HEAP[(int)H]=8;
+H++;
+t2=0;
+L2:
+if (t2==8) goto L3;
+HEAP[(int)H]=2;
+H=H+1;
+t2=t2+1;
+goto L2;
+L3:
+//CREANDO VECTOR CON VALORES REPETIDOS
+t5=H;//POS DE INICIO VECTOR A
+HEAP[(int)H]=15;
+H++;
+t4=0;
+L4:
+if (t4==15) goto L5;
+HEAP[(int)H]=3;
+H=H+1;
+t4=t4+1;
+goto L4;
+L5:
+//CREANDO VECTOR CON VALORES REPETIDOS
+t7=H;//POS DE INICIO VECTOR A
+HEAP[(int)H]=2;
+H++;
+t6=0;
+L6:
+if (t6==2) goto L7;
+HEAP[(int)H]=5;
+H=H+1;
+t6=t6+1;
+goto L6;
+L7:
+//CREANDO VECTOR CON VALORES REPETIDOS
+t9=H;//POS DE INICIO VECTOR A
+HEAP[(int)H]=1;
+H++;
+t8=0;
+L8:
+if (t8==1) goto L9;
+HEAP[(int)H]=8;
+H=H+1;
+t8=t8+1;
+goto L8;
+L9:
+t10=H;//POS DE INICIO VECTOR B
+HEAP[(int)H]=5;
+H=H+1;
+HEAP[(int)H]=t1;
+H=H+1;
+HEAP[(int)H]=t3;
+H=H+1;
+HEAP[(int)H]=t5;
+H=H+1;
+HEAP[(int)H]=t7;
+H=H+1;
+HEAP[(int)H]=t9;
+H=H+1;
+t11=1+P;
+t12=2+P;
+STACK[(int)t11]=2;
+STACK[(int)t12]=t10;
+proc_printInt();
+//INICIO DE STRING
+t24=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if (t24==-1) goto L14;
+P=P+1;
+t25=P+1;
+STACK[(int)t25] =t24;
+proc_printString();
+P=P-1;
+goto L15;
+L14:
+L15:
+
+printf("%c",10);
+//FIN DE PRINT
 return;
 }

@@ -228,6 +228,19 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator) 
 		//gen.AddCodes(tmp2+"=2+P;",ambito)
 		fmt.Println(result.Value)
 		fmt.Println(result.TrueLabel)
-
+	} else if result.Type == interfaces.VECTOR {
+		dimension := result.Tipo2.GetValue(0).(interfaces.Dimensions)
+		largo := strconv.Itoa(dimension.Dimensions.Len())
+		tmp1 := gen.NewTemp()
+		gen.AddCodes(tmp1+"=1+P;", ambito)
+		tmp2 := gen.NewTemp()
+		gen.AddCodes(tmp2+"=2+P;", ambito)
+		gen.AddCodes("STACK[(int)"+tmp1+"]="+largo+";", ambito)
+		gen.AddCodes("STACK[(int)"+tmp2+"]="+result.Value+";", ambito)
+		fmt.Println("EL LARGO ES " + largo)
+		if dimension.Tipo == interfaces.INTEGER {
+			gen.AddFuncExtra("SETINT")
+			gen.AddCodes("proc_printInt();", ambito)
+		}
 	}
 }

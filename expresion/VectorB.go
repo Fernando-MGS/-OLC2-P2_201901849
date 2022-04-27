@@ -41,7 +41,7 @@ func (p VectorB) Ejecutar(env interface{}, gen *generator.Generator) interfaces.
 	largo := strconv.Itoa(p.list.Len())
 	long := gen.NewTemp()
 	//pos := gen.NewTemp()
-	gen.AddCodes(long+"=H;", ambito)
+	gen.AddCodes(long+"=H;//POS DE INICIO VECTOR B", ambito)
 	gen.AddCodes("HEAP[(int)H]="+largo+";", ambito)
 	gen.AddCodes("H=H+1;", ambito)
 	for _, s := range valores.ToArray() {
@@ -63,9 +63,10 @@ func (p VectorB) Ejecutar(env interface{}, gen *generator.Generator) interfaces.
 		tipo_d := retorno.Tipo2.GetValue(0).(interfaces.Dimensions)
 		tipo_d.Dimensions.Add(interfaces.VECTOR)
 		retorno.Tipo2 = arraylist.New()
-		retorno.Tipo2.Add(tipo)
+		retorno.Tipo2.Add(tipo_d)
 	}
-
+	fmt.Println("========")
+	fmt.Println(retorno.Tipo2.GetValue(0))
 	retorno.TrueLabel = long
 	retorno.Value = long
 	fmt.Println(tipo)
