@@ -114,8 +114,25 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			/*fmt.Println(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.Clone().ToArray()...)*/
 			//CompararTipos(p.Tipo.Tipo2, result.Tipo2)
 		} else if p.Tipo.Tipo == interfaces.VECTOR {
-			fmt.Println(p.Tipo.Tipo)
+			fmt.Print("P.tipo   ")
 			fmt.Println(p.Tipo.Tipo2.ToArray()...)
+			dimension_res := result.Tipo2.GetValue(0).(interfaces.Dimensions)
+			fmt.Print("res.dimension   ")
+			fmt.Println(dimension_res.Dimensions.ToArray()...)
+			dimension_tipo := p.Tipo.Tipo2.GetValue(0).(interfaces.TipoExpresion)
+			fmt.Println("hola 2")
+			if dimension_res.Tipo == interfaces.VOID || dimension_res.Tipo == dimension_tipo {
+				posicion2 := ""
+				posicion2 = result.Value
+				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.VECTOR, Tipo2: p.Tipo.Tipo2}
+				variable := interfaces.Symbol{Id: p.Id, Posicion2: posicion2, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
+				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, variable, variable.Tipo)
+				fmt.Println("se guardo")
+			} else {
+				env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN EN LA DECLARACION", p.Line, p.Col)
+				result.Type = interfaces.NULL
+				return result
+			}
 		} else if p.Tipo.Tipo == interfaces.STR || p.Tipo.Tipo == interfaces.STRING {
 			code := "//--------------INICIO DE DECLARACION--------" + p.Id + "\n"
 			tam := env.(environment.Environment).Control.Stack

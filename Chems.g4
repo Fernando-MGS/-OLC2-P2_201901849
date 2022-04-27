@@ -108,9 +108,6 @@ dimensiones  returns [interfaces.Dimensions d]:
                                                 } 
 ;
 
-
-
-
 tipo_vector returns [interfaces.TipoSimbolo t]:
   VECT MENOR vectores MAYOR {$t=interfaces.TipoSimbolo{interfaces.VECTOR,$vectores.l}}
 ;
@@ -139,9 +136,7 @@ vectores returns [*arrayList.List l]:
 ;
 
 loops returns [interfaces.Instruction i]:
-  LOOP  LLAVEIZQ instrucciones LLAVEDER {$i=instruction.NewLoop($instrucciones.l)
-    fmt.Println("TOY EN EL ANALISIS")
-  }
+  LOOP  LLAVEIZQ instrucciones LLAVEDER {$i=instruction.NewLoop($instrucciones.l)}
 ;
 
 ifs returns[interfaces.Instruction p]:
@@ -260,6 +255,10 @@ expr_arit returns[interfaces.Expresion p]
     | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l) }
     |arrayAcc {$p=$arrayAcc.p}
     |creatArray {$p=$creatArray.p}
+    |VEC CORIZQ listValues CORDER   {$p=expresion.NewVectorB($listValues.l)}
+    |VEC CORIZQ exp1=expression PTCOMA exp2=expression CORDER   {$p=expresion.NewVectorA($exp1.p,$exp2.p)}
+    |VECT DDPUNTO CAP PARIZQ expression PARDER  {$p=expresion.New_CapacityV($expression.p)}
+    |VECT DDPUNTO NEW PARIZQ PARDER {$p=expresion.NewVectorC()}
 ;
 
 
@@ -336,3 +335,5 @@ listArray returns[*arrayList.List l]:
 creatArray returns [interfaces.Expresion p]:
   CORIZQ exp1=expression PTCOMA exp2=expression CORDER {$p=expresion.NewArray2($exp1.p,$exp2.p)}
 ;
+
+

@@ -66,7 +66,7 @@ func (m Match) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 							gen.AddCodes(label_cond+":", ambito)
 						}
 					}
-					fmt.Println("el segundo for")
+					//fmt.Println("el segundo for")
 					//next_cond:=gen.NewLabel()
 					var tmp interfaces.Value
 					var aux interfaces.Expresion
