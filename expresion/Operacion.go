@@ -733,11 +733,7 @@ func Comprobar_Div(g *generator.Generator, izq, der interfaces.Value, tmp, value
 	if tipo == 0 {
 		code += tmp + "=" + izq.Value + "/" + der.Value + ";\n"
 	} else {
-		code += "STACK[(int)P+1]=" + izq.Value + ";\n"
-		code += "STACK[(int)P+2]=" + der.Value + ";\n"
-		g.AddFuncExtra("MOD")
-		code += "proc_calcularMod();"
-		code += tmp + "=STACK[(int)P];\n"
+		code += tmp + "=fmod(" + izq.Value + "," + der.Value + ");\n"
 	}
 	code += l2 + ":"
 	return code
