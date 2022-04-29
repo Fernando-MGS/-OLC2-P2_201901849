@@ -5,69 +5,75 @@ import (
 	"OLC2/generator"
 	"OLC2/interfaces"
 	"fmt"
-	"reflect"
 	"strconv"
 
-	arrayList "github.com/colegno/arraylist"
+	"github.com/colegno/arraylist"
 )
 
 type Array struct {
-	ListExp *arrayList.List
+	ListExp *arraylist.List
 }
 
-func NewArray(list *arrayList.List) Array {
+func NewArray(list *arraylist.List) Array {
 	exp := Array{list}
 	return exp
 }
 
 func (p Array) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
-
-	//tempExp := arrayList.New()
-	//arr := p.ListExp.ToArray()
-	/*fmt.Println(arr[len(arr)-1])
-	fmt.Println("=======")*/
-	/*for _, s := range p.ListExp.ToArray() {
-		//tempExp.Add(s.(interfaces.Expresion).Ejecutar(env,gen))
-	}*/
+	var retorno interfaces.Value
+	retorno.Type = interfaces.ARRAY
 	ambito := env.(environment.Environment).DevAmbito()
-	valor := gen.NewTemp()
-	var ret interfaces.Value
-	//tipo := WatchTipos(p.ListExp, env, gen)
-	gen.AddCodes("//CREANDO ARRAY", ambito)
-	dimensiones := ContarLista(p.ListExp)
-	dimensiones.Add(strconv.Itoa(len(p.ListExp.ToArray())))
-	//fmt.Println(dimensiones.ToArray()...)
-
-	tipo_def, conf := ExecExpresiones(p.ListExp, arrayList.New(), env, gen)
-	//fmt.Println(conf.ToArray()...)
-	init := true
-	for _, s := range conf.ToArray() {
-		if init {
-			gen.AddCodes(valor+"=H;", ambito)
-			init = false
+	valores := arraylist.New()
+	conf := true
+	gen.AddCodes("//CREANDO ARRAY CON LISTA DE VALORES", ambito)
+	var tipo interfaces.TipoExpresion
+	for _, s := range p.ListExp.ToArray() {
+		res := s.(interfaces.Expresion).Ejecutar(env, gen)
+		if res.Type == interfaces.ARRAY && conf {
+			retorno.Tipo2 = res.Tipo2
+			conf = false
+		} else {
+			tipo = res.Type
 		}
-		val := fmt.Sprintf("%v", s)
-		gen.AddCodes("HEAP[(int)H]="+val+";", ambito)
-		gen.AddCodes("H=H+1;", ambito)
-		gen.Heap++
+		valores.Add(res)
+		//fmt.Println(res)
 	}
-	dimension := interfaces.Dimensions{Tipo: tipo_def, Dimensions: dimensiones}
-	gen.AddCodes("HEAP[(int)H]=-123456;", ambito)
+	largo := strconv.Itoa(p.ListExp.Len())
+	long := gen.NewTemp()
+	//pos := gen.NewTemp()
+	gen.AddCodes(long+"=H;//POS DE INICIO NEWARRAY", ambito)
+	gen.AddCodes("HEAP[(int)H]="+largo+";", ambito)
 	gen.AddCodes("H=H+1;", ambito)
-	gen.Heap++
-	ret.Type = interfaces.ARRAY
-	ret.IsTemp = true
-	//ret.Tipo2 = FixLista(tipo, tipo_def)
-	ret.Tipo2 = arrayList.New()
-	ret.Tipo2.Add(dimension)
-	fmt.Println("ret.Tipo2.ToArray()...")
-	fmt.Println(ret.Tipo2.ToArray()...)
-	ret.Value = valor
-	ret.TrueLabel = DevSize(dimensiones)
-	gen.AddCodes("//ARRAY CREADO", ambito)
-	return ret
+	for _, s := range valores.ToArray() {
+		valors := s.(interfaces.Value)
+		gen.AddCodes("HEAP[(int)H]="+valors.Value+";", ambito)
+		gen.AddCodes("H=H+1;", ambito)
+	}
+	//gen.AddCodes(long+"="+largo+";", ambito)
+	/*gen.AddCodes(pos+"=H;", ambito)
+	gen.AddCodes("HEAP[(int)H]="+largo+";", ambito)
+	gen.AddCodes("H=H+1;", ambito)*/
+	if conf {
+		dimension := arraylist.New()
+		dimension.Add(tipo)
+		tipo_d := interfaces.Dimensions{Tipo: tipo, Dimensions: dimension}
+		retorno.Tipo2 = arraylist.New()
+		retorno.Tipo2.Add(tipo_d)
+	} else {
+		tipo_d := retorno.Tipo2.GetValue(0).(interfaces.Dimensions)
+		tipo_d.Dimensions.Add(interfaces.ARRAY)
+		retorno.Tipo2 = arraylist.New()
+		retorno.Tipo2.Add(tipo_d)
+	}
+	fmt.Println("========")
+	fmt.Println(retorno.Tipo2.GetValue(0))
+	retorno.TrueLabel = long
+	retorno.Value = long
+	fmt.Println(tipo)
+	return retorno
 }
 
+/*
 func WatchTipos(l *arrayList.List, env interface{}, gen *generator.Generator) *arrayList.List {
 	lista := arrayList.New()
 	//fmt.Println("======")
@@ -188,3 +194,7 @@ func DevSize(lens *arrayList.List) string {
 	}
 	return strconv.Itoa(size)
 }
+
+
+
+*/

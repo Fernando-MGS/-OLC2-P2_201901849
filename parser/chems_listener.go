@@ -110,9 +110,6 @@ type ChemsListener interface {
 	// EnterListValues is called when entering the listValues production.
 	EnterListValues(c *ListValuesContext)
 
-	// EnterArrayAcc is called when entering the arrayAcc production.
-	EnterArrayAcc(c *ArrayAccContext)
-
 	// EnterListArray is called when entering the listArray production.
 	EnterListArray(c *ListArrayContext)
 
@@ -220,9 +217,6 @@ type ChemsListener interface {
 
 	// ExitListValues is called when exiting the listValues production.
 	ExitListValues(c *ListValuesContext)
-
-	// ExitArrayAcc is called when exiting the arrayAcc production.
-	ExitArrayAcc(c *ArrayAccContext)
 
 	// ExitListArray is called when exiting the listArray production.
 	ExitListArray(c *ListArrayContext)

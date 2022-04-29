@@ -8,15 +8,14 @@ import (
 )
 
 type ModArray struct {
-	id     string
 	Access interfaces.Expresion
 	Value  interfaces.Expresion
 	Line   string
 	Col    string
 }
 
-func NewModArray(id string, index, val interfaces.Expresion, line, col int) ModArray {
-	instr := ModArray{id, index, val, strconv.Itoa(line), strconv.Itoa(col)}
+func NewModArray(index, val interfaces.Expresion, line, col int) ModArray {
+	instr := ModArray{index, val, strconv.Itoa(line), strconv.Itoa(col)}
 	return instr
 }
 
@@ -29,10 +28,22 @@ func (m ModArray) Ejecutar(env interface{}, gen *generator.Generator) interface{
 	if bounds.Type == interfaces.NULL || value.Type == interfaces.NULL {
 		return retorno
 	}
-	gen.AddCodes("//INICIANDO LA ASIGNACION DE "+m.id, ambito)
+	gen.AddCodes("//INICIANDO LA ASIGNACION DE UN ARRAY O VECTOR", ambito)
 	if bounds.Type == value.Type {
-		if bounds.Type == interfaces.ARRAY {
-			entrada := gen.NewLabel()
+		if bounds.Type == interfaces.ARRAY || bounds.Type == interfaces.VECTOR {
+			//env.(environment.Environment).NewError("EL ELEMENTO QUE SE QUIERE MODIFICAR NO ES UN VECTOR", m.Line, m.Col)
+			dim_bounds := bounds.Tipo2.GetValue(0).(interfaces.Dimensions)
+			dim_value := value.Tipo2.GetValue(0).(interfaces.Dimensions)
+			if dim_value.Dimensions.Len() != dim_bounds.Dimensions.Len() {
+				env.(environment.Environment).NewError("LAS DIMENSIONES NO CONCUERDAN", m.Line, m.Col)
+				return retorno
+			}
+			//gen.AddCodes(bounds.Value+"="+value.Value+";", ambito)
+			//return retorno
+		}
+		gen.AddCodes("HEAP[(int)"+bounds.TrueLabel+"]="+value.Value+";", ambito)
+
+		/*entrada := gen.NewLabel()
 			salida := gen.NewLabel()
 			//gen.AddCodes("if("+bounds.TrueLabel+") ",ambito)
 			iterador := gen.NewTemp()
@@ -53,10 +64,10 @@ func (m ModArray) Ejecutar(env interface{}, gen *generator.Generator) interface{
 			gen.AddCodes(salida+":", ambito)
 		} else {
 			gen.AddCodes("HEAP[(int)"+bounds.TrueLabel+"]="+value.Value+";", ambito)
-		}
+		}*/
 	} else {
 		env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN EN LA ASIGNACION", m.Line, m.Col)
 	}
-	gen.AddCodes("//FINALIZANDO LA ASIGNACION DE "+m.id, ambito)
+	gen.AddCodes("//FINALIZANDO LA ASIGNACION", ambito)
 	return retorno
 }

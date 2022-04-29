@@ -68,7 +68,10 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 			gen.AddExpression(newTemp, "", "", value, ambito)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.ARRAY == result.Tipo.Tipo {
-			retorno = interfaces.Value{Value: result.Posicion2, IsTemp: true, Type: interfaces.ARRAY, Tipo2: result.Tipo.Tipo2, TrueLabel: result.Longitud}
+			retorno = interfaces.Value{Value: result.Posicion2, IsTemp: true, Type: interfaces.ARRAY, Tipo2: result.Tipo.Tipo2, TrueLabel: result.Posicion2}
+			return retorno
+		} else if interfaces.VECTOR == result.Tipo.Tipo {
+			retorno = interfaces.Value{Value: result.Posicion2, IsTemp: true, Type: interfaces.VECTOR, Tipo2: result.Tipo.Tipo2, TrueLabel: result.Posicion2}
 			return retorno
 		}
 	}

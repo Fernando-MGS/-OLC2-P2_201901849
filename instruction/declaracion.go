@@ -5,7 +5,6 @@ import (
 	"OLC2/generator"
 	"OLC2/interfaces"
 	"fmt"
-	"reflect"
 	"strconv"
 
 	"github.com/colegno/arraylist"
@@ -32,8 +31,8 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	conf := false
 	ambito := env.(environment.Environment).DevAmbito()
 	//index := 0
-	tipo := reflect.TypeOf(p.Expresion)
-	t := fmt.Sprintf("%v", tipo)
+	//tipo := reflect.TypeOf(p.Expresion)
+	//t := fmt.Sprintf("%v", tipo)
 	if p.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
 		conf = true
 	} else if p.Tipo.Tipo == result.Type {
@@ -73,34 +72,14 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				size.Add(p.Tipo.Tipo)*/
 				//fmt.Println(size.ToArray()...)
 				posicion2 := ""
-				if t == "expresion.CallVariable" {
-					entrada := gen.NewLabel()
-					salida := gen.NewLabel()
-					//gen.AddCodes("if("+bounds.TrueLabel+") ",ambito)
-					iterador := gen.NewTemp()
-					contador := gen.NewTemp()
-					contador2 := gen.NewTemp()
-					aux := gen.NewTemp()
-					gen.AddCodes(iterador+"=0;//iterador", ambito)
-					gen.AddCodes(contador+"=H;//contador1", ambito)
-					gen.AddCodes(contador2+"="+result.Value+";//contador2", ambito)
-					gen.AddCodes(entrada+":", ambito)
-					gen.AddCodes("if("+iterador+"=="+result.TrueLabel+") goto "+salida+";", ambito)
-					gen.AddCodes(aux+"=HEAP[(int)"+contador2+"];", ambito)
-					gen.AddCodes("HEAP[(int)H]="+aux+";", ambito)
-					gen.AddCodes("H=H+1;", ambito)
-					//gen.AddCodes(contador+"="+contador+"+1;", ambito)
-					gen.AddCodes(contador2+"="+contador2+"+1;", ambito)
-					gen.AddCodes(iterador+"="+iterador+"+1;", ambito)
-					gen.AddCodes("goto "+entrada+";", ambito)
-					gen.AddCodes(salida+":", ambito)
-					posicion2 = contador
-				} else {
-					posicion2 = result.Value
-				}
-				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.ARRAY, Tipo2: result.Tipo2}
+				posicion2 = result.Value
+				dimension := interfaces.Dimensions{Tipo: tipoArr, Dimensions: result.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions}
+				dimensions_list := arraylist.New()
+				dimensions_list.Add(dimension)
+				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.ARRAY, Tipo2: dimensions_list}
 				variable := interfaces.Symbol{Id: p.Id, Posicion2: posicion2, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, variable, variable.Tipo)
+				fmt.Println("se guardo EN " + posicion2)
 				fmt.Println("se guardo")
 			} else {
 				env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN EN LA DECLARACION", p.Line, p.Col)
@@ -122,15 +101,21 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			dimension_tipo := p.Tipo.Tipo2.GetValue(0).(interfaces.TipoExpresion)
 			fmt.Println("hola 2")
 			if dimension_res.Tipo == interfaces.VOID || dimension_res.Tipo == dimension_tipo {
-				posicion2 := ""
-				posicion2 = result.Value
-				dimension := interfaces.Dimensions{Tipo: dimension_tipo, Dimensions: p.Tipo.Tipo2}
-				dimensions_list := arraylist.New()
-				dimensions_list.Add(dimension)
-				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.VECTOR, Tipo2: dimensions_list}
-				variable := interfaces.Symbol{Id: p.Id, Posicion2: posicion2, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
-				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, variable, variable.Tipo)
-				fmt.Println("se guardo EN " + posicion2)
+				if dimension_res.Dimensions.Len() != p.Tipo.Tipo2.Len() {
+					env.(environment.Environment).NewError("LOS TAMAÑOS NO CONCUERDAN", p.Line, p.Col)
+					result.Type = interfaces.NULL
+					return result
+				} else {
+					posicion2 := ""
+					posicion2 = result.Value
+					dimension := interfaces.Dimensions{Tipo: dimension_tipo, Dimensions: p.Tipo.Tipo2}
+					dimensions_list := arraylist.New()
+					dimensions_list.Add(dimension)
+					tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.VECTOR, Tipo2: dimensions_list}
+					variable := interfaces.Symbol{Id: p.Id, Posicion2: posicion2, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
+					env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, variable, variable.Tipo)
+					fmt.Println("se guardo EN " + posicion2)
+				}
 			} else {
 				env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN EN LA DECLARACION", p.Line, p.Col)
 				result.Type = interfaces.NULL

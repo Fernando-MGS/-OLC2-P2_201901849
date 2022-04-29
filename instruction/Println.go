@@ -29,6 +29,7 @@ func (p Print) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	var ret interfaces.Value
 	ret.Type = interfaces.NULL
 	ambito := env.(environment.Environment).DevAmbito()
+	fmt.Println("VAMO A IMPRIMIR", len(p.Formato))
 	gen.AddCodes("//INICIO DE PRINT", ambito)
 	if len(p.Formato) >= 1 {
 		index := 0
@@ -52,6 +53,7 @@ func (p Print) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		}
 		gen.AddPrintf("c", "10", ambito)
 	} else {
+		fmt.Println("EL LARGO DE LISTA ES ", p.List_Expresion.Len())
 		aux := p.List_Expresion.GetValue(0).(interfaces.Expresion)
 		tipo := reflect.TypeOf(aux)
 		t := fmt.Sprintf("%v", tipo)
@@ -156,8 +158,10 @@ func Analisis_Print(form string) ([]string, string, bool) {
 }
 
 func console(p interfaces.Expresion, env interface{}, gen *generator.Generator) {
+	fmt.Println("console")
 	result := p.Ejecutar(env, gen)
 	ambito := env.(environment.Environment).DevAmbito()
+	fmt.Println(result)
 	if result.Type == interfaces.INTEGER {
 		gen.AddPrintf("d", "(int)"+fmt.Sprintf("%v", result.Value), ambito)
 	} else if result.Type == interfaces.FLOAT {
@@ -200,36 +204,6 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator) 
 		gen.AddFuncExtra("PRINTSTR")
 	} else if result.Type == interfaces.ARRAY {
 		dimension := result.Tipo2.GetValue(0).(interfaces.Dimensions)
-
-		tmp1 := gen.NewTemp()
-		gen.AddCodes(tmp1+"=1+P;", ambito)
-		tmp2 := gen.NewTemp()
-		gen.AddCodes(tmp2+"=2+P;", ambito)
-		gen.AddCodes("STACK[(int)"+tmp1+"]="+result.Value+";", ambito)
-		gen.AddCodes("STACK[(int)"+tmp2+"]="+result.TrueLabel+";", ambito)
-		if dimension.Tipo == interfaces.INTEGER {
-			gen.AddCodes("//IMPRIMIENDO ARRAY DE INT", ambito)
-			gen.AddFuncExtra("PRINTINT")
-			gen.AddCodes("proc_printSetNumbers();", ambito)
-		} else if dimension.Tipo == interfaces.FLOAT {
-			gen.AddFuncExtra("PRINTFLOAT")
-			gen.AddCodes("//IMPRIMIENDO ARRAY DE FLOAT", ambito)
-			gen.AddCodes("proc_printSetFloat();", ambito)
-		} else if dimension.Tipo == interfaces.CHAR {
-			gen.AddFuncExtra("PRINTCHAR")
-			gen.AddCodes("//IMPRIMIENDO ARRAY DE CHAR", ambito)
-			gen.AddCodes("proc_printSetChar();", ambito)
-		} else if dimension.Tipo == interfaces.STR || dimension.Tipo == interfaces.STRING {
-			gen.AddCodes("//IMPRIMIENDO ARRAY DE STRING", ambito)
-			gen.AddFuncExtra("PRINTSTRING")
-			gen.AddCodes("proc_printSetString();", ambito)
-		}
-
-		//gen.AddCodes(tmp2+"=2+P;",ambito)
-		fmt.Println(result.Value)
-		fmt.Println(result.TrueLabel)
-	} else if result.Type == interfaces.VECTOR {
-		dimension := result.Tipo2.GetValue(0).(interfaces.Dimensions)
 		largo := strconv.Itoa(dimension.Dimensions.Len())
 		tmp1 := gen.NewTemp()
 		gen.AddCodes(tmp1+"=1+P;", ambito)
@@ -239,8 +213,54 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator) 
 		gen.AddCodes("STACK[(int)"+tmp2+"]="+result.Value+";", ambito)
 		fmt.Println("EL LARGO ES " + largo)
 		if dimension.Tipo == interfaces.INTEGER {
+			gen.AddCodes("//IMPRIMIENDO ARRAY DE INT", ambito)
 			gen.AddFuncExtra("SETINT")
 			gen.AddCodes("proc_printInt();", ambito)
+		} else if dimension.Tipo == interfaces.FLOAT {
+			gen.AddCodes("//IMPRIMIENDO ARRAY DE FLOAT", ambito)
+			gen.AddFuncExtra("SETFLOAT")
+			gen.AddCodes("proc_printFloat();", ambito)
+		} else if dimension.Tipo == interfaces.CHAR {
+			gen.AddCodes("//IMPRIMIENDO ARRAY DE CHAR", ambito)
+			gen.AddFuncExtra("SETCHAR")
+			gen.AddCodes("proc_printChar();", ambito)
+		} else if dimension.Tipo == interfaces.STR || dimension.Tipo == interfaces.STRING {
+			gen.AddCodes("//IMPRIMIENDO ARRAY DE INT", ambito)
+			gen.AddFuncExtra("SETSTR")
+			gen.AddCodes("proc_printStr();", ambito)
+		}
+
+		//gen.AddCodes(tmp2+"=2+P;",ambito)
+		fmt.Println(result.Value)
+		fmt.Println(result.TrueLabel)
+	} else if result.Type == interfaces.VECTOR {
+		fmt.Println("EL LARGO ES ")
+		dimension := result.Tipo2.GetValue(0).(interfaces.Dimensions)
+
+		largo := strconv.Itoa(dimension.Dimensions.Len())
+		tmp1 := gen.NewTemp()
+		gen.AddCodes(tmp1+"=1+P;", ambito)
+		tmp2 := gen.NewTemp()
+		gen.AddCodes(tmp2+"=2+P;", ambito)
+		gen.AddCodes("STACK[(int)"+tmp1+"]="+largo+";", ambito)
+		gen.AddCodes("STACK[(int)"+tmp2+"]="+result.Value+";", ambito)
+		fmt.Println("EL LARGO ES " + largo)
+		if dimension.Tipo == interfaces.INTEGER {
+			gen.AddCodes("//IMPRIMIENDO VECTOR DE INT", ambito)
+			gen.AddFuncExtra("SETINT")
+			gen.AddCodes("proc_printInt();", ambito)
+		} else if dimension.Tipo == interfaces.FLOAT {
+			gen.AddCodes("//IMPRIMIENDO VECTOR DE FLOAT", ambito)
+			gen.AddFuncExtra("SETFLOAT")
+			gen.AddCodes("proc_printFloat();", ambito)
+		} else if dimension.Tipo == interfaces.CHAR {
+			gen.AddCodes("//IMPRIMIENDO FLOAT DE CHAR", ambito)
+			gen.AddFuncExtra("SETCHAR")
+			gen.AddCodes("proc_printChar();", ambito)
+		} else if dimension.Tipo == interfaces.STR || dimension.Tipo == interfaces.STRING {
+			gen.AddCodes("//IMPRIMIENDO VECTOR DE STRING", ambito)
+			gen.AddFuncExtra("SETSTR")
+			gen.AddCodes("proc_printStr();", ambito)
 		}
 	}
 }

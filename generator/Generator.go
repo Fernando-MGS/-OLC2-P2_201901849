@@ -243,6 +243,15 @@ func (g *Generator) AddFuncExtra(id string) {
 		} else if id == "SETINT" {
 			g.func_extra[id] = true
 			g.extra_code.Add(printSetInt(g))
+		} else if id == "SETFLOAT" {
+			g.func_extra[id] = true
+			g.extra_code.Add(printSetFloat(g))
+		} else if id == "SETCHAR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(printSetChar(g))
+		} else if id == "SETSTR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(printSetString(g))
 		}
 	}
 
@@ -755,9 +764,304 @@ func printSetInt(gen *Generator) string {
 	code += "STACK[81999]=" + size_return + ";\n"
 	//SON DATOS
 	code += tipo2 + ":\n"
-	code += "printf(\"%c\",44);\n" //","
+
 	code += pos + "=" + pos + "+1;\n"
 	code += iterador + "=" + iterador + "+1;\n"
+	code += "if (" + iterador + "==" + longitud + ") goto " + salida + ";\n"
+	code += "printf(\"%c\",44);\n" //","
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "printf(\"%c\",93);\n" //]
+	code += "return;\n}\n "
+	return code
+}
+
+func printSetFloat(gen *Generator) string {
+	code := "void proc_printFloat(){\n"
+	index_p1 := gen.NewTemp()
+	index_p2 := gen.NewTemp()
+	param := gen.NewTemp()  //tipo: si es 0 entonces empieza a imprimir datos, si es mayor entonces recursiva de procInt
+	param2 := gen.NewTemp() //la posicion en el heap
+	tipo := gen.NewTemp()   //temporal que se usara para comparar el tipo
+	longitud := gen.NewTemp()
+	iterador := gen.NewTemp()
+	valor := gen.NewTemp()
+	pos := gen.NewTemp()
+	entrada := gen.NewLabel()
+	salida := gen.NewLabel()
+	tipo1 := gen.NewLabel()
+	tipo2 := gen.NewLabel()
+	size_return := gen.NewTemp()
+	//retorno:=gen.NewTemp()
+	index_ret := gen.NewTemp()
+	//pos_ret:=gen.NewTemp()
+	code += index_p1 + "=P+1;//tipo\n"
+	code += index_p2 + "=P+2;//posicion en heap\n"
+	code += param + "=STACK[(int)" + index_p1 + "];//TIPO\n"
+	code += param2 + "=STACK[(int)" + index_p2 + "];//POSICION EN HEAP\n"
+	code += longitud + "=HEAP[(int)" + param2 + "];\n"
+	code += pos + "=" + param2 + "+1;//POSICION DEL PRIMER ELEMENTO DEL VECTOR\n"
+	code += tipo + "=" + param + "-1;//DISMINUCION DEL TIPO\n"
+	code += iterador + "=0;\n"
+	code += "printf(\"%c\",91);\n" //]
+	code += entrada + ":\n"
+
+	code += "if(" + iterador + ">=" + longitud + ") goto " + salida + ";\n"
+	code += valor + "=HEAP[(int)" + pos + "];\n"
+
+	//comprobacion de tipo
+	code += "if (" + tipo + ">0) goto " + tipo1 + ";\n"
+
+	//ES UN NUMERO
+	code += "printf(\"%f\"," + valor + ");\n" //]
+	code += "goto " + tipo2 + ";\n"
+
+	//ES UN VECTOR
+	code += tipo1 + ":\n"
+	//PARAMETROS PARA LLAMAR DE NUEVO AL PROC PRINTINT
+	code += "STACK[(int)" + index_p1 + "]=" + tipo + ";\n"
+	code += "STACK[(int)" + index_p2 + "]=" + valor + ";\n"
+	//DEJANDO UN RETORNO DONDE SE GUARDA LA POSICION ACTUAL
+	code += size_return + "=STACK[81999];\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + pos + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + iterador + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + tipo + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + longitud + ";\n"
+	code += "STACK[81999]=" + size_return + ";\n"
+	//LLAMADO DE LA FUNCION
+	code += "proc_printFloat();\n"
+	//RECUPERACION DE LA LONGITUD
+	code += size_return + "=STACK[81999];\n"
+	code += index_ret + "=81999-" + size_return + ";\n"    //CALCULO DEL INDICE DONDE ESTA EL RETORNO
+	code += size_return + "=" + size_return + "-1;\n"      //DISMINUCION DEL NUMERO DE RETORNOS ESPERADOS
+	code += longitud + "=STACK[(int)" + index_ret + "];\n" //RECUPERACION FINAL DE LA POSICION
+	//code += size_return + "=" + size_return + "-1;\n"
+	//RECUPERACION DE LA TIPO
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += tipo + "=STACK[(int)" + index_ret + "];\n"
+	//RECUPERACION DEL ITERADOD
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += iterador + "=STACK[(int)" + index_ret + "];\n"
+	//RECUPERACION DE LA POSICION
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += pos + "=STACK[(int)" + index_ret + "];\n"
+	//MODIFICACION DEL TAMAÑO
+	code += "STACK[81999]=" + size_return + ";\n"
+	//SON DATOS
+	code += tipo2 + ":\n"
+
+	code += pos + "=" + pos + "+1;\n"
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "if (" + iterador + "==" + longitud + ") goto " + salida + ";\n"
+	code += "printf(\"%c\",44);\n" //","
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "printf(\"%c\",93);\n" //]
+	code += "return;\n}\n "
+	return code
+}
+
+func printSetChar(gen *Generator) string {
+	code := "void proc_printChar(){\n"
+	index_p1 := gen.NewTemp()
+	index_p2 := gen.NewTemp()
+	param := gen.NewTemp()  //tipo: si es 0 entonces empieza a imprimir datos, si es mayor entonces recursiva de procInt
+	param2 := gen.NewTemp() //la posicion en el heap
+	tipo := gen.NewTemp()   //temporal que se usara para comparar el tipo
+	longitud := gen.NewTemp()
+	iterador := gen.NewTemp()
+	valor := gen.NewTemp()
+	pos := gen.NewTemp()
+	entrada := gen.NewLabel()
+	salida := gen.NewLabel()
+	tipo1 := gen.NewLabel()
+	tipo2 := gen.NewLabel()
+	size_return := gen.NewTemp()
+	//retorno:=gen.NewTemp()
+	index_ret := gen.NewTemp()
+	//pos_ret:=gen.NewTemp()
+	code += index_p1 + "=P+1;//tipo\n"
+	code += index_p2 + "=P+2;//posicion en heap\n"
+	code += param + "=STACK[(int)" + index_p1 + "];//TIPO\n"
+	code += param2 + "=STACK[(int)" + index_p2 + "];//POSICION EN HEAP\n"
+	code += longitud + "=HEAP[(int)" + param2 + "];\n"
+	code += pos + "=" + param2 + "+1;//POSICION DEL PRIMER ELEMENTO DEL VECTOR\n"
+	code += tipo + "=" + param + "-1;//DISMINUCION DEL TIPO\n"
+	code += iterador + "=0;\n"
+	code += "printf(\"%c\",91);\n" //]
+	code += entrada + ":\n"
+
+	code += "if(" + iterador + ">=" + longitud + ") goto " + salida + ";\n"
+	code += valor + "=HEAP[(int)" + pos + "];\n"
+
+	//comprobacion de tipo
+	code += "if (" + tipo + ">0) goto " + tipo1 + ";\n"
+
+	//ES UN NUMERO
+	code += "printf(\"%c\",(int)" + valor + ");\n" //]
+	code += "goto " + tipo2 + ";\n"
+
+	//ES UN VECTOR
+	code += tipo1 + ":\n"
+	//PARAMETROS PARA LLAMAR DE NUEVO AL PROC PRINTINT
+	code += "STACK[(int)" + index_p1 + "]=" + tipo + ";\n"
+	code += "STACK[(int)" + index_p2 + "]=" + valor + ";\n"
+	//DEJANDO UN RETORNO DONDE SE GUARDA LA POSICION ACTUAL
+	code += size_return + "=STACK[81999];\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + pos + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + iterador + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + tipo + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + longitud + ";\n"
+	code += "STACK[81999]=" + size_return + ";\n"
+	//LLAMADO DE LA FUNCION
+	code += "proc_printChar();\n"
+	//RECUPERACION DE LA LONGITUD
+	code += size_return + "=STACK[81999];\n"
+	code += index_ret + "=81999-" + size_return + ";\n"    //CALCULO DEL INDICE DONDE ESTA EL RETORNO
+	code += size_return + "=" + size_return + "-1;\n"      //DISMINUCION DEL NUMERO DE RETORNOS ESPERADOS
+	code += longitud + "=STACK[(int)" + index_ret + "];\n" //RECUPERACION FINAL DE LA POSICION
+	//code += size_return + "=" + size_return + "-1;\n"
+	//RECUPERACION DE LA TIPO
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += tipo + "=STACK[(int)" + index_ret + "];\n"
+	//RECUPERACION DEL ITERADOD
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += iterador + "=STACK[(int)" + index_ret + "];\n"
+	//RECUPERACION DE LA POSICION
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += pos + "=STACK[(int)" + index_ret + "];\n"
+	//MODIFICACION DEL TAMAÑO
+	code += "STACK[81999]=" + size_return + ";\n"
+	//SON DATOS
+	code += tipo2 + ":\n"
+
+	code += pos + "=" + pos + "+1;\n"
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "if (" + iterador + "==" + longitud + ") goto " + salida + ";\n"
+	code += "printf(\"%c\",44);\n" //","
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "printf(\"%c\",93);\n" //]
+	code += "return;\n}\n "
+	return code
+}
+
+func printSetString(gen *Generator) string {
+	code := "void proc_printStr(){\n"
+	index_p1 := gen.NewTemp()
+	index_p2 := gen.NewTemp()
+	param := gen.NewTemp()  //tipo: si es 0 entonces empieza a imprimir datos, si es mayor entonces recursiva de procInt
+	param2 := gen.NewTemp() //la posicion en el heap
+	tipo := gen.NewTemp()   //temporal que se usara para comparar el tipo
+	longitud := gen.NewTemp()
+	iterador := gen.NewTemp()
+	valor := gen.NewTemp()
+	pos := gen.NewTemp()
+	entrada := gen.NewLabel()
+	salida := gen.NewLabel()
+	tipo1 := gen.NewLabel()
+	tipo2 := gen.NewLabel()
+	size_return := gen.NewTemp()
+	//retorno:=gen.NewTemp()
+	index_ret := gen.NewTemp()
+	//pos_ret:=gen.NewTemp()
+	code += index_p1 + "=P+1;//tipo\n"
+	code += index_p2 + "=P+2;//posicion en heap\n"
+	code += param + "=STACK[(int)" + index_p1 + "];//TIPO\n"
+	code += param2 + "=STACK[(int)" + index_p2 + "];//POSICION EN HEAP\n"
+	code += longitud + "=HEAP[(int)" + param2 + "];\n"
+	code += pos + "=" + param2 + "+1;//POSICION DEL PRIMER ELEMENTO DEL VECTOR\n"
+	code += tipo + "=" + param + "-1;//DISMINUCION DEL TIPO\n"
+	code += iterador + "=0;\n"
+	code += "printf(\"%c\",91);\n" //]
+	code += entrada + ":\n"
+
+	code += "if(" + iterador + ">=" + longitud + ") goto " + salida + ";\n"
+	code += valor + "=HEAP[(int)" + pos + "];\n"
+
+	//comprobacion de tipo
+	code += "if (" + tipo + ">0) goto " + tipo1 + ";\n"
+
+	//ES UN NUMERO
+	//code += "printf(\"%c\",(int)" + valor + ");\n" //]
+	code += "printf(\"%c\",34);\n" //]
+	code += "STACK[(int)" + index_p1 + "]=" + valor + ";\n"
+	gen.AddFuncExtra("PRINTSTR")
+	code += "proc_printString();\n"
+	code += "printf(\"%c\",34);\n" //]
+	code += "goto " + tipo2 + ";\n"
+
+	//ES UN VECTOR
+	code += tipo1 + ":\n"
+	//PARAMETROS PARA LLAMAR DE NUEVO AL PROC PRINTINT
+	code += "STACK[(int)" + index_p1 + "]=" + tipo + ";\n"
+	code += "STACK[(int)" + index_p2 + "]=" + valor + ";\n"
+	//DEJANDO UN RETORNO DONDE SE GUARDA LA POSICION ACTUAL
+	code += size_return + "=STACK[81999];\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + pos + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + iterador + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + tipo + ";\n"
+	code += size_return + "=1+" + size_return + ";\n"
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += "STACK[(int)" + index_ret + "]=" + longitud + ";\n"
+	code += "STACK[81999]=" + size_return + ";\n"
+	//LLAMADO DE LA FUNCION
+	code += "proc_printStr();\n"
+	//RECUPERACION DE LA LONGITUD
+	code += size_return + "=STACK[81999];\n"
+	code += index_ret + "=81999-" + size_return + ";\n"    //CALCULO DEL INDICE DONDE ESTA EL RETORNO
+	code += size_return + "=" + size_return + "-1;\n"      //DISMINUCION DEL NUMERO DE RETORNOS ESPERADOS
+	code += longitud + "=STACK[(int)" + index_ret + "];\n" //RECUPERACION FINAL DE LA POSICION
+	//code += size_return + "=" + size_return + "-1;\n"
+	//RECUPERACION DE LA TIPO
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += tipo + "=STACK[(int)" + index_ret + "];\n"
+	//RECUPERACION DEL ITERADOD
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += iterador + "=STACK[(int)" + index_ret + "];\n"
+	//RECUPERACION DE LA POSICION
+	code += index_ret + "=81999-" + size_return + ";\n"
+	code += size_return + "=" + size_return + "-1;\n"
+	code += pos + "=STACK[(int)" + index_ret + "];\n"
+	//MODIFICACION DEL TAMAÑO
+	code += "STACK[81999]=" + size_return + ";\n"
+	//SON DATOS
+	code += tipo2 + ":\n"
+
+	code += pos + "=" + pos + "+1;\n"
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "if (" + iterador + "==" + longitud + ") goto " + salida + ";\n"
+	code += "printf(\"%c\",44);\n" //","
 	code += "goto " + entrada + ";\n"
 	code += salida + ":\n"
 	code += "printf(\"%c\",93);\n" //]

@@ -228,7 +228,7 @@ iter_for returns[interfaces.For_Range p]:
   |exp1=expression {$p=interfaces.For_Range{$exp1.p,expresion.NewPrimitivo (1,interfaces.INTEGER,0,0),1}}
 ;
 mod_Array returns[interfaces.Instruction p]:
-  id=ID list=listArray IGUAL expression {$p=instruction.NewModArray($id.text,expresion.NewArrayAccess($id.text,$list.l,$id.GetLine(),$id.GetColumn()),$expression.p,$IGUAL.GetLine(),$IGUAL.GetColumn())} 
+  exp1=expression IGUAL expression {$p=instruction.NewModArray($exp1.p,$expression.p,$IGUAL.GetLine(),$IGUAL.GetColumn())} 
 ;
 
 //EXPRESIONES
@@ -253,7 +253,7 @@ expr_arit returns[interfaces.Expresion p]
     | ifs   {$p=expresion.NewDevLoop($ifs.p)}
     |matches {$p=expresion.NewDevLoop($matches.m)}
     | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l) }
-    |arrayAcc {$p=$arrayAcc.p}
+    |id=expr_arit list=listArray {$p=expresion.NewArrayAccess($id.p,$list.l,0,0)}
     |creatArray {$p=$creatArray.p}
     |VEC CORIZQ listValues CORDER   {$p=expresion.NewVectorB($listValues.l)}
     |VEC CORIZQ exp1=expression PTCOMA exp2=expression CORDER   {$p=expresion.NewVectorA($exp1.p,$exp2.p)}
@@ -317,9 +317,7 @@ listValues returns[*arrayList.List l]
                 }
 ;
 
-arrayAcc returns [interfaces.Expresion p]:
-  id=ID list=listArray {$p=expresion.NewArrayAccess($id.text,$list.l,$id.GetLine(),$id.GetColumn())}
-;
+
 
 listArray returns[*arrayList.List l]:
   CORIZQ expression CORDER {
