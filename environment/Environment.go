@@ -95,7 +95,7 @@ func (env Environment) GetVariable(id, line, col string) interfaces.Symbol {
 	err := interfaces.Errores{Line: line, Col: col, Mess: "LA VARIABLE \"" + id + "\" NO EXISTE", Fecha: fecha}
 	env.Errores(err)
 	tipos := interfaces.TipoSimbolo{Tipo: interfaces.NULL}
-	return interfaces.Symbol{Id: "", Tipo: tipos, Posicion: 0}
+	return interfaces.Symbol{Id: "", Tipo: tipos, Posicion: "0"}
 }
 
 func (env Environment) LogBase(s interfaces.Bases) {

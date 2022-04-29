@@ -9,7 +9,7 @@ import (
 type Symbol struct {
 	Id        string
 	Tipo      TipoSimbolo
-	Posicion  int
+	Posicion  string
 	Posicion2 string
 	Longitud  string
 	Mutable   bool

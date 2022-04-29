@@ -42,17 +42,17 @@ func (f For) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		salida := gen.NewLabel()
 		contador := gen.NewTemp()
 		pre_contador := gen.NewTemp()
-		p := gen.Stack
+		//p := gen.Stack
 		gen.AddCodes("//INICIO DE FOR-----", ambito)
-		env_stack := env.(environment.Environment).Control.Stack
-		env.(environment.Environment).Control.Stack++
-		tam := p + env_stack
+		//env_stack := env.(environment.Environment).Control.Stack
+		//env.(environment.Environment).Control.Stack++
+		tam := gen.NewTemp()
 		variable := interfaces.Symbol{Id: f.Variable, Tipo: tipos, Posicion: tam, Mutable: true, Line: f.line, Col: f.col}
 		tmpEnv.SaveVariable(f.line, f.col, f.Variable, variable, tipos)
-		gen.AddCodes("STACK["+strconv.Itoa(tam)+"]="+rangoInf.Value+";", ambito)
+		gen.AddCodes("STACK[(int)"+tam+"]="+rangoInf.Value+";", ambito)
 		gen.AddCodes(entrada+":", ambito)
 		llamada := gen.NewTemp()
-		gen.AddCodes(llamada+"=STACK["+strconv.Itoa(tam)+"];", ambito)
+		gen.AddCodes(llamada+"=STACK["+tam+"];", ambito)
 		code := "if(" + llamada + "<" + rangoSup.Value + ") goto " + ciclo + ";"
 		gen.AddCodes(code, ambito)
 		gen.AddCodes("goto "+salida+";", ambito)
@@ -60,9 +60,9 @@ func (f For) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		for _, s := range f.Cuerpo.ToArray() {
 			s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
 		}
-		contar := pre_contador + "=STACK[" + strconv.Itoa(tam) + "];"
+		contar := pre_contador + "=STACK[" + tam + "];"
 		incrementar := contador + "=" + pre_contador + "+1;"
-		modificar := "STACK[" + strconv.Itoa(tam) + "]=" + contador + ";"
+		modificar := "STACK[" + tam + "]=" + contador + ";"
 		gen.AddCodes(contar, ambito)
 		gen.AddCodes(incrementar, ambito)
 		gen.AddCodes(modificar, ambito)

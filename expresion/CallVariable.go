@@ -29,23 +29,23 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 		gen.AddCodes("//INICIO DE LLAMADA"+p.Id+"", ambito)
 		newTemp := gen.NewTemp()
 		if interfaces.INTEGER == result.Tipo.Tipo || interfaces.FLOAT == result.Tipo.Tipo {
-			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"
+			value := "STACK[(int)" + result.Posicion + "]"
 			gen.AddExpression(newTemp, "", "", value, ambito)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.FLOAT == result.Tipo.Tipo {
-			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"
+			value := "STACK[(int)" + result.Posicion + "]"
 			gen.AddExpression(newTemp, "", "", value, ambito)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.USIZE == result.Tipo.Tipo {
-			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"
+			value := "STACK[(int)" + result.Posicion + "]"
 			gen.AddExpression(newTemp, "", "", value, ambito)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.CHAR == result.Tipo.Tipo {
-			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"
+			value := "STACK[(int)" + result.Posicion + "]"
 			gen.AddExpression(newTemp, "", "", value, ambito)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.BOOLEAN == result.Tipo.Tipo {
-			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"
+			value := "STACK[(int)" + result.Posicion + "]"
 			gen.AddExpression(newTemp, "", "", value, ambito)
 			l1 := gen.NewLabel()
 			l2 := ""
@@ -64,7 +64,7 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 			}
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.STR == result.Tipo.Tipo || result.Tipo.Tipo == interfaces.STRING {
-			value := "STACK[" + strconv.Itoa(result.Posicion) + "]"
+			value := "STACK[(int)" + result.Posicion + "]"
 			gen.AddExpression(newTemp, "", "", value, ambito)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.ARRAY == result.Tipo.Tipo {

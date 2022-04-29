@@ -43,12 +43,12 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			return result
 		}
 		if variable.Tipo.Tipo == result.Type || variable.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
-
+			gen.AddCodes("//INICIANDO ASIGNACION DE "+p.Id, ambito)
 			if result.Type == interfaces.VECTOR {
-
+				gen.AddCodes(variable.Posicion2+"="+result.Value+";", ambito)
 			} else if result.Type == interfaces.ARRAY {
 				//posicion2:=""
-				gen.AddCodes("//INICIANDO ASIGNACION DE"+p.Id, ambito)
+
 				if t == "expresion.CallVariable" {
 					entrada := gen.NewLabel()
 					salida := gen.NewLabel()
@@ -84,10 +84,10 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				l2 := gen.GetTempsB().FalseL
 				l3 := gen.NewLabel()
 				value += l1 + ":\n"
-				value += "STACK[" + strconv.Itoa(variable.Posicion) + "]=1;\n"
+				value += "STACK[(int)" + variable.Posicion + "]=1;\n"
 				value += "goto " + l3 + ";\n"
 				value += l2 + ":\n"
-				value += "STACK[" + strconv.Itoa(variable.Posicion) + "]=0;\n"
+				value += "STACK[(int)" + variable.Posicion + "]=0;\n"
 				value += l3 + ":\n"
 				gen.AddCodes(value, ambito)
 				gen.SetConf()
@@ -102,7 +102,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					result.Value = val
 				}
 				value := "//---------INICIANDO ASIGNACION-------" + p.Id + "\n"
-				value += "STACK[" + strconv.Itoa(variable.Posicion) + "]"
+				value += "STACK[(int)" + variable.Posicion + "]"
 				value += "=" + result.Value + ";\n"
 				value += "//---------FIN DE ASIGNACION-------" + p.Id + ""
 				gen.AddCodes(value, ambito)

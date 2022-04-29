@@ -113,6 +113,8 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		}
 	} else {
 		env.(environment.Environment).NewError("SE ESPERABA UNA EXPRESION BOOLEANA", p.line, p.col)
+		ret.Type = interfaces.NULL
+		return ret
 	}
 	if p.Tipo == 0 {
 		fmt.Println("LA salida es " + gen.GetSalida())
