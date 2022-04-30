@@ -38,9 +38,9 @@ func (p While) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	//salida:=gen.NewLabel()
 	condition := p.Expresion.Ejecutar(env, gen)
 	if condition.Type == interfaces.BOOLEAN {
-		l1 := gen.GetTempsB().TrueL
-		l2 := gen.GetTempsB().FalseL
-		gen.SetConf()
+		l1 := condition.TrueLabel
+		l2 := condition.FalseLabel
+		//gen.SetConf()
 		value := l1 + ":\n" // si es verdadera irá de nuevo a entrada para repetir el proceso
 		gen.AddCodes(value, ambito)
 		stack := env.(environment.Environment).Control.Stack

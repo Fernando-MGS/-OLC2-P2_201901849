@@ -32,10 +32,10 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	var ret interfaces.Value
 	ret.Type = interfaces.NULL
 	//retorno := ""
-	if gen.GetConf() == 1 {
+	/*if gen.GetConf() == 1 {
 		gen.SetConf()
-	}
-	fmt.Println("HOLA")
+	}*/
+	//fmt.Println("HOLA")
 	//ret.Value = retorno
 	condicion := p.Condicion.Ejecutar(env, gen)
 	ambito := env.(environment.Environment).DevAmbito()
@@ -43,7 +43,7 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	if condicion.Type == interfaces.BOOLEAN {
 		salida := ""
 
-		l2 := gen.GetTempsB().FalseL
+		l2 := condicion.FalseLabel
 		if p.Tipo == 0 {
 			salida = gen.NewLabel()
 			gen.SetSalida(salida)
@@ -62,9 +62,9 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 			salida = gen.GetSalida()
 		}
 		//fmt.Println("EL RETORNO NAME ES " + retorno)
-		l1 := gen.GetTempsB().TrueL
+		l1 := condicion.TrueLabel
 		//fmt.Println("El conf es " + strconv.Itoa(gen.GetConf()) + l1)
-		gen.SetConf()
+		//gen.SetConf()
 		//fmt.Println("El conf luego es " + strconv.Itoa(gen.GetConf()) + l1)
 		value := l1 + ":\n" // si es verdadera irá de nuevo a entrada para repetir el proceso
 		gen.AddCodes(value, ambito)
@@ -121,9 +121,9 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		gen.AddCodes("//SALIDA DEL IF", ambito)
 		gen.AddCodes(gen.GetSalida()+":", ambito)
 	}
-	if gen.GetConf() == 1 {
+	/*if gen.GetConf() == 1 {
 		gen.SetConf()
-	}
+	}*/
 	if p.Tipo == 0 {
 		gen.DelSalida()
 		gen.DelRetorno()

@@ -60,7 +60,7 @@ func (p ArrayAccess) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	new_dimension := interfaces.Dimensions{Tipo: dimensions.Tipo, Dimensions: result_access.Tipo2}
 	retorno.Tipo2 = arraylist.New()
 	retorno.Tipo2.Add(new_dimension)
-	fmt.Println("SALIO DEL ARRAY ACCESS")
+	fmt.Println("SALIO DEL ARRAY ACCESS ", retorno.Type)
 	return retorno
 }
 

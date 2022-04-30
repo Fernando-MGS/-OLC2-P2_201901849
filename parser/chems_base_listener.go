@@ -213,6 +213,12 @@ func (s *BaseChemsListener) EnterExpr_arit(ctx *Expr_aritContext) {}
 // ExitExpr_arit is called when production expr_arit is exited.
 func (s *BaseChemsListener) ExitExpr_arit(ctx *Expr_aritContext) {}
 
+// EnterAccesoArr is called when production accesoArr is entered.
+func (s *BaseChemsListener) EnterAccesoArr(ctx *AccesoArrContext) {}
+
+// ExitAccesoArr is called when production accesoArr is exited.
+func (s *BaseChemsListener) ExitAccesoArr(ctx *AccesoArrContext) {}
+
 // EnterPrimitivo is called when production primitivo is entered.
 func (s *BaseChemsListener) EnterPrimitivo(ctx *PrimitivoContext) {}
 

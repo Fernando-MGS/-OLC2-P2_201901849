@@ -48,8 +48,10 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 			value := "STACK[(int)" + result.Posicion + "]"
 			gen.AddExpression(newTemp, "", "", value, ambito)
 			l1 := gen.NewLabel()
-			l2 := ""
-			conf := gen.GetConf()
+			l2 := gen.NewLabel()
+			gen.AddCodes("if("+newTemp+"=="+"1) goto "+l1+";", ambito)
+			gen.AddCodes("goto "+l2+";", ambito)
+			/*conf := gen.GetConf()
 			if conf == 0 {
 				l2 = gen.NewLabel()
 				value := "if(" + newTemp + "==" + "1) goto " + l1 + ";\n"
@@ -61,8 +63,8 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 				l1 = gen.NewLabel()
 				value := "if(" + newTemp + "==" + "0) goto "
 				gen.AddTempBool(l1, value)
-			}
-			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
+			}*/
+			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2, TrueLabel: l1, FalseLabel: l2}
 		} else if interfaces.STR == result.Tipo.Tipo || result.Tipo.Tipo == interfaces.STRING {
 			value := "STACK[(int)" + result.Posicion + "]"
 			gen.AddExpression(newTemp, "", "", value, ambito)

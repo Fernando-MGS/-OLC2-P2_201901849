@@ -163,18 +163,19 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				}
 			} else if result.Type == interfaces.BOOLEAN {
 				value := ""
-				l1 := gen.GetTempsB().TrueL
-				l2 := gen.GetTempsB().FalseL
+				l1 := result.TrueLabel
+				l2 := result.FalseLabel
 				l3 := gen.NewLabel()
 				value += l1 + ":\n"
-				value += "STACK[(int)P]=1;\n" + "P=P+1;\n"
+				value += "STACK[(int)" + tam + "]=1;\n" + "P=P+1;\n"
 				value += "goto " + l3 + ";\n"
 				value += l2 + ":\n"
-				value += "STACK[(int)P]=0;\n" + "P=P+1;\n"
+				value += "STACK[(int)" + tam + "]=0;\n" + "P=P+1;\n"
 				value += l3 + ":\n"
+				value += "P=P+1;"
 				gen.AddCodes(value+"//FIN DE DECLARACION", ambito)
 
-				gen.SetConf()
+				//gen.SetConf()
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			}
 		}

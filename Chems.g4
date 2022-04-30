@@ -253,15 +253,19 @@ expr_arit returns[interfaces.Expresion p]
     | ifs   {$p=expresion.NewDevLoop($ifs.p)}
     |matches {$p=expresion.NewDevLoop($matches.m)}
     | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l) }
-    |id=expr_arit list=listArray {$p=expresion.NewArrayAccess($id.p,$list.l,0,0)}
+    |acc=accesoArr list=listArray {$p=expresion.NewArrayAccess($acc.p,$list.l,0,0)}
     |creatArray {$p=$creatArray.p}
     |VEC CORIZQ listValues CORDER   {$p=expresion.NewVectorB($listValues.l)}
     |VEC CORIZQ exp1=expression PTCOMA exp2=expression CORDER   {$p=expresion.NewVectorA($exp1.p,$exp2.p)}
     |VECT DDPUNTO CAP PARIZQ expression PARDER  {$p=expresion.New_CapacityV($expression.p)}
     |VECT DDPUNTO NEW PARIZQ PARDER {$p=expresion.NewVectorC()}
+    |id=expr_arit PUNTO LEN PARIZQ PARDER {$p=expresion.NewLen($id.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
+    |exp=expr_arit PUNTO F_ABS PARIZQ PARDER {$p=expresion.NewAbsoluto($exp.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
 ;
 
-
+accesoArr returns[interfaces.Expresion p]:
+     id=ID  {$p=expresion.NewCallVariable($id.text,$id.GetLine(),$id.GetColumn())}
+;
 
 primitivo returns[interfaces.Expresion p]
     :NUMBER {

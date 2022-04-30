@@ -19,6 +19,8 @@ type Primitivo struct {
 func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
 	name := env.(environment.Environment).Control.Id
 	ambito := true
+	true_l := ""
+	false_l := ""
 	if name == "GLOBAL" || name == "main" {
 		ambito = false
 	}
@@ -54,24 +56,14 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 		//fmt.Println(p.Valor)
 	} else if p.Tipo == interfaces.BOOLEAN {
 
-		l1 := gen.NewLabel()
-		l2 := ""
+		true_l = gen.NewLabel()
+		false_l = gen.NewLabel()
+		val := fmt.Sprintf("%v", p.Valor)
+		fmt.Println("EL VALOR DEL BOOL ES ", val)
 		gen.AddCodes("//INICIO DE BOOLEANO", ambito)
-		conf := gen.GetConf()
-		if conf == 0 {
-			l2 = gen.NewLabel()
-			if p.Valor == 0 {
-				gen.AddCodes("goto "+l2+";\n", ambito)
-			} else {
-				gen.AddCodes("goto "+l1+";\n", ambito)
-			}
-			gen.AddTempBool(l1, l2)
-			gen.SetConf()
-		} else {
-			l1 = gen.NewLabel()
-			gen.AddTempBool(l1, "goto ")
-		}
-		gen.AddCodes("//FIN DE BOOLEANO", ambito)
+		gen.AddCodes("if("+val+"==1) goto "+true_l+";", ambito)
+		gen.AddCodes("goto "+false_l+";", ambito)
+		gen.AddCodes("//FIN DE BOOLEANO "+p.Linea+"-"+p.Col, ambito)
 		/*gen.AddTempBool(l1, l2)
 		gen.SetConf()*/
 
@@ -80,8 +72,8 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 		Value:      fmt.Sprintf("%v", p.Valor),
 		IsTemp:     false,
 		Type:       p.Tipo,
-		TrueLabel:  "",
-		FalseLabel: "",
+		TrueLabel:  true_l,
+		FalseLabel: false_l,
 	}
 }
 

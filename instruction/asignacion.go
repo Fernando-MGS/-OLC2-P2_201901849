@@ -27,7 +27,8 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	result := p.Expresion.Ejecutar(env, gen)
 	tipo := reflect.TypeOf(p.Expresion)
 	t := fmt.Sprintf("%v", tipo)
-	//fmt.Println(t)
+	fmt.Println(t)
+	fmt.Println(result)
 	ambito := env.(environment.Environment).DevAmbito()
 	/*fmt.Println("TIPO 1")
 	fmt.Println(result.Value)
@@ -80,8 +81,8 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 			} else if result.Type == interfaces.BOOLEAN {
 				value := "//INICIO DE ASIGNACION" + p.Id + "\n"
-				l1 := gen.GetTempsB().TrueL
-				l2 := gen.GetTempsB().FalseL
+				l1 := result.TrueLabel
+				l2 := result.FalseLabel
 				l3 := gen.NewLabel()
 				value += l1 + ":\n"
 				value += "STACK[(int)" + variable.Posicion + "]=1;\n"
@@ -90,7 +91,7 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 				value += "STACK[(int)" + variable.Posicion + "]=0;\n"
 				value += l3 + ":\n"
 				gen.AddCodes(value, ambito)
-				gen.SetConf()
+				//gen.SetConf()*/
 				//env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			} else {
 				if interfaces.CHAR == result.Type && !result.IsTemp {

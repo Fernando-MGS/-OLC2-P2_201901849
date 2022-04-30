@@ -170,9 +170,9 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator) 
 		gen.AddPrintf("c", "(int)"+fmt.Sprintf("%v", result.Value), ambito)
 	} else if result.Type == interfaces.BOOLEAN {
 		value := ""
-		l1 := gen.GetTempsB().TrueL  //ln	true
-		l2 := gen.GetTempsB().FalseL //ln+1	false
-		l3 := gen.NewLabel()         //ln+2	exit
+		l1 := result.TrueLabel  //ln	true
+		l2 := result.FalseLabel //ln+1	false
+		l3 := gen.NewLabel()    //ln+2	exit
 		/*if result.IsTemp {
 		value = "if (" + result.Value + "==1) goto " + l1 + ";\n"
 		value += "goto " + l2 + ";\n"*/
@@ -183,7 +183,7 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator) 
 		value += "proc_extra_printFalse();\n"
 		value += l3 + ":\n"
 		gen.AddCodes(value, ambito)
-		gen.SetConf()
+		//gen.SetConf()
 		gen.AddFuncExtra("PRINTBOOL")
 	} else if result.Type == interfaces.STR || result.Type == interfaces.STRING {
 		l1 := gen.NewLabel()

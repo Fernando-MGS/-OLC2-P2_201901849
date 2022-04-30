@@ -104,6 +104,9 @@ type ChemsListener interface {
 	// EnterExpr_arit is called when entering the expr_arit production.
 	EnterExpr_arit(c *Expr_aritContext)
 
+	// EnterAccesoArr is called when entering the accesoArr production.
+	EnterAccesoArr(c *AccesoArrContext)
+
 	// EnterPrimitivo is called when entering the primitivo production.
 	EnterPrimitivo(c *PrimitivoContext)
 
@@ -211,6 +214,9 @@ type ChemsListener interface {
 
 	// ExitExpr_arit is called when exiting the expr_arit production.
 	ExitExpr_arit(c *Expr_aritContext)
+
+	// ExitAccesoArr is called when exiting the accesoArr production.
+	ExitAccesoArr(c *AccesoArrContext)
 
 	// ExitPrimitivo is called when exiting the primitivo production.
 	ExitPrimitivo(c *PrimitivoContext)

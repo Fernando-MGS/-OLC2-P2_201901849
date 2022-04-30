@@ -70,6 +70,8 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	case "+":
 		{
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
+			fmt.Println(retornoIzq.Type, "  vs")
+			fmt.Println(retornoDer.Type)
 			if retornoIzq.Type == retornoDer.Type {
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
@@ -166,6 +168,8 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	case "*":
 		{
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
+			fmt.Println(retornoIzq)
+			fmt.Println(retornoDer)
 			if retornoIzq.Type == retornoDer.Type {
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
@@ -198,12 +202,10 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 
 				if retornoDer.Type == interfaces.INTEGER || retornoDer.Type == interfaces.USIZE {
 					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0", 0), ambito)
-					//gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				} else if retornoDer.Type == interfaces.FLOAT {
 					gen.AddCodes(Comprobar_Div(gen, retornoIzq, retornoDer, newTemp, "0.0", 0), ambito)
-					//gen.AddExpression(newTemp, retornoIzq.Value, retornoDer.Value, "+", ambito)
 					return interfaces.Value{Value: newTemp, IsTemp: true, Type: retornoDer.Type, TrueLabel: "", FalseLabel: ""}
 
 				}
@@ -243,23 +245,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			gen.AddCodes("//--------<", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
+				l1 := gen.NewLabel()
+				l2 := gen.NewLabel()
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
-					l1 := ""
-					l2 := ""
-					if gen.GetConf() == 0 {
-						l1 = gen.NewLabel()
-						l2 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "<" + retornoDer.Value + ") goto " + l1 + ";\n"
-						value += "goto " + l2 + ";\n"
-						gen.AddCodes(value, ambito)
-						gen.AddTempBool(l1, l2)
-						gen.SetConf()
-					} else if gen.GetConf() == 1 {
-						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "<" + retornoDer.Value + ") goto "
-						gen.AddTempBool(l1, value)
-					}
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+retornoIzq.Value+"<"+retornoDer.Value+") goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				} else if retornoIzq.Type == interfaces.STRING {
 					code := "//COMPARACION DE STRING\n"
 					dir1 := gen.NewTemp() //dirección del primer parametro
@@ -274,8 +265,9 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					//code += "STACK[(int)P]=" + retornoDer.Value + ";\n"
 					code += resultado + "=STACK[(int)P];\n"
 					gen.AddCodes(code, ambito)
-					addCodeBool(gen, "==", "0", resultado, ambito)
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+resultado+"==0) goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				}
 			}
 			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
@@ -286,23 +278,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			gen.AddCodes("//-------->", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
+				l1 := gen.NewLabel()
+				l2 := gen.NewLabel()
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
-					l1 := ""
-					l2 := ""
-					if gen.GetConf() == 0 {
-						l1 = gen.NewLabel()
-						l2 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + ">" + retornoDer.Value + ") goto " + l1 + ";\n"
-						value += "goto " + l2 + ";\n"
-						gen.AddCodes(value, ambito)
-						gen.AddTempBool(l1, l2)
-						gen.SetConf()
-					} else if gen.GetConf() == 1 {
-						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + ">" + retornoDer.Value + ") goto "
-						gen.AddTempBool(l1, value)
-					}
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+retornoIzq.Value+">"+retornoDer.Value+") goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				} else if retornoIzq.Type == interfaces.STRING {
 					code := "//COMPARACION DE STRING\n"
 					dir1 := gen.NewTemp() //dirección del primer parametro
@@ -314,11 +295,11 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					gen.AddFuncExtra("COMPARELONG")
 					code += "compareLong_String();\n"
 					resultado := gen.NewTemp()
-					//code += "STACK[(int)P]=" + retornoDer.Value + ";\n"
 					code += resultado + "=STACK[(int)P];\n"
 					gen.AddCodes(code, ambito)
-					addCodeBool(gen, "==", "2", resultado, ambito)
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+resultado+"==2) goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				}
 			}
 			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
@@ -328,23 +309,12 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			gen.AddCodes("//-------->=", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == retornoDer.Type {
+				l1 := gen.NewLabel()
+				l2 := gen.NewLabel()
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
-					l1 := ""
-					l2 := ""
-					if gen.GetConf() == 0 {
-						l1 = gen.NewLabel()
-						l2 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + ">=" + retornoDer.Value + ") goto " + l1 + ";\n"
-						value += "goto " + l2 + ";\n"
-						gen.AddCodes(value, ambito)
-						gen.AddTempBool(l1, l2)
-						gen.SetConf()
-					} else if gen.GetConf() == 1 {
-						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + ">=" + retornoDer.Value + ") goto "
-						gen.AddTempBool(l1, value)
-					}
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+retornoIzq.Value+">="+retornoDer.Value+") goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				} else if retornoIzq.Type == interfaces.STRING {
 					code := "//COMPARACION DE STRING\n"
 					dir1 := gen.NewTemp() //dirección del primer parametro
@@ -359,35 +329,25 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					//code += "STACK[(int)P]=" + retornoDer.Value + ";\n"
 					code += resultado + "=STACK[(int)P];\n"
 					gen.AddCodes(code, ambito)
-					addCodeBool(gen, ">=", "1", resultado, ambito)
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+resultado+">=1) goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					//addCodeBool(gen, ">=", "1", resultado, ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				}
 			}
 			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 		}
-
 	case "<=":
 		{
 			gen.AddCodes("//--------<=", ambito)
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoDer.Type == retornoIzq.Type {
+				l1 := gen.NewLabel()
+				l2 := gen.NewLabel()
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
-					l1 := ""
-					l2 := ""
-					if gen.GetConf() == 0 {
-						l1 = gen.NewLabel()
-						l2 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "<=" + retornoDer.Value + ") goto " + l1 + ";\n"
-						value += "goto " + l2 + ";\n"
-						gen.AddCodes(value, ambito)
-						gen.AddTempBool(l1, l2)
-						gen.SetConf()
-					} else if gen.GetConf() == 1 {
-						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "<=" + retornoDer.Value + ") goto "
-						gen.AddTempBool(l1, value)
-					}
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+retornoIzq.Value+"<="+retornoDer.Value+") goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				} else if interfaces.STR == retornoDer.Type || interfaces.STRING == retornoIzq.Type {
 					code := "//COMPARACION DE STRING\n"
 					dir1 := gen.NewTemp() //dirección del primer parametro
@@ -402,8 +362,10 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					//code += "STACK[(int)P]=" + retornoDer.Value + ";\n"
 					code += resultado + "=STACK[(int)P];\n"
 					gen.AddCodes(code, ambito)
-					addCodeBool(gen, "<=", "1", resultado, ambito)
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+resultado+"<=1) goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					//addCodeBool(gen, "<=", "1", resultado, ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				} else {
 					env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 				}
@@ -417,48 +379,37 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			gen.AddCodes("//--------!=", ambito)
 			resultado := ""
 			resultado2 := ""
-			gen.Conf2()
-			//retornoIzq,retornoDer=DevTipos(p,env,gen)
 			retornoIzq = p.Op1.Ejecutar(env, gen)
-			//gen.AddCodes("//PRACTICA", ambito)
 			if retornoIzq.Type == interfaces.BOOLEAN {
-				gen.SetConf()
-				code, resultado1 := True_NotTrue("!=", retornoIzq, gen)
-				resultado = resultado1
-				gen.AddCodes(code+"\n//FIN DE IZQ", ambito)
+				salida := gen.NewLabel()
+				resultado = gen.NewTemp()
+				gen.AddCodes(retornoIzq.TrueLabel+":", ambito)
+				gen.AddCodes(resultado+"=1;", ambito)
+				gen.AddCodes("goto "+salida+";", ambito)
+				gen.AddCodes(retornoIzq.FalseLabel+":", ambito)
+				gen.AddCodes(resultado+"=0;", ambito)
+				gen.AddCodes(salida+":", ambito)
 			}
 			retornoDer = p.Op2.Ejecutar(env, gen)
 			if retornoDer.Type == interfaces.BOOLEAN {
-				//gen.SetConf()
-				code, resultado1 := True_NotTrue("!=", retornoIzq, gen)
-				resultado2 = resultado1
-				gen.AddCodes(code+"\n//FIN DE DERTYPE", ambito)
-				/*fmt.Println("ruta 2")
-				fmt.Println(gen.GetTempsB())*/
+				salida := gen.NewLabel()
+				resultado2 = gen.NewTemp()
+				gen.AddCodes(retornoDer.TrueLabel+":", ambito)
+				gen.AddCodes(resultado2+"=1;", ambito)
+				gen.AddCodes("goto "+salida+";", ambito)
+				gen.AddCodes(retornoDer.FalseLabel+":", ambito)
+				gen.AddCodes(resultado2+"=0;", ambito)
+				gen.AddCodes(salida+":", ambito)
 			}
-			//retornoIzq,retornoDer=DevTipos(p,env,gen)
+			/*fmt.Println(resultado)
+			fmt.Println(resultado2)*/
 			if retornoDer.Type == retornoIzq.Type {
-
+				l1 := gen.NewLabel()
+				l2 := gen.NewLabel()
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
-					l1 := ""
-					l2 := ""
-					if gen.GetConf() == 0 {
-						l1 = gen.NewLabel()
-						l2 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "!=" + retornoDer.Value + ") goto " + l1 + ";\n"
-						value += "goto " + l2 + ";\n"
-						gen.AddCodes(value, ambito)
-						gen.AddTempBool(l1, l2)
-						gen.SetConf()
-					} else if gen.GetConf() == 1 {
-						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "!=" + retornoDer.Value + ") goto "
-						gen.AddTempBool(l1, value)
-						if gen.GetConf2() {
-							gen.AddCodes("//practica", ambito)
-						}
-					}
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+retornoIzq.Value+"!="+retornoDer.Value+") goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				} else if retornoDer.Type == interfaces.STRING || retornoIzq.Type == interfaces.STR {
 					code := "//COMPARACION DE STRING\n"
 					t1 := gen.NewTemp()
@@ -474,88 +425,54 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					code += "proc_compareString();\n"
 					code += resultado + "=STACK[(int)P];"
 					gen.AddCodes(code, ambito)
-					//
-					l1 := ""
-					l2 := ""
-					if gen.GetConf() == 0 {
-						l1 = gen.NewLabel()
-						l2 = gen.NewLabel()
-						value := "if (" + resultado + "==0) goto " + l1 + ";\n"
-						value += "goto " + l2 + ";\n"
-						gen.AddCodes(value, ambito)
-						gen.AddTempBool(l1, l2)
-						gen.SetConf()
-					} else {
-						l1 = gen.NewLabel()
-						value := "if (" + resultado + "==0) goto "
-						gen.AddTempBool(l1, value)
-					}
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
-				} else if interfaces.BOOLEAN == retornoDer.Type {
-					l1 := gen.NewLabel()
-					l2 := gen.NewLabel()
+					gen.AddCodes("if ("+resultado+"==0) goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
+				} else if interfaces.BOOLEAN == retornoIzq.Type {
 					code := "if(" + resultado + "!=" + resultado2 + ") goto " + l1 + ";\n"
 					code += "goto " + l2 + ";"
-					gen.AddCodes(code, ambito)
-					gen.SetConf()
-					gen.AddTempBool(l1, l2)
-					gen.SetConf()
-					//gen.RotarLabels()
-					//fmt.Println(gen.GetTempsB())
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				}
 			} else {
 				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
-			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
-
 		}
 	case "==":
 		{
 			gen.AddCodes("//--------==", ambito)
 			resultado := ""
 			resultado2 := ""
-			gen.Conf2()
-			//retornoIzq,retornoDer=DevTipos(p,env,gen)
 			retornoIzq = p.Op1.Ejecutar(env, gen)
-			//gen.AddCodes("//PRACTICA", ambito)
 			if retornoIzq.Type == interfaces.BOOLEAN {
-				gen.SetConf()
-				code, resultado1 := True_NotTrue("==", retornoIzq, gen)
-				resultado = resultado1
-				gen.AddCodes(code+"\n//FIN DE IZQ", ambito)
+				salida := gen.NewLabel()
+				resultado = gen.NewTemp()
+				gen.AddCodes(retornoIzq.TrueLabel+":", ambito)
+				gen.AddCodes(resultado+"=1;", ambito)
+				gen.AddCodes("goto "+salida+";", ambito)
+				gen.AddCodes(retornoIzq.FalseLabel+":", ambito)
+				gen.AddCodes(resultado+"=0;", ambito)
+				gen.AddCodes(salida+":", ambito)
 			}
 			retornoDer = p.Op2.Ejecutar(env, gen)
 			if retornoDer.Type == interfaces.BOOLEAN {
-				//gen.SetConf()
-				code, resultado1 := True_NotTrue("==", retornoIzq, gen)
-				resultado2 = resultado1
-				gen.AddCodes(code+"\n//FIN DE DERTYPE", ambito)
-				fmt.Println("ruta 2")
-				fmt.Println(gen.GetTempsB())
+				salida := gen.NewLabel()
+				resultado2 = gen.NewTemp()
+				gen.AddCodes(retornoDer.TrueLabel+":", ambito)
+				gen.AddCodes(resultado2+"=1;", ambito)
+				gen.AddCodes("goto "+salida+";", ambito)
+				gen.AddCodes(retornoDer.FalseLabel+":", ambito)
+				gen.AddCodes(resultado2+"=0;", ambito)
+				gen.AddCodes(salida+":", ambito)
 			}
 			/*fmt.Println(resultado)
 			fmt.Println(resultado2)*/
 			if retornoDer.Type == retornoIzq.Type {
+				l1 := gen.NewLabel()
+				l2 := gen.NewLabel()
 				if retornoIzq.Type == interfaces.INTEGER || retornoIzq.Type == interfaces.FLOAT {
-					l1 := ""
-					l2 := ""
-
-					if gen.GetConf() == 0 {
-						l1 = gen.NewLabel()
-						l2 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto " + l1 + ";\n"
-						value += "goto " + l2 + ";\n"
-						gen.AddCodes(value, ambito)
-						gen.AddTempBool(l1, l2)
-						gen.SetConf()
-
-					} else if gen.GetConf() == 1 {
-						l1 = gen.NewLabel()
-						value := "if (" + retornoIzq.Value + "==" + retornoDer.Value + ") goto "
-						gen.AddTempBool(l1, value)
-					}
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+retornoIzq.Value+"=="+retornoDer.Value+") goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				} else if retornoDer.Type == interfaces.STRING || retornoIzq.Type == interfaces.STR {
 					code := "//COMPARACION DE STRING\n"
 					t1 := gen.NewTemp()
@@ -571,58 +488,29 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					code += "proc_compareString();\n"
 					code += resultado + "=STACK[(int)P];"
 					gen.AddCodes(code, ambito)
-					//
-					l1 := ""
-					l2 := ""
-					if gen.GetConf() == 0 {
-						l1 = gen.NewLabel()
-						l2 = gen.NewLabel()
-						value := "if (" + resultado + "==1) goto " + l1 + ";\n"
-						value += "goto " + l2 + ";\n"
-						gen.AddCodes(value, ambito)
-						gen.AddTempBool(l1, l2)
-						gen.SetConf()
-					} else {
-						l1 = gen.NewLabel()
-						value := "if (" + resultado + "==1) goto "
-						gen.AddTempBool(l1, value)
-					}
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+					gen.AddCodes("if ("+resultado+"==1) goto "+l1+";", ambito)
+					gen.AddCodes("goto "+l2+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				} else if interfaces.BOOLEAN == retornoIzq.Type {
-
-					//fmt.Println(gen.GetConf())
-					l1 := gen.NewLabel()
-					l2 := gen.NewLabel()
 					code := "if(" + resultado + "==" + resultado2 + ") goto " + l1 + ";\n"
 					code += "goto " + l2 + ";"
-					gen.AddCodes(code, ambito)
-					gen.SetConf()
-					gen.AddTempBool(l1, l2)
-					gen.SetConf()
-					//gen.RotarLabels()
-					//fmt.Println(gen.GetTempsB())
-					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
-					//gen.AddCodes(code, ambito)*/
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: l1, FalseLabel: l2}
 				}
 			} else {
 				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
-
 		}
 	case "||":
 		{
 			gen.AddCodes("//--------||", ambito)
-			retornoIzq, retornoDer = DevTipos(p, env, gen)
-			if retornoIzq.Type == retornoDer.Type && retornoDer.Type == interfaces.BOOLEAN {
-				anterior := gen.GetTempsB()
-				l2 := gen.NewLabel()
-				value := "//INICIO DE ||\n" + anterior.FalseL + ":\n"
-				value += anterior.FalseL1 + anterior.TrueL + ";\n"
-				value += "goto " + l2 + ";"
-				fmt.Println(value)
-				gen.LabelsOr(l2)
-				gen.AddCodes(value, ambito)
-				return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: "", FalseLabel: ""}
+			retornoIzq := p.Op1.Ejecutar(env, gen)
+			if retornoIzq.Type == interfaces.BOOLEAN {
+				gen.AddCodes(retornoIzq.FalseLabel+":", ambito)
+				retornoDer := p.Op2.Ejecutar(env, gen)
+				gen.AddCodes(retornoDer.TrueLabel+":", ambito)
+				gen.AddCodes("goto "+retornoIzq.TrueLabel+";", ambito)
+				//gen.AddCodes("goto "+retornoIzq.TrueLabel+";", ambito)
+				return interfaces.Value{Value: newTemp, IsTemp: false, Type: interfaces.BOOLEAN, TrueLabel: retornoIzq.TrueLabel, FalseLabel: retornoDer.FalseLabel}
 			} else {
 				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 			}
@@ -631,35 +519,32 @@ func (p Aritmetica) Ejecutar(env interface{}, gen *generator.Generator) interfac
 	case "&&":
 		{
 			gen.AddCodes("//--------&&", ambito)
-			retornoIzq, retornoDer = DevTipos(p, env, gen)
-			/*fmt.Println("&&")
-			fmt.Println(retornoDer)
-			fmt.Println(retornoIzq)*/
-			if retornoIzq.Type == retornoDer.Type && retornoDer.Type == interfaces.BOOLEAN {
-				anterior := gen.GetTempsB()
-				newTrue := gen.NewLabel()
-				value := "//INICIO DE &&\n" + anterior.TrueL + ":\n"
-				value += anterior.FalseL1 + newTrue + ";\n"
-				value += "goto " + anterior.FalseL + ";"
-				gen.AddCodes(value, ambito)
-				//fmt.Println(gen.GetTempsB())
-				//gen.RotarLabels()
-
-				gen.SetTrueFalse(newTrue, anterior.FalseL)
-				fmt.Println(gen.GetTempsB())
-				return interfaces.Value{Value: newTemp, IsTemp: false, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
-				//gen.AddTempBool(anterior.TrueL1, anterior.FalseL1)
-			} else {
-				env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
+			gen.AddCodes("//--------RetornoIZQ", ambito)
+			retornoIzq := p.Op1.Ejecutar(env, gen)
+			if retornoIzq.Type == interfaces.BOOLEAN {
+				gen.AddCodes(retornoIzq.TrueLabel+":", ambito)
+				gen.AddCodes("//--------RetornoDER", ambito)
+				retornoDer := p.Op2.Ejecutar(env, gen)
+				if retornoDer.Type == interfaces.BOOLEAN {
+					/*gen.AddCodes(retornoDer.TrueLabel+":", ambito)
+					gen.AddCodes("goto "+retornoIzq.TrueLabel+";", ambito)*/
+					gen.AddCodes(retornoDer.FalseLabel+":", ambito)
+					gen.AddCodes("goto "+retornoIzq.FalseLabel+";", ambito)
+					return interfaces.Value{Value: newTemp, IsTemp: false, Type: retornoIzq.Type, TrueLabel: retornoDer.TrueLabel, FalseLabel: retornoIzq.FalseLabel}
+				}
 			}
-
+			gen.AddCodes(retornoIzq.FalseLabel+":", ambito)
+			env.(environment.Environment).NewError("LOS TIPOS NO SE PUEDEN OPERAR ENTRE SI", p.Line, p.Col)
 		}
 	case "!":
 		{
 			retornoIzq, retornoDer = DevTipos(p, env, gen)
 			if retornoIzq.Type == interfaces.BOOLEAN {
-				gen.InvertirLabels()
-				return interfaces.Value{Value: newTemp, IsTemp: false, Type: retornoIzq.Type, TrueLabel: "", FalseLabel: ""}
+				//gen.InvertirLabels()
+				aux := retornoIzq.TrueLabel
+				retornoIzq.TrueLabel = retornoIzq.FalseLabel
+				retornoIzq.FalseLabel = aux
+				return retornoIzq
 			} else {
 				env.(environment.Environment).NewError("SE ESPERABA UNA EXPRESION BOOLEANA", p.Line, p.Col)
 			}
