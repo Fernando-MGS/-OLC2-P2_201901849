@@ -252,6 +252,27 @@ func (g *Generator) AddFuncExtra(id string) {
 		} else if id == "SETSTR" {
 			g.func_extra[id] = true
 			g.extra_code.Add(printSetString(g))
+		} else if id == "PUSHVECTOR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(push_Vector(g))
+		} else if id == "NEWVECTOR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(NewVector(g))
+		} else if id == "PUSHVECTOR2" {
+			g.func_extra[id] = true
+			g.extra_code.Add(Push_Vector(g))
+		} else if id == "INSERTVECTOR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(InsertVector(g))
+		} else if id == "REMOVEVECTOR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(RemoveVector(g))
+		} else if id == "LENVECTOR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(LenArray(g))
+		} else if id == "CONTAINSVECTOR" {
+			g.func_extra[id] = true
+			g.extra_code.Add(ContainVector(g))
 		}
 	}
 
@@ -1083,6 +1104,317 @@ func bounds_error() string {
 	code += "printf(\"%c\",111);\n" //o
 	code += "printf(\"%c\",114);\n" //r
 	code += "printf(\"%c\",110);\n" //r
+	code += "printf(\"%c\",10);\n"  //r
+	code += "return;\n}"
+	return code
+}
+
+func push_Vector(g *Generator) string {
+	code := "void proc_vectorPush(){\n"
+	param_pos := g.NewTemp()
+	param_index := g.NewTemp()
+	//aux_index:=g.NewTemp()
+	//value:=g.NewTemp()
+	stack_pos := g.NewTemp()
+	tam_vec := g.NewTemp()
+	heap_pos := g.NewTemp()
+	tmp_value := g.NewTemp()
+	iterador := g.NewTemp()
+	value := g.NewTemp()
+	new_vec := g.NewLabel()
+	entrada := g.NewLabel()
+	copy_vector := g.NewLabel()
+	vector_full := g.NewLabel()
+	//push_Vec:=g.NewLabel()
+	salida := g.NewLabel()
+	code += iterador + "=0;\n"
+	code += stack_pos + "=P+2;\n"
+	code += heap_pos + "=P+1;\n"
+	code += param_pos + "=STACK[(int)" + stack_pos + "];\n"
+	code += param_index + "=STACK[(int)" + stack_pos + "];\n"
+	code += value + "=STACK[(int)" + heap_pos + "];\n"
+	//code+=aux_index+"="+param_index+";\n"
+	code += tam_vec + "=HEAP[(int)" + param_pos + "];\n"
+	code += "if(" + tam_vec + "==0) goto " + new_vec + ";\n"
+	code += entrada + ":\n"
+	code += "if(" + iterador + ">=" + tam_vec + ") goto " + vector_full + ";\n"
+	code += param_index + "=" + param_index + "+1;\n"
+	code += tmp_value + "=HEAP[(int)" + param_index + "];\n"
+	code += "if(" + tmp_value + "!=-123456) goto " + copy_vector + ";\n"
+	/*
+	*	SI ENCUENTRA UN ESPACIO VACIO
+	 */
+	code += "HEAP[(int)" + param_index + "]=" + value + ";\n" //-----------
+	code += "STACK[(int)P]=" + param_pos + ";\n"
+	code += "goto " + salida + ";\n"
+	code += copy_vector + ":\n"
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	/*
+	*	SI EL VECTOR YA ESTA LLENO
+	 */
+
+	//
+	code += vector_full + ":\n"
+	code += "proc_PushVector2();\n"
+	g.AddFuncExtra("PUSHVECTOR2")
+	//NUEVO VECTOR
+	g.AddFuncExtra("NEWVECTOR")
+	code += "goto " + salida + ";\n"
+	code += new_vec + ":\n"
+	code += "proc_NewvectorPush();\n"
+	code += salida + ":\n"
+	code += "return;\n}\n"
+	return code
+}
+
+func NewVector(g *Generator) string {
+	code := "void proc_NewvectorPush(){\n"
+	param_pos := g.NewTemp()
+	value := g.NewTemp()
+	new_pos := g.NewTemp()
+	code += param_pos + "=P+1;\n"
+	code += value + "=STACK[(int)" + param_pos + "];\n"
+	code += new_pos + "=H;\n"
+	code += "HEAP[(int)H]=1;\n"
+	code += "H=H+1;\n"
+	code += "HEAP[(int)H]=" + value + ";\n"
+	code += "H=H+1;\n"
+	code += "STACK[(int)P]=" + new_pos + ";\n"
+	code += "return;\n}\n"
+	return code
+}
+
+func Push_Vector(g *Generator) string {
+	code := "void proc_PushVector2(){\n"
+	param_pos := g.NewTemp()
+	param_index := g.NewTemp()
+	//aux_index:=g.NewTemp()
+	//value:=g.NewTemp()
+	stack_pos := g.NewTemp()
+	tam_vec := g.NewTemp()
+	heap_pos := g.NewTemp()
+	tmp_value := g.NewTemp()
+	iterador := g.NewTemp()
+	value := g.NewTemp()
+	new_vec := g.NewTemp()
+	new_size := g.NewTemp()
+	entrada := g.NewLabel()
+	//push_Vec:=g.NewLabel()
+	salida := g.NewLabel()
+	code += iterador + "=0;\n"
+	code += stack_pos + "=P+2;\n"
+	code += heap_pos + "=P+1;\n"
+	code += param_pos + "=STACK[(int)" + stack_pos + "];//INICIO DEL VECTOR EN EL HEAP\n"
+	code += param_index + "=STACK[(int)" + stack_pos + "];//LO DE ARRIBA X2\n"
+	code += value + "=STACK[(int)" + heap_pos + "];//VALOR A GUARDAR EN EL VECTOR\n"
+	code += tam_vec + "=HEAP[(int)" + param_pos + "];//TAMANIO DEL VECTOR\n"
+	code += new_size + "=" + tam_vec + "+1;//NUEVO TAMANIO\n"
+	code += new_vec + "=H;//NUEVA POSICION DEL VECTOR\n"
+	code += "HEAP[(int)H]=" + new_size + ";\n"
+	code += "H=H+1;\n"
+	code += entrada + ":\n"
+	code += "if(" + iterador + ">=" + tam_vec + ") goto " + salida + ";\n"
+	code += param_pos + "=" + param_pos + "+1;\n"
+	code += tmp_value + "=HEAP[(int)" + param_pos + "];\n"
+	code += "HEAP[(int)H]=" + tmp_value + ";\n"
+	code += "H=H+1;\n"
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "HEAP[(int)H]=" + value + ";\n"
+	code += "H=H+1;\n"
+	code += "STACK[(int)P]=" + new_vec + ";\n"
+	code += "return;\n}"
+	return code
+}
+
+func InsertVector(g *Generator) string {
+	index_val := g.NewTemp()
+	index_ind := g.NewTemp()
+	index_pos := g.NewTemp()
+	value := g.NewTemp()
+	index := g.NewTemp()
+	pos_heap := g.NewTemp()
+	heap := g.NewTemp()
+	//entrada:=g.NewTemp()
+	salida := g.NewLabel()
+	invalido := g.NewLabel()
+	code := "void proc_InsertVector(){\n"
+	code += index_val + "=P+1;\n"
+	code += index_ind + "=P+2;\n"
+	code += index_pos + "=P+3;\n"
+	code += value + "=STACK[(int)" + index_val + "];\n"
+	code += index + "=STACK[(int)" + index_ind + "];\n"
+	code += pos_heap + "=STACK[(int)" + index_pos + "];\n"
+	code += heap + "=HEAP[(int)" + pos_heap + "];\n"
+	code += pos_heap + "=" + pos_heap + "+1;\n"
+	code += "if(" + index + ">" + heap + ") goto " + invalido + ";\n"
+	code += "if(" + heap + "==-123456) goto " + invalido + ";\n"
+	code += pos_heap + "=" + pos_heap + "+" + index + ";\n"
+	code += "HEAP[(int)" + pos_heap + "]=" + value + ";\n"
+	code += "goto " + salida + ";\n"
+	code += invalido + ":\n"
+	g.AddFuncExtra("BOUNDS")
+	code += "proc_boundsError();\n"
+	//code+=entrada+":\n"
+	code += salida + ":\n"
+	code += "return;\n}"
+	return code
+}
+
+func RemoveVector(g *Generator) string {
+	index_val := g.NewTemp()
+	index_pos := g.NewTemp()
+	value := g.NewTemp()
+	heap_pos := g.NewTemp()
+	heap := g.NewTemp()
+	tmp_heap := g.NewTemp()
+	size := g.NewTemp()
+	insert := g.NewTemp()
+	tmp_value := g.NewTemp()
+	conf_size := g.NewTemp()
+	iterador := g.NewTemp()
+	aux_heap := g.NewTemp()
+	entrada := g.NewLabel()
+	salida := g.NewLabel()
+	invalido := g.NewLabel()
+	iterar := g.NewLabel()
+	skip := g.NewLabel()
+	code := "void proc_RemoveVector(){\n"
+	code += index_val + "=P+1;\n"
+	code += index_pos + "=P+2;\n"
+	code += iterador + "=0;\n"
+	code += value + "=STACK[(int)" + index_val + "];\n"
+	code += heap_pos + "=STACK[(int)" + index_pos + "];\n"
+	code += aux_heap + "=" + heap_pos + ";\n"
+	code += heap + "=HEAP[(int)" + heap_pos + "];\n"
+	code += size + "=" + heap + ";\n"
+	code += tmp_heap + "=" + heap_pos + "+1;\n"
+	code += conf_size + "=HEAP[(int)" + tmp_heap + "];\n"
+	code += size + "=" + size + "-1;\n"
+	/*
+	*	VERIFICAR SI ES VALIDO
+	 */
+	code += "if(" + value + ">" + heap + ") goto " + invalido + ";\n"
+	code += "if(" + conf_size + "==-123456) goto " + invalido + ";\n"
+	/*
+	*	MODIFICAR EL VECTOR
+	 */
+	code += entrada + ":\n"
+	code += "if(" + iterador + ">" + heap + ") goto " + salida + ";//iterador vs size\n"
+	code += heap_pos + "=" + heap_pos + "+1; //HEAP POS\n"
+	code += insert + "=" + insert + "+1;// INSERT INDEXC\n"
+	code += tmp_value + "=HEAP[(int)" + heap_pos + "];// valor temporal\n"
+	code += "if(" + value + "!=" + iterador + ") goto " + skip + ";//iterador vs index\n"
+	code += "STACK[(int)P]=" + tmp_value + ";//copiar al stack\n"
+	code += insert + "=" + insert + "-1;//disminuir el heap pos\n"
+	code += "HEAP[(int)" + aux_heap + "]=" + size + ";//DISMINUIR EL TAMANIO\n"
+	code += "goto " + iterar + ";\n"
+	code += skip + ":\n"
+	code += "HEAP[(int)" + insert + "]=" + tmp_value + ";// copiar valor\n"
+	code += iterar + ":\n"
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	//code += "goto " + salida + ";\n"
+	code += invalido + ":\n"
+	g.AddFuncExtra("BOUNDS")
+	code += "proc_boundsError();\n"
+
+	code += salida + ":\n"
+	code += "return;\n}"
+	return code
+}
+
+func LenArray(g *Generator) string {
+	index_param := g.NewTemp()
+	pos_heap := g.NewTemp()
+	size := g.NewTemp()
+	iterador := g.NewTemp()
+	tmp_value := g.NewTemp()
+	entrada := g.NewLabel()
+	salida := g.NewLabel()
+	code := "void proc_LenVector(){\n"
+	code += index_param + "=P+1;\n"
+	code += pos_heap + "=STACK[(int)" + index_param + "];\n"
+	code += size + "=HEAP[(int)" + pos_heap + "];\n"
+	code += entrada + ":\n"
+	code += "if(" + iterador + ">=" + size + ") goto " + salida + ";\n"
+	code += pos_heap + "=" + pos_heap + "+1;\n"
+	code += tmp_value + "=HEAP[(int)" + pos_heap + "];\n"
+	code += "if(" + tmp_value + "==-123456) goto " + salida + ";\n"
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	code += salida + ":\n"
+	code += "STACK[(int)P]=" + iterador + ";\n"
+	code += "return;\n}"
+	return code
+}
+
+func ContainVector(g *Generator) string {
+	p_valor := g.NewTemp()
+	p_tipo := g.NewTemp()
+	p_pos := g.NewTemp()
+	valor := g.NewTemp()
+	tipo := g.NewTemp()
+	pos_heap := g.NewTemp()
+	iterador := g.NewTemp()
+	conf_true := g.NewTemp()
+	size := g.NewTemp()
+	tmp_value := g.NewTemp()
+	entrada := g.NewLabel()
+	salida := g.NewLabel()
+	skip := g.NewLabel()
+	//false:=g.NewLabel()
+	tipo1 := g.NewLabel()
+	code := "void proc_ContainsVector(){\n"
+	code += p_valor + "=P+1;\n"
+	code += p_tipo + "=P+2;\n"
+	code += p_pos + "=P+3;\n"
+	code += iterador + "=0;\n"
+	code += conf_true + "=0;\n"
+	code += "STACK[(int)P]=0;"
+	code += valor + "=STACK[(int)" + p_valor + "];\n"
+	code += tipo + "=STACK[(int)" + p_tipo + "];\n"
+	code += pos_heap + "=STACK[(int)" + p_pos + "];\n"
+	code += size + "=HEAP[(int)" + pos_heap + "];\n"
+	/*
+	*	INICIO DEL CICLO
+	 */
+	code += entrada + ":	//INICIO DEL CICLO\n"
+	code += "if(" + iterador + ">=" + size + ") goto " + salida + ";\n"
+	code += pos_heap + "=" + pos_heap + "+1;\n"
+	code += tmp_value + "=HEAP[(int)" + pos_heap + "];\n"
+	/*
+	* REVISION DE TIPOS
+	 */
+	code += "if(" + tipo + "==1) goto " + tipo1 + ";	//REVISION DE TIPO\n"
+	/*
+	*	ES UN STRING O UN STR
+	 */
+	g.AddFuncExtra("COMPARESTR")
+	code += "STACK[(int)" + p_tipo + "]=" + tmp_value + ";\n"
+	code += "proc_compareString();\n"
+	code += conf_true + "=STACK[(int)P];\n"
+	code += "if(" + conf_true + "==1) goto " + salida + ";\n"
+	code += "goto " + skip + ";\n"
+	/*
+	*	NO ES UN STRING NI UN STR
+	 */
+	code += tipo1 + ":\n"
+	code += "if(" + valor + "!=" + tmp_value + ") goto " + skip + ";\n"
+	code += "STACK[(int)P]=1;\n"
+	code += "goto " + salida + ";\n"
+	/*
+	*	ITERAR
+	 */
+	code += skip + ":\n"
+	code += iterador + "=" + iterador + "+1;\n"
+	code += "goto " + entrada + ";\n"
+	/*
+	*	FIN DEL CICLO
+	 */
+	code += salida + ":\n"
 	code += "return;\n}"
 	return code
 }

@@ -43,6 +43,8 @@ instruccion returns [interfaces.Instruction instr]
   |matches    {$instr=$matches.m}
   |rfor {$instr=$rfor.p}
   |mod_Array PTCOMA {$instr=$mod_Array.p}
+  |accesoArr PUNTO PUSH PARIZQ expression PARDER PTCOMA  {$instr=instruction.NewPush($accesoArr.p,$expression.p,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
+  |accesoArr PUNTO INSERT PARIZQ exp1=expression COMA exp2=expression PARDER PTCOMA {$instr=instruction.NewInsert($accesoArr.p,$exp1.p,$exp2.p,$COMA.GetLine(),$COMA.GetColumn())}
 ;
 instruccion_wc returns [interfaces.Instruction instr]:
   CONSOLE '.' LOG PARIZQ expression PARDER {$instr = instruction.NewImprimir($expression.p)}
@@ -56,6 +58,7 @@ instruccion_wc returns [interfaces.Instruction instr]:
   |impr {$instr=$impr.p}
   |rfor {$instr=$rfor.p}
   |mod_Array  {$instr=$mod_Array.p}
+  |accesoArr PUNTO PUSH PARIZQ expression PARDER  {$instr=instruction.NewPush($accesoArr.p,$expression.p,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
 ;
 
 
@@ -259,8 +262,11 @@ expr_arit returns[interfaces.Expresion p]
     |VEC CORIZQ exp1=expression PTCOMA exp2=expression CORDER   {$p=expresion.NewVectorA($exp1.p,$exp2.p)}
     |VECT DDPUNTO CAP PARIZQ expression PARDER  {$p=expresion.New_CapacityV($expression.p)}
     |VECT DDPUNTO NEW PARIZQ PARDER {$p=expresion.NewVectorC()}
-    |id=expr_arit PUNTO LEN PARIZQ PARDER {$p=expresion.NewLen($id.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
+    |id=accesoArr PUNTO CAPACITY PARIZQ PARDER {$p=expresion.NewLen($id.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
+    |id=accesoArr PUNTO LEN PARIZQ PARDER {$p=expresion.NewLenT($id.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
     |exp=expr_arit PUNTO F_ABS PARIZQ PARDER {$p=expresion.NewAbsoluto($exp.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
+    |accesoArr PUNTO REMOVE PARIZQ expression PARDER PTCOMA  {$p=expresion.NewRemove($accesoArr.p,$expression.p,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
+    |accesoArr PUNTO CONTAINS PARIZQ AMPER expression  PARDER  {$p=expresion.NewContains($accesoArr.p,$expression.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
 ;
 
 accesoArr returns[interfaces.Expresion p]:

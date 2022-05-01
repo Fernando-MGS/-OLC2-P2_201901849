@@ -25,7 +25,7 @@ func NewArrayAccess(id interfaces.Expresion, access *arraylist.List, line, col i
 func (p ArrayAccess) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
 	var retorno interfaces.Value
 	array := p.Id.Ejecutar(env, gen)
-	if array.Type != interfaces.ARRAY {
+	if array.Type != interfaces.ARRAY && array.Type != interfaces.VECTOR {
 		env.(environment.Environment).NewError("EL ELEMENTO AL QUE SE QUIERE ACCEDER NO ES UN ARRAY", p.Line, p.Col)
 		retorno.Type = interfaces.NULL
 		return retorno
