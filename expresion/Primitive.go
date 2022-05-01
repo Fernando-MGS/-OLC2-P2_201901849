@@ -36,15 +36,24 @@ func (p Primitivo) Ejecutar(env interface{}, gen *generator.Generator) interface
 		if p.Tipo == interfaces.STRING {
 			tmp := gen.NewTemp()
 			p.Valor = tmp
-			declarar := "//INICIO DE STRING\n" + tmp + "=H;"
-			gen.AddCodes(declarar, ambito)
+			comentario := generator.Comentario{Comentario: "INICIO DE STRING"}
+			fragmento := generator.Fragment{Valor: comentario, Tipo: 5, Valido: true, Mod: false}
+			gen.AddFragment(name, fragmento)
+			//declarar := "//INICIO DE STRING\n" + tmp + "=H;"
+			//gen.AddCodes(declarar, ambito)
+			code := generator.Asignacion{Destino: tmp, Op: "H", Comentario: false, Comentario_Cont: ""}
+			fragmento = generator.Fragment{Valor: code, Tipo: 1, Valido: true, Mod: true}
+			gen.AddFragment(name, fragmento)
 			chars := gen.Array_char(cadena)
 			for _, s := range chars {
 				val := strconv.Itoa(int(s))
 				save := "HEAP[(int)H]=" + val + ";//" + string(s) + "\n"
 				save += "H=H+1;"
+				code := generator.Heap{Index: "H", Value: val, Comentario: true, Comentario_Cont: string(s)}
+				fragmento = generator.Fragment{Valor: code, Tipo: 3, Valido: true, Mod: false}
+				gen.AddFragment(name, fragmento)
 				gen.Heap++
-				gen.AddCodes(save, ambito)
+				//gen.AddCodes(save, ambito)
 
 			}
 			save := "HEAP[(int)H]=-1;\n"

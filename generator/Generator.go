@@ -17,6 +17,7 @@ type Generator struct {
 	func_code  *arrayList.List
 	tempList   *arrayList.List
 	func_extra map[string]bool
+	funcs_map  map[string]Functions
 	extra_code *arrayList.List
 	temp_Bools *temporals
 }
@@ -24,6 +25,19 @@ type Generator struct {
 type Booleans struct {
 	Expresiones *arrayList.List
 	Last_Label  string
+}
+
+type Functions struct {
+	Fragmentos *arrayList.List
+	Return     bool
+	Id         string
+}
+
+type Fragment struct {
+	Valor  interface{} //es el tipo en el generador
+	Tipo   int         //Es el numero del tipo
+	Valido bool        //Si se agrega o no
+	Mod    bool        //Si se puede modifcar o no
 }
 
 type temporals struct {
@@ -37,13 +51,32 @@ type temporals struct {
 
 func NewGenerator() *Generator {
 	//fmt.Println("neuvo generator")
-	generator := Generator{salida: arrayList.New(), temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}, retornos: arrayList.New()}
+	generator := Generator{salida: arrayList.New(), temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, funcs_map: make(map[string]Functions), func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}, retornos: arrayList.New()}
 	return &generator
+}
+
+func (g *Generator) AddFragment(id string, fragment Fragment) {
+	if function, ok := g.funcs_map[id]; ok {
+		if fragment.Tipo == 10 {
+			function.Return = true
+		}
+		function.Fragmentos.Add(fragment)
+	} else {
+		lista := arrayList.New()
+		lista.Add(fragment)
+		function := Functions{Fragmentos: lista, Return: false, Id: id}
+		g.funcs_map[id] = function
+	}
 }
 
 func (g Generator) GetCode() *arrayList.List {
 
 	return g.code
+}
+
+func (g Generator) GetReturn(id string) bool {
+	function := g.funcs_map[id]
+	return function.Return
 }
 
 func (g Generator) GetTemps() *arrayList.List {
@@ -275,7 +308,6 @@ func (g *Generator) AddFuncExtra(id string) {
 			g.extra_code.Add(ContainVector(g))
 		}
 	}
-
 }
 
 func (g *Generator) AddFunc(code string) { //crea el codigo para las funciones

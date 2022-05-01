@@ -45,6 +45,7 @@ instruccion returns [interfaces.Instruction instr]
   |mod_Array PTCOMA {$instr=$mod_Array.p}
   |accesoArr PUNTO PUSH PARIZQ expression PARDER PTCOMA  {$instr=instruction.NewPush($accesoArr.p,$expression.p,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
   |accesoArr PUNTO INSERT PARIZQ exp1=expression COMA exp2=expression PARDER PTCOMA {$instr=instruction.NewInsert($accesoArr.p,$exp1.p,$exp2.p,$COMA.GetLine(),$COMA.GetColumn())}
+  |funcs {$instr=$funcs.i}
 ;
 instruccion_wc returns [interfaces.Instruction instr]:
   CONSOLE '.' LOG PARIZQ expression PARDER {$instr = instruction.NewImprimir($expression.p)}
@@ -78,12 +79,17 @@ mutable returns [bool mut]
 ;
 types returns [interfaces.TipoSimbolo l]:
   DOSPUNTOS tipo_vector {$l=$tipo_vector.t}
-  |a=asignar_Array  {
+  |DOSPUNTOS  a=asignar_Array  {
     dim:=arrayList.New()
     dim.Add($a.d)
     $l=interfaces.TipoSimbolo{interfaces.ARRAY,dim}
   }
   |DOSPUNTOS tipo_d {$l=interfaces.TipoSimbolo{$tipo_d.t,arrayList.New()}}
+  |DOSPUNTOS id=ID {
+    dim:=arrayList.New()
+    dim.Add($id.text)
+    $l=interfaces.TipoSimbolo{interfaces.STRUCT,dim}
+  }
 ;
 
 tipo_d returns [interfaces.TipoExpresion t]:
@@ -98,7 +104,7 @@ tipo_d returns [interfaces.TipoExpresion t]:
 ;
 
 asignar_Array returns [interfaces.Dimensions d]:
-  DOSPUNTOS dimensiones {$d=$dimensiones.d}
+  dimensiones {$d=$dimensiones.d}
   //|           {$d=interfaces.Dimensions{interfaces.ALL,arrayList.New()}}
 ;
 dimensiones  returns [interfaces.Dimensions d]:
@@ -232,6 +238,60 @@ iter_for returns[interfaces.For_Range p]:
 ;
 mod_Array returns[interfaces.Instruction p]:
   exp1=expression IGUAL expression {$p=instruction.NewModArray($exp1.p,$expression.p,$IGUAL.GetLine(),$IGUAL.GetColumn())} 
+;
+
+funcs returns [interfaces.Instruction i]:
+  FUNCTION id=ID PARIZQ p=param_dec PARDER tr=type_ret LLAVEIZQ instrucciones LLAVEDER{
+    $i=instruction.NewFunctions($id.text,$tr.l,$p.l,$instrucciones.l,$FUNCTION.GetLine(),$FUNCTION.GetColumn())
+  }
+;
+
+type_ret  returns [interfaces.TipoSimbolo l]:
+  SUB MAYOR type_func {$l=$type_func.l}
+  |                   {$l=interfaces.TipoSimbolo{interfaces.NULL,arrayList.New()}}
+;
+
+param_dec returns [*arrayList.List l]:
+  id=ID t=type_param  {
+    par:=interfaces.Parametros{$id.text,$t.t}
+    $l=arrayList.New()
+    $l.Add(par)}
+  |p=param_dec COMA id=ID t=type_param  {
+    par:=interfaces.Parametros{$id.text,$t.t}  
+    $p.l.Add(par)
+    $l=$p.l
+  }
+  |     {$l=arrayList.New()}
+;
+
+type_param returns [interfaces.TipoSimbolo t]:
+  DOSPUNTOS AMPER MUT tipo_vector {$t=$tipo_vector.t}
+  |DOSPUNTOS AMPER MUT a=asignar_Array  {
+    dim:=arrayList.New()
+    dim.Add($a.d)
+    $t=interfaces.TipoSimbolo{interfaces.ARRAY,dim}
+  }
+  |DOSPUNTOS tipo_d {$t=interfaces.TipoSimbolo{$tipo_d.t,arrayList.New()}} 
+  |DOSPUNTOS AMPER MUT id=ID {
+    dim:=arrayList.New()
+    dim.Add($id.text)
+    $t=interfaces.TipoSimbolo{interfaces.STRUCT,dim}
+  }
+;
+
+type_func returns [interfaces.TipoSimbolo l]:
+  tipo_vector {$l=$tipo_vector.t}
+  |a=asignar_Array  {
+    dim:=arrayList.New()
+    dim.Add($a.d)
+    $l=interfaces.TipoSimbolo{interfaces.ARRAY,dim}
+  }
+  |tipo_d {$l=interfaces.TipoSimbolo{$tipo_d.t,arrayList.New()}}
+  |id=ID {
+    dim:=arrayList.New()
+    dim.Add($id.text)
+    $l=interfaces.TipoSimbolo{interfaces.STRUCT,dim}
+  }
 ;
 
 //EXPRESIONES

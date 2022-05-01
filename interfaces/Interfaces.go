@@ -97,3 +97,20 @@ type For_Range struct {
 	Range2 Expresion
 	Tipo   int
 }
+
+type Parametros struct {
+	Id   string
+	Tipo TipoSimbolo
+}
+
+type Atributos struct {
+	Id   string
+	Tipo TipoSimbolo
+}
+
+type Functions struct {
+	Id        string
+	Params    *arraylist.List
+	Tipo      TipoSimbolo
+	Statments *arraylist.List
+}

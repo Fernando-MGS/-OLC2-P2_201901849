@@ -9,13 +9,14 @@ import (
 )
 
 type Environment struct {
-	Control  *EnvControl
-	father   interface{}
-	variable map[string]interfaces.Symbol
-
-	bases    *arraylist.List
-	simbolos *arraylist.List
-	errores  *arraylist.List
+	Control   *EnvControl
+	father    interface{}
+	variable  map[string]interfaces.Symbol
+	bases     *arraylist.List
+	simbolos  *arraylist.List
+	errores   *arraylist.List
+	functions map[string]interfaces.Functions
+	structs   map[string]interfaces.Symbol
 }
 
 type EnvControl struct {
@@ -28,8 +29,20 @@ type EnvControl struct {
 }
 
 func NewEnvironment(father interface{}, id, in, out string, ciclo bool, stack int) Environment {
-	env := Environment{&EnvControl{Id: id, Stack: stack, Heap: 1, Entrada: in, Salida: out, Ciclo: ciclo}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New()}
+	env := Environment{&EnvControl{Id: id, Stack: stack, Heap: 1, Entrada: in, Salida: out, Ciclo: ciclo}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New(), make(map[string]interfaces.Functions), make(map[string]interfaces.Symbol)}
 	return env
+}
+
+func (env Environment) SaveFunc(line, col, id string, function interfaces.Functions) bool {
+	if _, ok := env.variable[id]; ok {
+		env.NewError("LA FUNCION \""+id+"\" YA EXISTE", line, col)
+		return false
+	}
+	env.functions[id] = function
+	simbolos := interfaces.Simbolos{ID: id, Tipo: Tipo2(function.Tipo.Tipo), Ambito: env.Control.Id, Fila: line, Columna: col}
+	env.LogSimbolo(simbolos)
+	return true
+	//env.size = env.size + 1
 }
 
 func (env Environment) SaveVariable(line, col, id string, value interfaces.Symbol, tipo interfaces.TipoSimbolo) {
@@ -38,7 +51,7 @@ func (env Environment) SaveVariable(line, col, id string, value interfaces.Symbo
 		fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
 			t.Year(), t.Month(), t.Day(),
 			t.Hour(), t.Minute(), t.Second())
-		err := interfaces.Errores{Line: "0", Col: "0", Mess: "LA VARIABLE \"" + variable.Id + "\" YA EXISTE", Fecha: fecha}
+		err := interfaces.Errores{Line: line, Col: col, Mess: "LA VARIABLE \"" + variable.Id + "\" YA EXISTE", Fecha: fecha}
 		env.Errores(err)
 		return
 	}

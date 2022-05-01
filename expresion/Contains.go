@@ -24,7 +24,7 @@ func (c Contains) Ejecutar(env interface{}, gen *generator.Generator) interfaces
 	access := c.Acceso.Ejecutar(env, gen)
 	value := c.Value.Ejecutar(env, gen)
 	ambito := env.(environment.Environment).DevAmbito()
-	if access.Type == interfaces.ARRAY || access.Type == interfaces.VECTOR {
+	if access.Type == interfaces.ARRAY || access.Type == interfaces.VECTOR && access.Type != interfaces.NULL {
 		dimension := access.Tipo2.GetValue(0).(interfaces.Dimensions)
 		if value.Type == dimension.Tipo {
 			p_valor := gen.NewTemp()

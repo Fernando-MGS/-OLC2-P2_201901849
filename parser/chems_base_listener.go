@@ -201,6 +201,36 @@ func (s *BaseChemsListener) EnterMod_Array(ctx *Mod_ArrayContext) {}
 // ExitMod_Array is called when production mod_Array is exited.
 func (s *BaseChemsListener) ExitMod_Array(ctx *Mod_ArrayContext) {}
 
+// EnterFuncs is called when production funcs is entered.
+func (s *BaseChemsListener) EnterFuncs(ctx *FuncsContext) {}
+
+// ExitFuncs is called when production funcs is exited.
+func (s *BaseChemsListener) ExitFuncs(ctx *FuncsContext) {}
+
+// EnterType_ret is called when production type_ret is entered.
+func (s *BaseChemsListener) EnterType_ret(ctx *Type_retContext) {}
+
+// ExitType_ret is called when production type_ret is exited.
+func (s *BaseChemsListener) ExitType_ret(ctx *Type_retContext) {}
+
+// EnterParam_dec is called when production param_dec is entered.
+func (s *BaseChemsListener) EnterParam_dec(ctx *Param_decContext) {}
+
+// ExitParam_dec is called when production param_dec is exited.
+func (s *BaseChemsListener) ExitParam_dec(ctx *Param_decContext) {}
+
+// EnterType_param is called when production type_param is entered.
+func (s *BaseChemsListener) EnterType_param(ctx *Type_paramContext) {}
+
+// ExitType_param is called when production type_param is exited.
+func (s *BaseChemsListener) ExitType_param(ctx *Type_paramContext) {}
+
+// EnterType_func is called when production type_func is entered.
+func (s *BaseChemsListener) EnterType_func(ctx *Type_funcContext) {}
+
+// ExitType_func is called when production type_func is exited.
+func (s *BaseChemsListener) ExitType_func(ctx *Type_funcContext) {}
+
 // EnterExpression is called when production expression is entered.
 func (s *BaseChemsListener) EnterExpression(ctx *ExpressionContext) {}
 

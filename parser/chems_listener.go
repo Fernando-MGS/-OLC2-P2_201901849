@@ -98,6 +98,21 @@ type ChemsListener interface {
 	// EnterMod_Array is called when entering the mod_Array production.
 	EnterMod_Array(c *Mod_ArrayContext)
 
+	// EnterFuncs is called when entering the funcs production.
+	EnterFuncs(c *FuncsContext)
+
+	// EnterType_ret is called when entering the type_ret production.
+	EnterType_ret(c *Type_retContext)
+
+	// EnterParam_dec is called when entering the param_dec production.
+	EnterParam_dec(c *Param_decContext)
+
+	// EnterType_param is called when entering the type_param production.
+	EnterType_param(c *Type_paramContext)
+
+	// EnterType_func is called when entering the type_func production.
+	EnterType_func(c *Type_funcContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -208,6 +223,21 @@ type ChemsListener interface {
 
 	// ExitMod_Array is called when exiting the mod_Array production.
 	ExitMod_Array(c *Mod_ArrayContext)
+
+	// ExitFuncs is called when exiting the funcs production.
+	ExitFuncs(c *FuncsContext)
+
+	// ExitType_ret is called when exiting the type_ret production.
+	ExitType_ret(c *Type_retContext)
+
+	// ExitParam_dec is called when exiting the param_dec production.
+	ExitParam_dec(c *Param_decContext)
+
+	// ExitType_param is called when exiting the type_param production.
+	ExitType_param(c *Type_paramContext)
+
+	// ExitType_func is called when exiting the type_func production.
+	ExitType_func(c *Type_funcContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)
