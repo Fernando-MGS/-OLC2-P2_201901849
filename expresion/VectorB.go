@@ -22,10 +22,12 @@ func NewVectorB(lista *arraylist.List) VectorB {
 func (p VectorB) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
 	var retorno interfaces.Value
 	retorno.Type = interfaces.VECTOR
-	ambito := env.(environment.Environment).DevAmbito()
+	//ambito := env.(environment.Environment).DevAmbito()
+	name := env.(environment.Environment).Control.Id
 	valores := arraylist.New()
 	conf := true
-	gen.AddCodes("//CREANDO VECTOR CON LISTA DE VALORES", ambito)
+	//gen.AddCodes("//CREANDO VECTOR CON LISTA DE VALORES", ambito)
+	gen.NewComentario("CREANDO VECTOR CON LISTA DE VALORES", name, true, false, "")
 	var tipo interfaces.TipoExpresion
 	for _, s := range p.list.ToArray() {
 		res := s.(interfaces.Expresion).Ejecutar(env, gen)
@@ -41,13 +43,18 @@ func (p VectorB) Ejecutar(env interface{}, gen *generator.Generator) interfaces.
 	largo := strconv.Itoa(p.list.Len())
 	long := gen.NewTemp()
 	//pos := gen.NewTemp()
-	gen.AddCodes(long+"=H;//POS DE INICIO VECTOR B", ambito)
-	gen.AddCodes("HEAP[(int)H]="+largo+";", ambito)
-	gen.AddCodes("H=H+1;", ambito)
+	//gen.AddCodes(long+"=H;//POS DE INICIO VECTOR B", ambito)
+	gen.NewAsignacion(long, "H", false, "", name, true, false, "")
+	//gen.AddCodes("HEAP[(int)H]="+largo+";", ambito)
+	gen.NewHeap("H", largo, false, "", name, true, false, "")
+	//gen.AddCodes("H=H+1;", ambito)
+	gen.NewOperacion("H", "H", "+", "1", false, "", name, true, false, "")
 	for _, s := range valores.ToArray() {
 		valors := s.(interfaces.Value)
-		gen.AddCodes("HEAP[(int)H]="+valors.Value+";", ambito)
-		gen.AddCodes("H=H+1;", ambito)
+		//gen.AddCodes("HEAP[(int)H]="+valors.Value+";", ambito)
+		gen.NewHeap("H", valors.Value, false, "", name, true, false, "")
+		//gen.AddCodes("H=H+1;", ambito)
+		gen.NewOperacion("H", "H", "+", "1", false, "", name, true, true, "")
 	}
 	//gen.AddCodes(long+"="+largo+";", ambito)
 	/*gen.AddCodes(pos+"=H;", ambito)

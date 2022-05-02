@@ -22,10 +22,12 @@ func NewArray(list *arraylist.List) Array {
 func (p Array) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
 	var retorno interfaces.Value
 	retorno.Type = interfaces.ARRAY
-	ambito := env.(environment.Environment).DevAmbito()
+	//ambito := env.(environment.Environment).DevAmbito()
+	name := env.(environment.Environment).Control.Id
 	valores := arraylist.New()
 	conf := true
-	gen.AddCodes("//CREANDO ARRAY CON LISTA DE VALORES", ambito)
+	//gen.AddCodes("//CREANDO ARRAY CON LISTA DE VALORES", ambito)
+	gen.NewComentario("CREANDO ARRAY CON LISTA DE VALORES", name, true, false, "")
 	var tipo interfaces.TipoExpresion
 	for _, s := range p.ListExp.ToArray() {
 		res := s.(interfaces.Expresion).Ejecutar(env, gen)
@@ -41,13 +43,18 @@ func (p Array) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Va
 	largo := strconv.Itoa(p.ListExp.Len())
 	long := gen.NewTemp()
 	//pos := gen.NewTemp()
-	gen.AddCodes(long+"=H;//POS DE INICIO NEWARRAY", ambito)
-	gen.AddCodes("HEAP[(int)H]="+largo+";", ambito)
-	gen.AddCodes("H=H+1;", ambito)
+	//gen.AddCodes(long+"=H;//POS DE INICIO NEWARRAY", ambito)
+	gen.NewAsignacion(long, "H", false, "", name, true, true, "")
+	//gen.AddCodes("HEAP[(int)H]="+largo+";", ambito)
+	gen.NewHeap("H", largo, false, "", name, true, false, "")
+	//gen.AddCodes("H=H+1;", ambito)
+	gen.NewOperacion("H", "H", "+", "1", false, "", name, true, true, "")
 	for _, s := range valores.ToArray() {
 		valors := s.(interfaces.Value)
-		gen.AddCodes("HEAP[(int)H]="+valors.Value+";", ambito)
-		gen.AddCodes("H=H+1;", ambito)
+		//gen.AddCodes("HEAP[(int)H]="+valors.Value+";", ambito)
+		gen.NewHeap("H", valors.Value, false, "", name, true, false, "")
+		//gen.AddCodes("H=H+1;", ambito)
+		gen.NewOperacion("H", "H", "+", "1", false, "", name, true, true, "")
 	}
 	//gen.AddCodes(long+"="+largo+";", ambito)
 	/*gen.AddCodes(pos+"=H;", ambito)

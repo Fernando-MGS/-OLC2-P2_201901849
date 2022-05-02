@@ -4,8 +4,6 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
-	"fmt"
-	"reflect"
 
 	//"fmt"
 	"strconv"
@@ -25,14 +23,15 @@ func NewAssignment(id string, val interfaces.Expresion, line, col int) Assignmen
 
 func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	result := p.Expresion.Ejecutar(env, gen)
-	tipo := reflect.TypeOf(p.Expresion)
-	t := fmt.Sprintf("%v", tipo)
-	fmt.Println(t)
-	fmt.Println(result)
-	ambito := env.(environment.Environment).DevAmbito()
+	//tipo := reflect.TypeOf(p.Expresion)
+	//t := fmt.Sprintf("%v", tipo)
+	/*fmt.Println(t)
+	fmt.Println(result)*/
+	//ambito := env.(environment.Environment).DevAmbito()
 	/*fmt.Println("TIPO 1")
 	fmt.Println(result.Value)
 	fmt.Println("tipo2")*/
+	name := env.(environment.Environment).Control.Id
 	if result.Type == interfaces.NULL {
 		err := "LA EXPRESION NO ES VALIDA"
 		env.(environment.Environment).NewError(err, p.Line, p.Col)
@@ -44,13 +43,15 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 			return result
 		}
 		if variable.Tipo.Tipo == result.Type || variable.Tipo.Tipo == interfaces.USIZE && result.Type == interfaces.INTEGER {
-			gen.AddCodes("//INICIANDO ASIGNACION DE "+p.Id, ambito)
+			//gen.AddCodes("//INICIANDO ASIGNACION DE "+p.Id, ambito)
+			gen.NewComentario("INICIANDO ASIGNACION DE "+p.Id, name, true, false, p.Line)
 			if result.Type == interfaces.VECTOR {
-				gen.AddCodes(variable.Posicion2+"="+result.Value+";", ambito)
+				//gen.AddCodes(variable.Posicion2+"="+result.Value+";", ambito)
+				gen.NewAsignacion(variable.Posicion2, result.Value, false, "", name, true, true, p.Line)
 			} else if result.Type == interfaces.ARRAY {
 				//posicion2:=""
 
-				if t == "expresion.CallVariable" {
+				/*if t == "expresion.CallVariable" {
 					entrada := gen.NewLabel()
 					salida := gen.NewLabel()
 					//gen.AddCodes("if("+bounds.TrueLabel+") ",ambito)
@@ -71,26 +72,35 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					gen.AddCodes("goto "+entrada+";", ambito)
 					gen.AddCodes(salida+":", ambito)
 					//posicion2 = contador
-				} else {
-					//posicion2=result.Value
-					gen.AddCodes(variable.Posicion2+"="+result.Value+";", ambito)
-				}
-				gen.AddCodes("//FINALIZANDO ASIGNACION DE"+p.Id, ambito)
+				//} else {*/
+				//posicion2=result.Value
+				//gen.AddCodes(variable.Posicion2+"="+result.Value+";", ambito)
+				gen.NewAsignacion(variable.Posicion2, result.Value, false, "", name, true, true, p.Line)
+				//}
+				//gen.AddCodes("//FINALIZANDO ASIGNACION DE"+p.Id, ambito)
+				gen.NewComentario("FINALIZANDO ASIGNACION DE"+p.Id, name, true, false, p.Line)
 				//env.(environment.Environment).
 			} else if result.Type == interfaces.STRUCT {
 
 			} else if result.Type == interfaces.BOOLEAN {
-				value := "//INICIO DE ASIGNACION" + p.Id + "\n"
+				//value := "//INICIO DE ASIGNACION" + p.Id + "\n"
+				gen.NewComentario("INICIANDO ASIGNACION DE"+p.Id, name, true, false, p.Line)
 				l1 := result.TrueLabel
 				l2 := result.FalseLabel
 				l3 := gen.NewLabel()
-				value += l1 + ":\n"
-				value += "STACK[(int)" + variable.Posicion + "]=1;\n"
-				value += "goto " + l3 + ";\n"
-				value += l2 + ":\n"
-				value += "STACK[(int)" + variable.Posicion + "]=0;\n"
-				value += l3 + ":\n"
-				gen.AddCodes(value, ambito)
+				//value += l1 + ":\n"
+				gen.NewLabels(l1, false, "", name, true, true, p.Line)
+				//value += "STACK[(int)" + variable.Posicion + "]=1;\n"
+				gen.NewStack(variable.Posicion, "1", false, "", name, true, true, p.Line)
+				//value += "goto " + l3 + ";\n"
+				gen.NewSalto(l3, false, "", name, true, true, p.Line)
+				//value += l2 + ":\n"
+				gen.NewLabels(l2, false, "", name, true, true, p.Line)
+				//value += "STACK[(int)" + variable.Posicion + "]=0;\n"
+				gen.NewStack(variable.Posicion, "0", false, "", name, true, true, p.Line)
+				//value += l3 + ":\n"
+				gen.NewLabels(l3, false, "", name, true, true, p.Line)
+				//gen.AddCodes(value, ambito)
 				//gen.SetConf()*/
 				//env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			} else {
@@ -102,11 +112,14 @@ func (p Assignment) Ejecutar(env interface{}, gen *generator.Generator) interfac
 					}
 					result.Value = val
 				}
-				value := "//---------INICIANDO ASIGNACION-------" + p.Id + "\n"
-				value += "STACK[(int)" + variable.Posicion + "]"
-				value += "=" + result.Value + ";\n"
-				value += "//---------FIN DE ASIGNACION-------" + p.Id + ""
-				gen.AddCodes(value, ambito)
+				//value := "//---------INICIANDO ASIGNACION-------" + p.Id + "\n"
+				gen.NewComentario("---------INICIANDO ASIGNACION-------"+p.Id, name, true, false, p.Line)
+				//value += "STACK[(int)" + variable.Posicion + "]"
+				//value += "=" + result.Value + ";\n"
+				gen.NewStack(variable.Posicion, result.Value, false, "", name, true, true, p.Line)
+				//value += "//---------FIN DE ASIGNACION-------" + p.Id + ""
+				gen.NewComentario("---------FIN DE ASIGNACION-------"+p.Id, name, true, false, p.Line)
+				//gen.AddCodes(value, ambito)
 			}
 		} else {
 			env.(environment.Environment).NewError("LOS TIPOS NO COINCIDEN", p.Line, p.Col)

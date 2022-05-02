@@ -4,7 +4,6 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
-	"fmt"
 
 	arrayList "github.com/colegno/arraylist"
 )
@@ -22,12 +21,15 @@ func NewLoop(body *arrayList.List) Loop {
 func (l Loop) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	var retorno interfaces.Value
 	//fmt.Println("ENTRO A LOOP")
+	name := env.(environment.Environment).Control.Id
 	retorno.Type = interfaces.NULL
 	entrada := gen.NewLabel()
 	salida := gen.NewLabel()
-	ambito := env.(environment.Environment).DevAmbito()
-	gen.AddCodes("//INICIO DE LOOP", ambito)
-	gen.AddCodes(entrada+":", ambito)
+	//ambito := env.(environment.Environment).DevAmbito()
+	///gen.AddCodes("//INICIO DE LOOP", ambito)
+	gen.NewComentario("INICIO DE LOOP", name, true, false, "")
+	//gen.AddCodes(entrada+":", ambito)
+	gen.NewLabels(entrada, false, "", name, true, true, "")
 	stack := env.(environment.Environment).Control.Stack
 	tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, salida, true, stack)
 	for _, s := range l.Cuerpo.ToArray() {
@@ -36,7 +38,7 @@ func (l Loop) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		fmt.Println("SE ENCONTRO UN RETORNO")*/
 
 		ret := res.(interfaces.Value)
-		fmt.Println(ret)
+		//fmt.Println(ret)
 		if ret.Type != interfaces.NULL {
 			/*fmt.Println("SE ENCONTRO UN RETORNO2")
 			fmt.Println(res)*/
@@ -44,8 +46,11 @@ func (l Loop) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		}
 		//fmt.Println("//////ENDLOOP")
 	}
-	gen.AddCodes("goto "+entrada+";", ambito)
-	gen.AddCodes(salida+":", ambito)
-	gen.AddCodes("//FIN DE LOOP", ambito)
+	//gen.AddCodes("goto "+entrada+";", ambito)
+	gen.NewSalto(entrada, false, "", name, true, false, "")
+	//gen.AddCodes(salida+":", ambito)
+	gen.NewLabels(salida, false, "", name, true, true, "")
+	//gen.AddCodes("//FIN DE LOOP", ambito)
+	gen.NewComentario("FIN DE LOOP", name, true, false, "")
 	return retorno
 }

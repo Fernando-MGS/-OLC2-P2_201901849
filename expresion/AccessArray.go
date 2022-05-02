@@ -25,13 +25,15 @@ func NewArrayAccess(id interfaces.Expresion, access *arraylist.List, line, col i
 func (p ArrayAccess) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
 	var retorno interfaces.Value
 	array := p.Id.Ejecutar(env, gen)
+	name := env.(environment.Environment).Control.Id
 	if array.Type != interfaces.ARRAY && array.Type != interfaces.VECTOR {
 		env.(environment.Environment).NewError("EL ELEMENTO AL QUE SE QUIERE ACCEDER NO ES UN ARRAY", p.Line, p.Col)
 		retorno.Type = interfaces.NULL
 		return retorno
 	}
-	ambito := env.(environment.Environment).DevAmbito()
-	gen.AddCodes("//ACCEDIENDO A ELEMENTO ", ambito)
+	//ambito := env.(environment.Environment).DevAmbito()
+	//gen.AddCodes("//ACCEDIENDO A ELEMENTO ", ambito)
+	gen.NewComentario("ACCEDIENDO A UN ELEMENTO", name, true, false, p.Line)
 	//array := env.(environment.Environment).GetVariable(p.Id, p.Line, p.Col)
 	if array.Type != interfaces.ARRAY && array.Type != interfaces.VECTOR {
 		retorno.Type = interfaces.NULL
@@ -43,17 +45,18 @@ func (p ArrayAccess) Ejecutar(env interface{}, gen *generator.Generator) interfa
 		retorno.Type = interfaces.NULL
 		env.(environment.Environment).NewError("ACCESO FUERA DE LOS LIMITES DEL ARRAY", p.Line, p.Col)
 		gen.AddFuncExtra("BOUNDS")
-		gen.AddCodes("proc_boundsError();", env.(environment.Environment).DevAmbito())
+		//gen.AddCodes("proc_boundsError();", env.(environment.Environment).DevAmbito())
+		gen.NewLlamada("proc_boundsError", false, "", name, true, true, p.Line)
 		return retorno
 	} else if p.Access.Len() == tipos.Dimensions.Len() {
 		retorno.Type = tipos.Tipo
 	} else {
 		retorno.Type = array.Type
 	}
-	fmt.Println("LA POS ORIGINAL ES " + array.Value)
+	//fmt.Println("LA POS ORIGINAL ES " + array.Value)
 	list_access := EjecutarAccesos(p.Access, env, gen)
 	dimensions := array.Tipo2.GetValue(0).(interfaces.Dimensions)
-	result_access := AccessVector(array.Value, "", dimensions.Dimensions, list_access, gen, ambito)
+	result_access := AccessVector(array.Value, "", dimensions.Dimensions, list_access, gen, name)
 	retorno.Value = result_access.Value
 	retorno.TrueLabel = result_access.TrueLabel
 	retorno.IsTemp = true
@@ -73,20 +76,24 @@ func EjecutarAccesos(lista *arraylist.List, env interface{}, gen *generator.Gene
 	return access_list
 }
 
-func AccessVector(origen, posHeap string, tipo2, acceso *arraylist.List, gen *generator.Generator, ambito bool) interfaces.Value {
+func AccessVector(origen, posHeap string, tipo2, acceso *arraylist.List, gen *generator.Generator, name string) interfaces.Value {
 	var retorno interfaces.Value
 	if acceso.Len() > 0 {
 		index := acceso.GetValue(0).(interfaces.Value).Value
 		tmp_size := gen.NewTemp()
 		tmp_pos := gen.NewTemp()
 		tmp_value := gen.NewTemp()
-		gen.AddCodes("//ACCEDIENDO A VALOR", ambito)
-		gen.AddCodes(tmp_size+"="+index+"+1;", ambito) //se le suma 1 al valor porque en el 0 está el tamaño del vector
-		gen.AddCodes(tmp_pos+"="+tmp_size+"+"+origen+";", ambito)
-		gen.AddCodes(tmp_value+"=HEAP[(int)"+tmp_pos+"];", ambito)
+		//gen.AddCodes("//ACCEDIENDO A VALOR", ambito)
+		gen.NewComentario("INICIO DE IF ELSE", name, true, false, "")
+		//gen.AddCodes(tmp_size+"="+index+"+1;", ambito) //se le suma 1 al valor porque en el 0 está el tamaño del vector
+		gen.NewOperacion(tmp_size, index, "+", "1", false, "", name, true, true, "")
+		//gen.AddCodes(tmp_pos+"="+tmp_size+"+"+origen+";", ambito)
+		gen.NewOperacion(tmp_pos, tmp_size, "+", origen, false, "", name, true, true, "")
+		//gen.AddCodes(tmp_value+"=HEAP[(int)"+tmp_pos+"];", ambito)
+		gen.NewCallHeap(tmp_value, tmp_pos, false, "", name, true, true, "")
 		_tipo2 := Delete_element(tipo2)
 		_acceso := Delete_element(acceso)
-		retorno = AccessVector(tmp_value, tmp_pos, _tipo2, _acceso, gen, ambito)
+		retorno = AccessVector(tmp_value, tmp_pos, _tipo2, _acceso, gen, name)
 	} else {
 		retorno.Value = origen
 		retorno.Tipo2 = tipo2

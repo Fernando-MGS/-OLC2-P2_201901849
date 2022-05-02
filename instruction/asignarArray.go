@@ -22,13 +22,15 @@ func NewModArray(index, val interfaces.Expresion, line, col int) ModArray {
 func (m ModArray) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	var retorno interfaces.Value
 	retorno.Type = interfaces.NULL
-	ambito := env.(environment.Environment).DevAmbito()
+	///ambito := env.(environment.Environment).DevAmbito()
 	bounds := m.Access.Ejecutar(env, gen)
 	value := m.Value.Ejecutar(env, gen)
+	name := env.(environment.Environment).Control.Id
 	if bounds.Type == interfaces.NULL || value.Type == interfaces.NULL {
 		return retorno
 	}
-	gen.AddCodes("//INICIANDO LA ASIGNACION DE UN ARRAY O VECTOR", ambito)
+	//gen.AddCodes("//INICIANDO LA ASIGNACION DE UN ARRAY O VECTOR", ambito)
+	gen.NewComentario("INICIO DE ASIGNACION DE ARRAY O VECTOR", name, true, false, m.Line)
 	if bounds.Type == value.Type {
 		if bounds.Type == interfaces.ARRAY || bounds.Type == interfaces.VECTOR {
 			//env.(environment.Environment).NewError("EL ELEMENTO QUE SE QUIERE MODIFICAR NO ES UN VECTOR", m.Line, m.Col)
@@ -41,8 +43,8 @@ func (m ModArray) Ejecutar(env interface{}, gen *generator.Generator) interface{
 			//gen.AddCodes(bounds.Value+"="+value.Value+";", ambito)
 			//return retorno
 		}
-		gen.AddCodes("HEAP[(int)"+bounds.TrueLabel+"]="+value.Value+";", ambito)
-
+		//gen.AddCodes("HEAP[(int)"+bounds.TrueLabel+"]="+value.Value+";", ambito)
+		gen.NewHeap(bounds.TrueLabel, value.Value, false, "", name, true, false, m.Line)
 		/*entrada := gen.NewLabel()
 			salida := gen.NewLabel()
 			//gen.AddCodes("if("+bounds.TrueLabel+") ",ambito)
@@ -68,6 +70,7 @@ func (m ModArray) Ejecutar(env interface{}, gen *generator.Generator) interface{
 	} else {
 		env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN EN LA ASIGNACION", m.Line, m.Col)
 	}
-	gen.AddCodes("//FINALIZANDO LA ASIGNACION", ambito)
+	//gen.AddCodes("//FINALIZANDO LA ASIGNACION", ambito)
+	gen.NewComentario("FINALIZANDO LA ASIGNACION", name, true, false, m.Line)
 	return retorno
 }

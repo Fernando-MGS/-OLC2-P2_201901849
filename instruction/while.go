@@ -32,25 +32,31 @@ func (p While) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	var result interfaces.Value
 	result.Type = interfaces.NULL
 	entrada := gen.NewLabel()
-	ambito := env.(environment.Environment).DevAmbito()
-	gen.AddCodes("//INICIO DE WHILE", ambito)
-	gen.AddCodes(entrada+":", ambito)
+	name := env.(environment.Environment).Control.Id
+	//ambito := env.(environment.Environment).DevAmbito()
+	//gen.AddCodes("//INICIO DE WHILE", ambito)
+	gen.NewComentario("INICIO DE IF WHILE", name, true, false, p.Line)
+	//gen.AddCodes(entrada+":", ambito)
+	gen.NewLabels(entrada, false, "", name, true, true, "")
 	//salida:=gen.NewLabel()
 	condition := p.Expresion.Ejecutar(env, gen)
 	if condition.Type == interfaces.BOOLEAN {
 		l1 := condition.TrueLabel
 		l2 := condition.FalseLabel
 		//gen.SetConf()
-		value := l1 + ":\n" // si es verdadera irá de nuevo a entrada para repetir el proceso
-		gen.AddCodes(value, ambito)
+		//value := l1 + ":\n" // si es verdadera irá de nuevo a entrada para repetir el proceso
+		gen.NewLabels(l1, false, "", name, true, true, "")
+		//gen.AddCodes(value, ambito)
 		stack := env.(environment.Environment).Control.Stack
 		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, l2, true, stack)
 		for _, s := range p.Bloque.ToArray() {
 			s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
 		}
-		value = "goto " + entrada + ";\n"
-		value += l2 + ":"
-		gen.AddCodes(value, ambito)
+		//value = "goto " + entrada + ";\n"
+		gen.NewSalto(entrada, false, "", name, true, false, p.Line)
+		//value += l2 + ":"
+		gen.NewLabels(l2, false, "", name, true, true, "")
+		//gen.AddCodes(value, ambito)
 
 	} else {
 		env.(environment.Environment).NewError("SE ESPERABA UNA EXPRESION BOOLEANA", p.Line, p.Col)

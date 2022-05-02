@@ -23,34 +23,43 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 	//fmt.Println("aceso")
 	var retorno interfaces.Value
 	retorno.Type = interfaces.NULL
+	name := env.(environment.Environment).Control.Id
 	result := env.(environment.Environment).GetVariable(p.Id, p.Linea, p.Col)
-	ambito := env.(environment.Environment).DevAmbito()
+	//ambito := env.(environment.Environment).DevAmbito()
 	if result.Tipo.Tipo != interfaces.NULL {
-		gen.AddCodes("//INICIO DE LLAMADA"+p.Id+"", ambito)
+		//gen.AddCodes("//INICIO DE LLAMADA"+p.Id+"", ambito)
+		gen.NewComentario("//INICIO DE LLAMADA"+p.Id, name, true, false, p.Linea)
 		newTemp := gen.NewTemp()
 		if interfaces.INTEGER == result.Tipo.Tipo || interfaces.FLOAT == result.Tipo.Tipo {
-			value := "STACK[(int)" + result.Posicion + "]"
-			gen.AddExpression(newTemp, "", "", value, ambito)
+			/*value := "STACK[(int)" + result.Posicion + "]"
+			gen.AddExpression(newTemp, "", "", value, ambito)*/
+			gen.NewCallStack(newTemp, result.Posicion, false, "", name, true, true, p.Linea)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.FLOAT == result.Tipo.Tipo {
-			value := "STACK[(int)" + result.Posicion + "]"
-			gen.AddExpression(newTemp, "", "", value, ambito)
+			/*value := "STACK[(int)" + result.Posicion + "]"
+			gen.AddExpression(newTemp, "", "", value, ambito)*/
+			gen.NewCallStack(newTemp, result.Posicion, false, "", name, true, true, p.Linea)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.USIZE == result.Tipo.Tipo {
-			value := "STACK[(int)" + result.Posicion + "]"
-			gen.AddExpression(newTemp, "", "", value, ambito)
+			/*value := "STACK[(int)" + result.Posicion + "]"
+			gen.AddExpression(newTemp, "", "", value, ambito)*/
+			gen.NewCallStack(newTemp, result.Posicion, false, "", name, true, true, p.Linea)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.CHAR == result.Tipo.Tipo {
-			value := "STACK[(int)" + result.Posicion + "]"
-			gen.AddExpression(newTemp, "", "", value, ambito)
+			/*value := "STACK[(int)" + result.Posicion + "]"
+			gen.AddExpression(newTemp, "", "", value, ambito)*/
+			gen.NewCallStack(newTemp, result.Posicion, false, "", name, true, true, p.Linea)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.BOOLEAN == result.Tipo.Tipo {
-			value := "STACK[(int)" + result.Posicion + "]"
-			gen.AddExpression(newTemp, "", "", value, ambito)
+			/*value := "STACK[(int)" + result.Posicion + "]"
+			gen.AddExpression(newTemp, "", "", value, ambito)*/
+			gen.NewCallStack(newTemp, result.Posicion, false, "", name, true, true, p.Linea)
 			l1 := gen.NewLabel()
 			l2 := gen.NewLabel()
-			gen.AddCodes("if("+newTemp+"=="+"1) goto "+l1+";", ambito)
-			gen.AddCodes("goto "+l2+";", ambito)
+			//gen.AddCodes("if("+newTemp+"=="+"1) goto "+l1+";", ambito)
+			gen.NewIf(newTemp, "==", "1", l1, false, "", name, true, true, p.Linea)
+			//gen.AddCodes("goto "+l2+";", ambito)
+			gen.NewSalto(l2, false, "", name, true, true, p.Linea)
 			/*conf := gen.GetConf()
 			if conf == 0 {
 				l2 = gen.NewLabel()
@@ -66,8 +75,9 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 			}*/
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2, TrueLabel: l1, FalseLabel: l2}
 		} else if interfaces.STR == result.Tipo.Tipo || result.Tipo.Tipo == interfaces.STRING {
-			value := "STACK[(int)" + result.Posicion + "]"
-			gen.AddExpression(newTemp, "", "", value, ambito)
+			/*value := "STACK[(int)" + result.Posicion + "]"
+			gen.AddExpression(newTemp, "", "", value, ambito)*/
+			gen.NewCallStack(newTemp, result.Posicion, false, "", name, true, true, p.Linea)
 			retorno = interfaces.Value{Value: newTemp, IsTemp: true, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2}
 		} else if interfaces.ARRAY == result.Tipo.Tipo {
 			retorno = interfaces.Value{Value: result.Posicion2, IsTemp: true, Type: interfaces.ARRAY, Tipo2: result.Tipo.Tipo2, TrueLabel: result.Posicion2}

@@ -19,13 +19,16 @@ func NewLen(expr interfaces.Expresion, line, col int) Len {
 
 func (l Len) Ejecutar(env interface{}, gen *generator.Generator) interfaces.Value {
 	var retorno interfaces.Value
-	ambito := env.(environment.Environment).DevAmbito()
+	name := env.(environment.Environment).Control.Id
+	//ambito := env.(environment.Environment).DevAmbito()
 	array := l.Acceso.Ejecutar(env, gen)
 	if array.Type != interfaces.NULL {
 		if array.Type == interfaces.ARRAY || array.Type == interfaces.VECTOR {
 			retorno.Type = interfaces.INTEGER
 			size := gen.NewTemp()
-			gen.AddCodes(size+"=HEAP[(int)"+array.Value+"];", ambito)
+			gen.NewComentario("CALCULANDO CAPACIDAD DE UN ARRAY O UN VECTOR", name, true, false, "")
+			//gen.AddCodes(size+"=HEAP[(int)"+array.Value+"];", ambito)
+			gen.NewCallHeap(size, array.Value, false, "", name, true, true, l.Line)
 			retorno.Value = size
 			retorno.IsTemp = true
 		} else {

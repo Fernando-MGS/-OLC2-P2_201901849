@@ -4,227 +4,147 @@ float HEAP[82000];
 float STACK[82000];
 float P;
 float H;
-float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35;
+float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43;
 
-void proc_compareString(){
-t21=P+1;
-t22=STACK[(int)t21];
-t23=P+2;
-t24=STACK[(int)t23];
-t25=1;
-t26=HEAP[(int)t22];
-t27=HEAP[(int)t24];
-L4:
-if(t26!=-1) goto L7;
-goto L6;
-L7:
-if(t26!=t27) goto L5;
-goto L8;
+void proc_PushVector2(){
+t22=0;
+t18=P+2;
+t20=P+1;
+t16=STACK[(int)t18];//INICIO DEL VECTOR EN EL HEAP
+t17=STACK[(int)t18];//LO DE ARRIBA X2
+t23=STACK[(int)t20];//VALOR A GUARDAR EN EL VECTOR
+t19=HEAP[(int)t16];//TAMANIO DEL VECTOR
+t25=t19+1;//NUEVO TAMANIO
+t24=H;//NUEVA POSICION DEL VECTOR
+HEAP[(int)H]=t25;
+H=H+1;
 L5:
-t25= 0  ;
-goto L6;
-L8:
-t22 = t22 + 1;
-t24 = t24 + 1;
-t26 = HEAP[(int)+t22];
-t27 = HEAP[(int)+t24];
-goto L4;
-L6:
-if(t27!=-1) goto L9;
-goto L10;
-L9:
-t25=0;
-L10:
-STACK[(int)P] =t25;
-return ;
-}
-void proc_ContainsVector(){
-t11=P+1;
-t12=P+2;
-t13=P+3;
-t17=0;
-t18=0;
-STACK[(int)P]=0;t14=STACK[(int)t11];
-t15=STACK[(int)t12];
-t16=STACK[(int)t13];
-t19=HEAP[(int)t16];
-L0:	//INICIO DEL CICLO
-if(t17>=t19) goto L1;
+if(t22>=t19) goto L6;
 t16=t16+1;
-t20=HEAP[(int)t16];
-if(t15==1) goto L3;	//REVISION DE TIPO
-STACK[(int)t12]=t20;
-proc_compareString();
-t18=STACK[(int)P];
-if(t18==1) goto L1;
-goto L2;
-L3:
-if(t14!=t20) goto L2;
-STACK[(int)P]=1;
-goto L1;
-L2:
-t17=t17+1;
-goto L0;
+t21=HEAP[(int)t16];
+HEAP[(int)H]=t21;
+H=H+1;
+t22=t22+1;
+goto L5;
+L6:
+HEAP[(int)H]=t23;
+H=H+1;
+STACK[(int)P]=t24;
+return;
+}
+void proc_NewvectorPush(){
+t26=P+1;
+t27=STACK[(int)t26];
+t28=H;
+HEAP[(int)H]=1;
+H=H+1;
+HEAP[(int)H]=t27;
+H=H+1;
+STACK[(int)P]=t28;
+return;
+}
+
+void proc_vectorPush(){
+t14=0;
+t10=P+2;
+t12=P+1;
+t8=STACK[(int)t10];
+t9=STACK[(int)t10];
+t15=STACK[(int)t12];
+t11=HEAP[(int)t8];
+if(t11==0) goto L0;
 L1:
+if(t14>=t11) goto L3;
+t9=t9+1;
+t13=HEAP[(int)t9];
+if(t13!=-123456) goto L2;
+HEAP[(int)t9]=t15;
+STACK[(int)P]=t8;
+goto L4;
+L2:
+t14=t14+1;
+goto L1;
+L3:
+proc_PushVector2();
+goto L4;
+L0:
+proc_NewvectorPush();
+L4:
 return;
 }
+
 void proc_printString(){
-t31=P+1;
-t32=STACK[(int)t31];
-L16:
-t33=HEAP[(int)t32];
-if(t33!=-1) goto L17;
-goto L18;
-L17:
-printf("%c",(int)t33);
-t32=t32 + 1;
-goto L16;
-L18:
+t41=P+1;
+t42=STACK[(int)t41];
+L9:
+t43=HEAP[(int)t42];
+if(t43!=-1) goto L10;
+goto L11;
+L10:
+printf("%c",(int)t43);
+t42=t42 + 1;
+goto L9;
+L11:
 return;
 }
 
 
-void main(){
-//CREANDO VECTOR CON LISTA DE VALORES
-//INICIO DE STRING
+void main (){
+//CREANDO VECTOR CON CAPACIDAD FIJADA
 t0=H;
-HEAP[(int)H]=50;//2
+HEAP[(int)H]=10;
 H=H+1;
-HEAP[(int)H]=-1;
+t2:
+if(t1==10) goto t3;
+HEAP[(int)H]=-123456;
 H=H+1;
-//FIN DE STRING
-//INICIO DE STRING
-t1=H;
-HEAP[(int)H]=52;//4
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-//INICIO DE STRING
-t2=H;
-HEAP[(int)H]=54;//6
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-//INICIO DE STRING
-t3=H;
-HEAP[(int)H]=56;//8
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-//INICIO DE STRING
-t4=H;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=48;//0
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-t5=H;//POS DE INICIO VECTOR B
-HEAP[(int)H]=5;
-H=H+1;
-HEAP[(int)H]=t0;
-H=H+1;
-HEAP[(int)H]=t1;
-H=H+1;
-HEAP[(int)H]=t2;
-H=H+1;
-HEAP[(int)H]=t3;
-H=H+1;
-HEAP[(int)H]=t4;
-H=H+1;
-//INICIO DE LLAMADAv
-//INICIO DE STRING
-t7=H;
-HEAP[(int)H]=50;//2
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-t8=P+1;
-t9=P+2;
-t10=P+3;
-STACK[(int)t8]=t7;
-STACK[(int)t9]=0;
-STACK[(int)t10]=t5;
-proc_ContainsVector();
-t28=STACK[(int)P];
-if(t28==1) goto L11;
-goto L12;
-//INICIO DE IF PRIMARIO
-L11:
-
-//INICIO DE PRINT
-//INICIO DE STRING
-t29=H;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=117;//u
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if (t29==-1) goto L14;
-P=P+1;
-t30=P+1;
-STACK[(int)t30] =t29;
-proc_printString();
-P=P-1;
-goto L15;
-L14:
-L15:
-
-printf("%c",10);
-//FIN DE PRINT
-goto L13;
-//FIN DE IF
-L12:
-//INICIO DE BOOLEANO
-if(1==1) goto L19;
-goto L20;
-//FIN DE BOOLEANO 0-0
-//INICIO DE ELSE
-L19:
-
-//INICIO DE PRINT
-//INICIO DE STRING
-t34=H;
-HEAP[(int)H]=102;//f
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if (t34==-1) goto L21;
-P=P+1;
+t1=t1+1;
+goto t2;
+t3:
+////INICIO DE LLAMADAv
+t6=P+1;
+t7=P+2;
+STACK[(int)t6]=1;
+STACK[(int)t7]=t0;
+proc_vectorPush();
+t5=STACK[(int)P];
+t0=t5;
+////INICIO DE LLAMADAv
+t31=P+1;
+t32=P+2;
+STACK[(int)t31]=2;
+STACK[(int)t32]=t0;
+proc_vectorPush();
+t30=STACK[(int)P];
+t0=t30;
+////INICIO DE LLAMADAv
 t35=P+1;
-STACK[(int)t35] =t34;
+t36=P+2;
+STACK[(int)t35]=3;
+STACK[(int)t36]=t0;
+proc_vectorPush();
+t34=STACK[(int)P];
+t0=t34;
+//INICIO DE PRINT
+////INICIO DE LLAMADAv
+//CALCULANDO CAPACIDAD DE UN ARRAY O UN VECTOR
+t38=HEAP[(int)t0];
+printf("%d",(int)t38);
+//INICIO DE STRING
+t39=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t39==-1) goto L7;
+P=P+1;
+t40=P+1;
+STACK[(int)t40]=t39;
 proc_printString();
 P=P-1;
-goto L22;
-L21:
-L22:
-
-printf("%c",10);
+goto L8;
+L7:
+L8:
+printf("%c",10);//SALTO DE LINEA
 //FIN DE PRINT
-goto L13;
-//FIN DE IF
-L20:
-//SALIDA DEL IF
-L13:
 return;
 }

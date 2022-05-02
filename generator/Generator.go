@@ -12,6 +12,7 @@ type Generator struct {
 	Stack      int
 	Heap       int
 	salida     *arrayList.List
+	entrada    *arrayList.List
 	retornos   *arrayList.List
 	code       *arrayList.List
 	func_code  *arrayList.List
@@ -38,6 +39,7 @@ type Fragment struct {
 	Tipo   int         //Es el numero del tipo
 	Valido bool        //Si se agrega o no
 	Mod    bool        //Si se puede modifcar o no
+	Line   string
 }
 
 type temporals struct {
@@ -51,7 +53,7 @@ type temporals struct {
 
 func NewGenerator() *Generator {
 	//fmt.Println("neuvo generator")
-	generator := Generator{salida: arrayList.New(), temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, funcs_map: make(map[string]Functions), func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}, retornos: arrayList.New()}
+	generator := Generator{salida: arrayList.New(), entrada: arrayList.New(), temporal: 0, label: 0, code: arrayList.New(), tempList: arrayList.New(), func_code: arrayList.New(), Stack: 0, Heap: 0, funcs_map: make(map[string]Functions), func_extra: make(map[string]bool), extra_code: arrayList.New(), temp_Bools: &temporals{Conf: 0, TrueL: "", FalseL: "", TrueL1: "", FalseL1: "", Cequal: false}, retornos: arrayList.New()}
 	return &generator
 }
 
@@ -67,6 +69,114 @@ func (g *Generator) AddFragment(id string, fragment Fragment) {
 		function := Functions{Fragmentos: lista, Return: false, Id: id}
 		g.funcs_map[id] = function
 	}
+}
+
+func (g Generator) NewOperacion(destino, op1, signo, op2 string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Operacion{Destino: destino, Op1: op1, Signo: signo, Op2: op2, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 0, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewAsignacion(destino, op string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Asignacion{Destino: destino, Op: op, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 1, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewIf(op1, signo, op2, salto string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := If{Op1: op1, Signo: signo, Op2: op2, Salto: salto, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 2, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewHeap(index, value string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Heap{Index: index, Value: value, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 3, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewStack(index, value string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Stack{Index: index, Value: value, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 4, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewComentario(content, name string, valido, mod bool, line string) {
+	code := Comentario{Comentario: content}
+	fragment := Fragment{Valor: code, Tipo: 5, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewLlamada(nombre string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Llamada{Nombre: nombre, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 6, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewParametro(index, valor string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Parametros{Index: index, Valor: valor, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 7, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewLabels(label string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Label{Name: label, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 8, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewSalto(label string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Salto{Label: label, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 9, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewReturn(valor string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Return{Valor: valor, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 10, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewBreak(label string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Break{Label: label, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 11, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewVarios(valor string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Varios{Valor: valor, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 12, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewObligatorio(valor string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Obligatorio{Valor: valor, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 13, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewPrint(tipo, valor string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := Print{Tipo: tipo, Valor: valor, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 14, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewCallStack(destino, index string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := CallStack{Destino: destino, Index: index, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 15, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewCallHeap(destino, index string, Comentario bool, Comentario_Cont, name string, valido, mod bool, line string) {
+	code := CallHeap{Destino: destino, Index: index, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 16, Valido: valido, Mod: mod, Line: line}
+	g.AddFragment(name, fragment)
+}
+
+func (g Generator) NewFmod(destino, op1, op2 string, Comentario bool, Comentario_Cont, name string) {
+	code := Fmod{Destino: destino, Div1: op1, Div2: op2, Comentario: Comentario, Comentario_Cont: Comentario_Cont}
+	fragment := Fragment{Valor: code, Tipo: 17, Valido: true, Mod: true, Line: ""}
+	g.AddFragment(name, fragment)
 }
 
 func (g Generator) GetCode() *arrayList.List {
@@ -94,6 +204,104 @@ func (g Generator) GetExtraFuncs() *arrayList.List {
 	return g.extra_code
 }
 
+func (g Generator) GetFunciones() string {
+	code := ""
+	code_main := ""
+	//conf:=false
+	for _, s := range g.funcs_map {
+		for _, o := range s.Fragmentos.ToArray() {
+			if s.Id == "main" {
+				code_main += MatchTipo(o.(Fragment)) + "\n"
+			} else {
+				code += MatchTipo(o.(Fragment)) + "\n"
+			}
+		}
+	}
+	code += "\n" + code_main
+	return code
+}
+
+func MatchTipo(frag Fragment) string {
+	switch frag.Tipo {
+	case 0:
+		{
+			return frag.Valor.(Operacion).Ejecutar()
+		}
+	case 1:
+		{
+			return frag.Valor.(Asignacion).Ejecutar()
+		}
+	case 2:
+		{
+			return frag.Valor.(If).Ejecutar()
+		}
+	case 3:
+		{
+			return frag.Valor.(Heap).Ejecutar()
+		}
+	case 4:
+		{
+			return frag.Valor.(Stack).Ejecutar()
+		}
+	case 5:
+		{
+			return frag.Valor.(Comentario).Ejecutar()
+		}
+	case 6:
+		{
+			return frag.Valor.(Llamada).Ejecutar()
+		}
+	case 7:
+		{
+			return frag.Valor.(Parametros).Ejecutar()
+		}
+	case 8:
+		{
+			return frag.Valor.(Label).Ejecutar()
+		}
+	case 9:
+		{
+			return frag.Valor.(Salto).Ejecutar()
+		}
+	case 10:
+		{
+			return frag.Valor.(Return).Ejecutar()
+		}
+	case 11:
+		{
+			return frag.Valor.(Break).Ejecutar()
+		}
+	case 12:
+		{
+			return frag.Valor.(Varios).Ejecutar()
+		}
+	case 13:
+		{
+			return frag.Valor.(Obligatorio).Ejecutar()
+		}
+	case 14:
+		{
+			return frag.Valor.(Print).Ejecutar()
+		}
+	case 15:
+		{
+			return frag.Valor.(CallStack).Ejecutar()
+		}
+	case 16:
+		{
+			fmt.Println("La LINEA ES" + frag.Line)
+			fmt.Println(frag.Tipo)
+			fmt.Println(frag.Valor)
+			return frag.Valor.(CallHeap).Ejecutar()
+		}
+	case 17:
+		{
+			return frag.Valor.(Fmod).Ejecutar()
+		}
+	}
+	return ""
+}
+
 func (g Generator) AddTempBool(labelT, labelF string) {
 	if g.temp_Bools.Conf == 0 {
 		g.temp_Bools.TrueL = labelT
@@ -118,6 +326,22 @@ func (g Generator) GetSalida() string {
 func (g Generator) DelSalida() {
 	index := g.salida.Len() - 1
 	g.salida.RemoveAtIndex(index)
+}
+
+func (g *Generator) SetEntrada(exit string) {
+	//gen := Generator{salida: exit}
+	g.entrada.Add(exit)
+}
+func (g Generator) GetEntrada() string {
+	index := g.entrada.Len() - 1
+	r1 := fmt.Sprintf("%v", g.entrada.GetValue(index))
+	/*fmt.Println(r1 + "salida")
+	fmt.Println()*/
+	return r1
+}
+func (g Generator) DelEntrada() {
+	index := g.entrada.Len() - 1
+	g.entrada.RemoveAtIndex(index)
 }
 
 func (g *Generator) SetRetorno(retorno string) {

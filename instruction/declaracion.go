@@ -27,9 +27,12 @@ func NewDeclaracion(id string, tipo interfaces.TipoSimbolo, val interfaces.Expre
 
 func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	//fmt.Println("DECLARACION")
+	var fragmento generator.Fragment
+	name := env.(environment.Environment).Control.Id
+	var code interface{}
 	result := p.Expresion.Ejecutar(env, gen)
 	conf := false
-	ambito := env.(environment.Environment).DevAmbito()
+	//ambito := env.(environment.Environment).DevAmbito()
 	//index := 0
 	//tipo := reflect.TypeOf(p.Expresion)
 	//t := fmt.Sprintf("%v", tipo)
@@ -47,30 +50,26 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	fmt.Println(p.Tipo.Tipo)*/
 	if conf {
 		if p.Tipo.Tipo == interfaces.ARRAY {
-			gen.AddCodes("//INICIO DE DECLARACION "+p.Id, ambito)
-			fmt.Println(p.Tipo.Tipo2.ToArray()...)
+			//gen.AddCodes("//INICIO DE DECLARACION "+p.Id, ambito)
+			code = generator.Comentario{Comentario: "INICIO DE DECLARACION " + p.Id}
+			fragmento = generator.Fragment{Valor: code, Tipo: 5, Valido: true, Mod: false, Line: p.Line}
+			gen.AddFragment(name, fragmento)
+			//fmt.Println(p.Tipo.Tipo2.ToArray()...)
 			tipoArr := p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Tipo
-			fmt.Println("simon")
+			//fmt.Println("simon")
 			if tipoArr != result.Tipo2.GetValue(0).(interfaces.Dimensions).Tipo {
-				fmt.Println("NEL1")
+				//fmt.Println("NEL1")
 				conf = false
 			}
 			if len(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.ToArray()) != len(result.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.ToArray()) {
-				fmt.Println("NEL2")
+				//fmt.Println("NEL2")
 				conf = false
 				env.(environment.Environment).NewError("LAS DIMENSIONES DEL ARREGLO NO CONCUERDAN EN LA DECLARACION", p.Line, p.Col)
 				result.Type = interfaces.NULL
 				return result
 			}
-			fmt.Println(conf)
+			//fmt.Println(conf)
 			if conf {
-				/*size := arraylist.New()
-				for _, s := range p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.ToArray() {
-					tam := s.(interfaces.Expresion).Ejecutar(env, gen)
-					size.Add(tam.Value)
-				}
-				size.Add(p.Tipo.Tipo)*/
-				//fmt.Println(size.ToArray()...)
 				posicion2 := ""
 				posicion2 = result.Value
 				dimension := interfaces.Dimensions{Tipo: tipoArr, Dimensions: result.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions}
@@ -79,25 +78,13 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				tipoSimbolo := interfaces.TipoSimbolo{Tipo: interfaces.ARRAY, Tipo2: dimensions_list}
 				variable := interfaces.Symbol{Id: p.Id, Posicion2: posicion2, Mutable: p.Mutable, Line: p.Line, Col: p.Col, Tipo: tipoSimbolo, Longitud: result.TrueLabel}
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, variable, variable.Tipo)
-				fmt.Println("se guardo EN " + posicion2)
-				fmt.Println("se guardo")
 			} else {
 				env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN EN LA DECLARACION", p.Line, p.Col)
 				result.Type = interfaces.NULL
 				return result
 			}
-			/*fmt.Println(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Tipo)
-			fmt.Print(len(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.ToArray()))
-			fmt.Print("vs")
-			fmt.Println(len(result.Tipo2.ToArray()))
-			/*fmt.Println(p.Tipo.Tipo2.GetValue(0).(interfaces.Dimensions).Dimensions.Clone().ToArray()...)*/
-			//CompararTipos(p.Tipo.Tipo2, result.Tipo2)
 		} else if p.Tipo.Tipo == interfaces.VECTOR {
-			/*fmt.Print("P.tipo   ")
-			fmt.Println(result.Tipo2.ToArray()...)*/
 			dimension_res := result.Tipo2.GetValue(0).(interfaces.Dimensions)
-			/*fmt.Print("res.dimension   ")
-			fmt.Println(dimension_res.Dimensions.ToArray()...)*/
 			dimension_tipo := p.Tipo.Tipo2.GetValue(0).(interfaces.TipoExpresion)
 			//fmt.Println("hola 2")
 			if dimension_res.Tipo == interfaces.VOID || dimension_res.Tipo == dimension_tipo {
@@ -122,20 +109,38 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				return result
 			}
 		} else if p.Tipo.Tipo == interfaces.STR || p.Tipo.Tipo == interfaces.STRING {
-			code := "//--------------INICIO DE DECLARACION--------" + p.Id + "\n"
+			//code := "//--------------INICIO DE DECLARACION--------" + p.Id + "\n"
+			code = generator.Comentario{Comentario: "--------------INICIO DE DECLARACION--------" + p.Id}
+			fragmento = generator.Fragment{Valor: code, Tipo: 5, Valido: true, Mod: false, Line: p.Line}
+			gen.AddFragment(name, fragmento)
 			//tam := gen.NewTemp()
 			//guia := ""
 			tmp_pos := gen.NewTemp()
 			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: tmp_pos, Mutable: p.Mutable}
 			env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
-			code += tmp_pos + "=P;"
-			code += "STACK[(int)" + tmp_pos + "]=" + result.Value + ";\n"
-			code += "P=P+1;\n"
-			code += "//--------------FIN DE DECLARACION--------" + p.Id + ""
-			gen.AddCodes(code, ambito)
+			//code += tmp_pos + "=P;"
+			code = generator.Asignacion{Destino: tmp_pos, Op: "P", Comentario: false, Comentario_Cont: ""}
+			fragmento = generator.Fragment{Valor: code, Tipo: 1, Valido: true, Mod: true, Line: p.Line}
+			gen.AddFragment(name, fragmento)
+			//code += "STACK[(int)" + tmp_pos + "]=" + result.Value + ";\n"
+			code = generator.Stack{Index: tmp_pos, Value: result.Value, Comentario: false, Comentario_Cont: ""}
+			fragmento = generator.Fragment{Valor: code, Tipo: 4, Valido: true, Mod: true, Line: p.Line}
+			gen.AddFragment(name, fragmento)
+			//code += "P=P+1;\n"
+			code = generator.Operacion{Destino: "P", Op1: "P", Signo: "+", Op2: "1", Comentario: false, Comentario_Cont: ""}
+			fragmento = generator.Fragment{Valor: code, Tipo: 0, Valido: true, Mod: false, Line: p.Line}
+			gen.AddFragment(name, fragmento)
+			//code += "//--------------FIN DE DECLARACION--------" + p.Id + ""
+			code = generator.Comentario{Comentario: "--------------FIN DE DECLARACION--------" + p.Id}
+			fragmento = generator.Fragment{Valor: code, Tipo: 5, Valido: true, Mod: false, Line: p.Line}
+			gen.AddFragment(name, fragmento)
+			//gen.AddCodes(code, ambito)
 		} else {
 
-			codigo := "//--------------INICIO DE DECLARACION--------" + p.Id + "\n"
+			//codigo := "//--------------INICIO DE DECLARACION--------" + p.Id + "\n"
+			code = generator.Comentario{Comentario: "--------------INICIO DE DECLARACION--------" + p.Id}
+			fragmento = generator.Fragment{Valor: code, Tipo: 5, Valido: true, Mod: false, Line: p.Line}
+			gen.AddFragment(name, fragmento)
 			tam := gen.NewTemp()
 
 			simbolo := interfaces.Symbol{Id: p.Id, Tipo: p.Tipo, Posicion: tam, Mutable: p.Mutable}
@@ -151,30 +156,70 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 					}
 					result.Value = val
 				}
-				gen.AddCodes(tam+"=P;", ambito)
-				codigo += "STACK[(int)P]=" + fmt.Sprintf("%v", result.Value) + ";\n"
-				codigo += "P=P+1;\n"
-				codigo += "//------FIN DE DECLARACION--------" + p.Id
+				//gen.AddCodes(tam+"=P;", ambito)
+				code = generator.Asignacion{Destino: tam, Op: "P", Comentario: false, Comentario_Cont: ""}
+				fragmento = generator.Fragment{Valor: code, Tipo: 1, Valido: true, Mod: true, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//codigo += "STACK[(int)P]=" + fmt.Sprintf("%v", result.Value) + ";\n"
+				code = generator.Stack{Index: "P", Value: fmt.Sprintf("%v", result.Value), Comentario: false, Comentario_Cont: ""}
+				fragmento = generator.Fragment{Valor: code, Tipo: 4, Valido: true, Mod: true, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//codigo += "P=P+1;\n"
+				code = generator.Operacion{Destino: "P", Op1: "P", Signo: "+", Op2: "1", Comentario: false, Comentario_Cont: ""}
+				fragmento = generator.Fragment{Valor: code, Tipo: 0, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//codigo += "//------FIN DE DECLARACION--------" + p.Id
+				code = generator.Comentario{Comentario: "------FIN DE DECLARACION--------" + p.Id}
+				fragmento = generator.Fragment{Valor: code, Tipo: 5, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
-				if ambito {
+				/*if ambito {
 					gen.AddFunc(codigo)
 				} else {
 					gen.AddCode(codigo)
-				}
+				}*/
 			} else if result.Type == interfaces.BOOLEAN {
-				value := ""
+				//value := ""
 				l1 := result.TrueLabel
 				l2 := result.FalseLabel
 				l3 := gen.NewLabel()
-				value += l1 + ":\n"
-				value += "STACK[(int)" + tam + "]=1;\n" + "P=P+1;\n"
-				value += "goto " + l3 + ";\n"
-				value += l2 + ":\n"
-				value += "STACK[(int)" + tam + "]=0;\n" + "P=P+1;\n"
-				value += l3 + ":\n"
-				value += "P=P+1;"
-				gen.AddCodes(value+"//FIN DE DECLARACION", ambito)
-
+				//value += l1 + ":\n"
+				code = generator.Label{Name: l1, Comentario: true, Comentario_Cont: "-----VERDADERO"}
+				fragmento = generator.Fragment{Valor: code, Tipo: 8, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//value += "STACK[(int)" + tam + "]=1;\n" +
+				code = generator.Stack{Index: tam, Value: "1", Comentario: false, Comentario_Cont: ""}
+				fragmento = generator.Fragment{Valor: code, Tipo: 4, Valido: true, Mod: true, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//"P=P+1;\n"
+				code = generator.Operacion{Destino: "P", Op1: "P", Signo: "+", Op2: "1", Comentario: false, Comentario_Cont: ""}
+				fragmento = generator.Fragment{Valor: code, Tipo: 0, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//value += "goto " + l3 + ";\n"
+				code = generator.Salto{Label: l3, Comentario: false, Comentario_Cont: "//----FALSO"}
+				fragmento = generator.Fragment{Valor: code, Tipo: 9, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//value += l2 + ":\n"
+				code = generator.Label{Name: l2, Comentario: false, Comentario_Cont: "-----SALIDA"}
+				fragmento = generator.Fragment{Valor: code, Tipo: 8, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//value += "STACK[(int)" + tam + "]=0;\n" +
+				code = generator.Stack{Index: tam, Value: "0", Comentario: false, Comentario_Cont: ""}
+				fragmento = generator.Fragment{Valor: code, Tipo: 4, Valido: true, Mod: true, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//"P=P+1;\n"
+				code = generator.Operacion{Destino: "P", Op1: "P", Signo: "+", Op2: "1", Comentario: false, Comentario_Cont: ""}
+				fragmento = generator.Fragment{Valor: code, Tipo: 0, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//value += l3 + ":\n"
+				code = generator.Label{Name: l3, Comentario: false, Comentario_Cont: "-----SALIDA"}
+				fragmento = generator.Fragment{Valor: code, Tipo: 8, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
+				//value += "P=P+1;"
+				//gen.AddCodes(value+"//FIN DE DECLARACION", ambito)
+				code = generator.Comentario{Comentario: "FIN DE DECLARACION " + p.Id}
+				fragmento = generator.Fragment{Valor: code, Tipo: 5, Valido: true, Mod: false, Line: p.Line}
+				gen.AddFragment(name, fragmento)
 				//gen.SetConf()
 				env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 			}

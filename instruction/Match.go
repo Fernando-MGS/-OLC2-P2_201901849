@@ -32,7 +32,8 @@ func (m Match) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	conf_tipo := false
 	salida := gen.NewLabel()
 	label_cond := ""
-	ambito := env.(environment.Environment).DevAmbito()
+	//ambito := env.(environment.Environment).DevAmbito()
+	name := env.(environment.Environment).Control.Id
 	ret := gen.NewTemp()
 	if header.Type != interfaces.STRUCT {
 		conf_tipo = true
@@ -42,7 +43,8 @@ func (m Match) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		return retorno
 	}
 	if conf_tipo && comprobar_tipo(m.cases) {
-		gen.AddCodes("//INICIO DE MATCH", ambito)
+		//gen.AddCodes("//INICIO DE MATCH", ambito)
+		gen.NewComentario("INICIO DE MATCH", name, true, false, m.line)
 		for index < m.cases.Len() {
 			//entrada:=gen.NewLabel()
 			//gen.AddCodes(entrada+":",ambito)
@@ -56,14 +58,17 @@ func (m Match) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 			num_cond := 0
 			cond_true := gen.NewLabel()
 			next_cond := gen.NewLabel()
-			gen.AddCodes("//INICIO DEL CASO "+strconv.Itoa(index+1), ambito)
-			gen.AddCodes("//REVISION DE CONDICIONES", ambito)
+			//gen.AddCodes("//INICIO DEL CASO "+strconv.Itoa(index+1), ambito)
+			gen.NewComentario("INICIO DEL CASO "+strconv.Itoa(index+1), name, true, false, m.line)
+			//gen.AddCodes("//REVISION DE CONDICIONES", ambito)
+			gen.NewComentario("REVISION DE CONDICIONES", name, true, false, m.line)
 			if actual_case.Tipo == 0 {
 				for i < conditions {
 
 					if index > 0 {
 						if i == 0 {
-							gen.AddCodes(label_cond+":", ambito)
+							//gen.AddCodes(label_cond+":", ambito)
+							gen.NewLabels(label_cond, false, "", name, true, true, "")
 						}
 					}
 					//fmt.Println("el segundo for")
@@ -77,24 +82,29 @@ func (m Match) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 					}
 					if conf {
 						num_cond++
-						code := "if(" + header.Value + "==" + tmp.Value + ") goto " + cond_true + ";"
-						gen.AddCodes(code, ambito)
+						//code := "if(" + header.Value + "==" + tmp.Value + ") goto " + cond_true + ";"
+						gen.NewIf(header.Value, "==", tmp.Value, cond_true, false, "", name, true, true, m.line)
+						//gen.AddCodes(code, ambito)
 					} else {
 						env.(environment.Environment).NewError("LOS TIPOS NO CONCUERDAN", m.line, m.col)
 					}
 					i++
 				}
 			} else {
-				gen.AddCodes(label_cond+":", ambito)
+				//gen.AddCodes(label_cond+":", ambito)
+				gen.NewLabels(label_cond, false, "", name, true, true, "")
 			}
 
 			if index < m.cases.Len()-1 {
-				gen.AddCodes("goto "+next_cond+";", ambito)
+				//gen.AddCodes("goto "+next_cond+";", ambito)
+				gen.NewSalto(next_cond, false, "", name, true, false, m.line)
 				label_cond = next_cond
 			}
 			if num_cond > 0 || actual_case.Tipo == 1 {
-				gen.AddCodes("//EJECUCION DE INSTRUCCIONES", ambito)
-				gen.AddCodes(cond_true+":", ambito)
+				//gen.AddCodes("//EJECUCION DE INSTRUCCIONES", ambito)
+				gen.NewComentario("EJECUCION DE INSTRUCCIONES", name, true, false, m.line)
+				//gen.AddCodes(cond_true+":", ambito)
+				gen.NewLabels(cond_true, false, "", name, true, true, "")
 				in := env.(environment.Environment).Control.Entrada
 				out := env.(environment.Environment).Control.Salida
 				loop := env.(environment.Environment).Control.Ciclo
@@ -105,18 +115,22 @@ func (m Match) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 					t := fmt.Sprintf("%v", tipo)
 					if posicion := strings.Index(t, "Expresion"); posicion != -1 {
 						res := s.(interfaces.Expresion).Ejecutar(tmpEnv, gen)
-						code := ret + "=" + res.Value + ";"
-						gen.AddCodes(code, ambito)
+						//code := ret + "=" + res.Value + ";"
+						gen.NewAsignacion(ret, res.Value, false, "", name, true, true, m.line)
+						//gen.AddCodes(code, ambito)
 						//return ret
 					} else {
 						s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
 					}
 
 				}
-				gen.AddCodes("//FIN DE EJECUCION DE INSTRUCCIONES", ambito)
-				gen.AddCodes("goto "+salida+";", ambito)
+				//gen.AddCodes("//FIN DE EJECUCION DE INSTRUCCIONES", ambito)
+				gen.NewComentario("FIN DE EJECUCION DE INSTRUCCIONES", name, true, false, m.line)
+				//gen.AddCodes("goto "+salida+";", ambito)
+				gen.NewSalto(salida, false, "", name, true, false, m.line)
 			}
-			gen.AddCodes("//FIN DEL CASO", ambito)
+			//gen.AddCodes("//FIN DEL CASO", ambito)
+			gen.NewComentario("FIN DEL CASO", name, true, false, m.line)
 			index++
 
 		}
@@ -124,7 +138,8 @@ func (m Match) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		env.(environment.Environment).NewError("EL CASO DEFAULT DEBE IR POR ULTIMO", m.line, m.col)
 		retorno.Type = interfaces.NULL
 	}
-	gen.AddCodes(salida+":", ambito)
+	//gen.AddCodes(salida+":", ambito)
+	gen.NewLabels(salida, false, "", name, true, true, "")
 	return retorno
 }
 

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
 
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
@@ -50,7 +51,12 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	salida = ""
 
 	for _, s := range result.ToArray() {
-		s.(interfaces.Instruction).Ejecutar(globalEnv, gen)
+		tipo := reflect.TypeOf(s)
+		t := fmt.Sprintf("%v", tipo)
+		if t == "instruction.Functions" {
+			s.(interfaces.Instruction).Ejecutar(globalEnv, gen)
+		}
+		//s.(interfaces.Instruction).Ejecutar(globalEnv, gen)
 	}
 
 	//Escribir salida
@@ -85,18 +91,20 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 		salida += "\n"
 	}
 	salida += "\n"
-	for _, s := range gen.GetFuncs().ToArray() {
+	/*for _, s := range gen.GetFuncs().ToArray() {
 		salida += fmt.Sprintf("%v", s)
 		salida += "\n"
-	}
-	salida += "\nvoid main(){\n"
+	}*/
+	salida += gen.GetFunciones()
+
+	/*salida += "\nvoid main(){\n"
 
 	for _, s := range gen.GetCode().ToArray() {
 		salida += fmt.Sprintf("%v", s)
 		salida += "\n"
 	}
 
-	salida += "return;\n}\n"
+	salida += "return;\n}\n"*/
 
 	errores := globalEnv.DevErrores()
 	simbolos := globalEnv.DevSimbolos()

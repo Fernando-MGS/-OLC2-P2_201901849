@@ -28,6 +28,7 @@ func (f Functions) Ejecutar(env interface{}, gen *generator.Generator) interface
 	newFunc := interfaces.Functions{Id: f.Id, Params: f.Params, Tipo: f.Tipo, Statments: f.Statments}
 	tmp := environment.NewEnvironment(env.(environment.Environment), f.Id, "", "", false, 0)
 	if env.(environment.Environment).SaveFunc(f.Line, f.Col, f.Id, newFunc) {
+		gen.NewObligatorio("void "+f.Id+" (){", false, "", f.Id, true, false, f.Line)
 		for _, s := range f.Statments.ToArray() {
 			s.(interfaces.Instruction).Ejecutar(tmp, gen)
 		}
@@ -39,12 +40,12 @@ func (f Functions) Ejecutar(env interface{}, gen *generator.Generator) interface
 		} else {
 			if f.Tipo.Tipo != interfaces.NULL {
 				env.(environment.Environment).NewError("SE ESPERABA UN RETORNO", f.Line, f.Col)
+				gen.NewObligatorio("return;", false, "", f.Id, true, false, f.Line)
 			} else {
-				code := generator.Obligatorio{"return;", false, ""}
-				fragment := generator.Fragment{Valor: code, Tipo: 13, Valido: true, Mod: false}
-				gen.AddFragment(f.Id, fragment)
+				gen.NewObligatorio("return;", false, "", f.Id, true, false, f.Line)
 			}
 		}
+		gen.NewObligatorio("}", false, "", f.Id, true, false, f.Line)
 	}
 	return retorno
 }
