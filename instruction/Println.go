@@ -270,9 +270,11 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator, 
 		/*fmt.Println(result.Value)
 		fmt.Println(result.TrueLabel)*/
 	} else if result.Type == interfaces.VECTOR {
-		//fmt.Println("EL LARGO ES ")
+
+		//fmt.Println(result.Tipo2.ToArray()...)
 		dimension := result.Tipo2.GetValue(0).(interfaces.Dimensions)
 		largo := strconv.Itoa(dimension.Dimensions.Len())
+		//fmt.Println("EL LARGO ES ", largo)
 		tmp1 := gen.NewTemp()
 		//gen.AddCodes(tmp1+"=1+P;", ambito)
 		gen.NewOperacion(tmp1, "1", "+", "P", false, "", name, true, true, linea)

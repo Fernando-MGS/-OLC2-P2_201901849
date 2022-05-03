@@ -85,6 +85,8 @@ func (p CallVariable) Ejecutar(env interface{}, gen *generator.Generator) interf
 		} else if interfaces.VECTOR == result.Tipo.Tipo {
 			retorno = interfaces.Value{Value: result.Posicion2, IsTemp: true, Type: interfaces.VECTOR, Tipo2: result.Tipo.Tipo2, TrueLabel: result.Posicion2}
 			return retorno
+		} else if interfaces.STRUCT == result.Tipo.Tipo {
+			retorno = interfaces.Value{Value: result.Posicion, Type: result.Tipo.Tipo, Tipo2: result.Tipo.Tipo2, IsTemp: false}
 		}
 	}
 	return retorno

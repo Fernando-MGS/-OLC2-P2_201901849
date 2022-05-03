@@ -289,9 +289,6 @@ func MatchTipo(frag Fragment) string {
 		}
 	case 16:
 		{
-			fmt.Println("La LINEA ES" + frag.Line)
-			fmt.Println(frag.Tipo)
-			fmt.Println(frag.Valor)
 			return frag.Valor.(CallHeap).Ejecutar()
 		}
 	case 17:

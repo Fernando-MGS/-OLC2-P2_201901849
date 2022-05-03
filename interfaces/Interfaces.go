@@ -108,9 +108,24 @@ type Atributos struct {
 	Tipo TipoSimbolo
 }
 
+type Atributo struct {
+	Id   string
+	Expr Expresion
+}
+
+type AttSymbol struct {
+	Id    string
+	Valor Value
+}
+
 type Functions struct {
 	Id        string
 	Params    *arraylist.List
 	Tipo      TipoSimbolo
 	Statments *arraylist.List
+}
+
+type Structs struct {
+	Id       string
+	Atributo *arraylist.List
 }

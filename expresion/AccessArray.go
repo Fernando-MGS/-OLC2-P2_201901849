@@ -60,6 +60,7 @@ func (p ArrayAccess) Ejecutar(env interface{}, gen *generator.Generator) interfa
 	retorno.Value = result_access.Value
 	retorno.TrueLabel = result_access.TrueLabel
 	retorno.IsTemp = true
+	retorno.FalseLabel = "1"
 	new_dimension := interfaces.Dimensions{Tipo: dimensions.Tipo, Dimensions: result_access.Tipo2}
 	retorno.Tipo2 = arraylist.New()
 	retorno.Tipo2.Add(new_dimension)

@@ -26,7 +26,8 @@ func (p Push) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	access := p.Acceso.Ejecutar(env, gen)
 	value := p.Valor.Ejecutar(env, gen)
 	name := env.(environment.Environment).Control.Id
-	fmt.Println(access)
+	//fmt.Println(access)
+	fmt.Println("EL VALUE ES ", value)
 	if access.Type != interfaces.NULL && value.Type != interfaces.NULL {
 		//pos:=gen.NewTemp()
 		dim := access.Tipo2.GetValue(0).(interfaces.Dimensions)

@@ -36,14 +36,14 @@ func (b Break) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 			/*fmt.Println(res)
 			fmt.Println("FIN-BREAK ")*/
 			//code := "goto " + env.(environment.Environment).Control.Salida + ";"
-			gen.NewSalto(env.(environment.Environment).Control.Salida, false, "", name, true, false, b.line)
+			gen.NewBreak(env.(environment.Environment).Control.Salida, false, "", name, true, false, b.line)
 			//gen.AddCodes(code, ambito)
 			//gen.AddCodes("//FIN DEL BREAK", ambito)
 			gen.NewComentario("FIN DEL BREAK", name, true, false, b.line)
 			return res
 		} else {
 			gen.NewComentario("INICIO DEL BREAK", name, true, false, b.line)
-			gen.NewSalto(env.(environment.Environment).Control.Salida, false, "", name, true, false, b.line)
+			gen.NewBreak(env.(environment.Environment).Control.Salida, false, "", name, true, false, b.line)
 			gen.NewComentario("FIN DEL BREAK", name, true, false, b.line)
 			//code := "//BREAK\n" + "goto " + env.(environment.Environment).Control.Salida + ";\n//FIN DE BREAK\n"
 			//gen.AddCodes(code, ambito)

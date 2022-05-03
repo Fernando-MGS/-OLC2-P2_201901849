@@ -46,6 +46,8 @@ instruccion returns [interfaces.Instruction instr]
   |accesoArr PUNTO PUSH PARIZQ expression PARDER PTCOMA  {$instr=instruction.NewPush($accesoArr.p,$expression.p,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
   |accesoArr PUNTO INSERT PARIZQ exp1=expression COMA exp2=expression PARDER PTCOMA {$instr=instruction.NewInsert($accesoArr.p,$exp1.p,$exp2.p,$COMA.GetLine(),$COMA.GetColumn())}
   |funcs {$instr=$funcs.i}
+  |t_struct {$instr=$t_struct.i}
+  |llamadas PTCOMA{$instr=$llamadas.i}
 ;
 instruccion_wc returns [interfaces.Instruction instr]:
   CONSOLE '.' LOG PARIZQ expression PARDER {$instr = instruction.NewImprimir($expression.p)}
@@ -62,6 +64,27 @@ instruccion_wc returns [interfaces.Instruction instr]:
   |accesoArr PUNTO PUSH PARIZQ expression PARDER  {$instr=instruction.NewPush($accesoArr.p,$expression.p,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
 ;
 
+value_ref returns [bool t]:
+  AMPER MUT   {$t=true}
+  |     {$t=false}
+;
+
+llamadas returns [interfaces.Instruction i]:
+  id=ID PARIZQ p=param_call PARDER{
+    $i=instruction.NewCallF($id.text,$p.l,$id.GetLine(),$id.GetColumn())    
+  }
+;
+
+param_call returns [*arrayList.List l]:
+  value_ref expression  {$l=arrayList.New()
+                $l.Add($expression.p)
+  }
+  |p=param_call COMA value_ref expression {
+              $p.l.Add($expression.p)
+              $l=$p.l
+  }
+  |           {$l=arrayList.New()}
+;
 
 asignacion_var  returns [interfaces.Instruction i]:
   id=ID IGUAL expression {
@@ -136,8 +159,8 @@ vectores returns [*arrayList.List l]:
   |USIZE    {$l=arrayList.New()
               $l.Add(interfaces.USIZE)}  
   |id=ID       {$l=arrayList.New()
-              $l.Add($id.text)
-              $l.Add(interfaces.STRUCT)}
+              $l.Add(interfaces.STRUCT)
+              }
   |VECT MENOR vectores MAYOR{
     $vectores.l.Add(interfaces.VECTOR)
     $l=$vectores.l
@@ -237,7 +260,7 @@ iter_for returns[interfaces.For_Range p]:
   |exp1=expression {$p=interfaces.For_Range{$exp1.p,expresion.NewPrimitivo (1,interfaces.INTEGER,0,0),1}}
 ;
 mod_Array returns[interfaces.Instruction p]:
-  exp1=expression IGUAL expression {$p=instruction.NewModArray($exp1.p,$expression.p,$IGUAL.GetLine(),$IGUAL.GetColumn())} 
+  exp1=accesoArr IGUAL expression {$p=instruction.NewModArray($exp1.p,$expression.p,$IGUAL.GetLine(),$IGUAL.GetColumn())} 
 ;
 
 funcs returns [interfaces.Instruction i]:
@@ -294,9 +317,27 @@ type_func returns [interfaces.TipoSimbolo l]:
   }
 ;
 
+t_struct returns [interfaces.Instruction i]:
+  P_STRUCT id=ID LLAVEIZQ lista=lista_att LLAVEDER  {$i = instruction.NewStruct($id.text, $lista.l,$P_STRUCT.GetLine(),$P_STRUCT.GetColumn())}
+;
+
+lista_att returns [*arrayList.List l]:
+  list=lista_att COMA id=ID DOSPUNTOS type_func{
+    att:=interfaces.Atributos{$id.text,$type_func.l}
+    $list.l.Add(att);
+    $l = $list.l;
+  }
+  |id=ID DOSPUNTOS type_func{
+    att:=interfaces.Atributos{$id.text,$type_func.l}
+    $l = arrayList.New();
+    $l.Add(att);
+  }
+;
+
 //EXPRESIONES
 expression returns[interfaces.Expresion p]
     : expr_arit    {$p = $expr_arit.p}
+    |id=ID LLAVEIZQ listAtt LLAVEDER  {$p=expresion.NewStruct($id.text,$listAtt.l,$LLAVEIZQ.GetLine(),$LLAVEIZQ.GetColumn())}
 ;
 
 expr_arit returns[interfaces.Expresion p]
@@ -316,21 +357,24 @@ expr_arit returns[interfaces.Expresion p]
     | ifs   {$p=expresion.NewDevLoop($ifs.p)}
     |matches {$p=expresion.NewDevLoop($matches.m)}
     | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l) }
-    |acc=accesoArr list=listArray {$p=expresion.NewArrayAccess($acc.p,$list.l,0,0)}
+    |acc=accesoArr {$p=$acc.p}
     |creatArray {$p=$creatArray.p}
     |VEC CORIZQ listValues CORDER   {$p=expresion.NewVectorB($listValues.l)}
     |VEC CORIZQ exp1=expression PTCOMA exp2=expression CORDER   {$p=expresion.NewVectorA($exp1.p,$exp2.p)}
     |VECT DDPUNTO CAP PARIZQ expression PARDER  {$p=expresion.New_CapacityV($expression.p)}
-    |VECT DDPUNTO NEW PARIZQ PARDER {$p=expresion.NewVectorC()}
+    |VECT DDPUNTO NEW PARIZQ PARDER {$p=expresion.NewVectorC()}    
     |id=accesoArr PUNTO CAPACITY PARIZQ PARDER {$p=expresion.NewLen($id.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
     |id=accesoArr PUNTO LEN PARIZQ PARDER {$p=expresion.NewLenT($id.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
     |exp=expr_arit PUNTO F_ABS PARIZQ PARDER {$p=expresion.NewAbsoluto($exp.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
     |accesoArr PUNTO REMOVE PARIZQ expression PARDER PTCOMA  {$p=expresion.NewRemove($accesoArr.p,$expression.p,$PARIZQ.GetLine(),$PARIZQ.GetColumn())}
-    |accesoArr PUNTO CONTAINS PARIZQ AMPER expression  PARDER  {$p=expresion.NewContains($accesoArr.p,$expression.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}
+    |accesoArr PUNTO CONTAINS PARIZQ AMPER expression  PARDER  {$p=expresion.NewContains($accesoArr.p,$expression.p,$PUNTO.GetLine(),$PUNTO.GetColumn())}    
+    |llamadas {$p=expresion.NewDevLoop($llamadas.i)}
 ;
 
 accesoArr returns[interfaces.Expresion p]:
      id=ID  {$p=expresion.NewCallVariable($id.text,$id.GetLine(),$id.GetColumn())}
+     |a=accesoArr PUNTO id=ID {$p=expresion.NewStructAccess($a.p,$id.text,$PUNTO.GetLine(),$PUNTO.GetColumn())}
+     |a=accesoArr list=listArray {$p=expresion.NewArrayAccess($a.p,$list.l,0,0)}
 ;
 
 primitivo returns[interfaces.Expresion p]
@@ -387,6 +431,18 @@ listValues returns[*arrayList.List l]
                 }
 ;
 
+listAtt returns [*arrayList.List l]:
+  id=ID DOSPUNTOS expression  {
+    $l=arrayList.New()
+    att:=interfaces.Atributo{$id.text,$expression.p}
+    $l.Add(att)
+  }
+  |list=listAtt COMA id=ID DOSPUNTOS expression{
+    att:=interfaces.Atributo{$id.text,$expression.p}
+    $list.l.Add(att)
+    $l=$list.l
+  }
+;
 
 
 listArray returns[*arrayList.List l]:

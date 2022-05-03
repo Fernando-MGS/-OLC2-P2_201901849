@@ -55,6 +55,8 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 		t := fmt.Sprintf("%v", tipo)
 		if t == "instruction.Functions" {
 			s.(interfaces.Instruction).Ejecutar(globalEnv, gen)
+		} else if t == "instruction.Struct" {
+			s.(interfaces.Instruction).Ejecutar(globalEnv, gen)
 		}
 		//s.(interfaces.Instruction).Ejecutar(globalEnv, gen)
 	}

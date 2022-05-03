@@ -84,9 +84,12 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 				return result
 			}
 		} else if p.Tipo.Tipo == interfaces.VECTOR {
+			fmt.Println("hola 0")
 			dimension_res := result.Tipo2.GetValue(0).(interfaces.Dimensions)
+			fmt.Println("hola 1")
+			fmt.Println(p.Tipo.Tipo2.GetValue(0))
 			dimension_tipo := p.Tipo.Tipo2.GetValue(0).(interfaces.TipoExpresion)
-			//fmt.Println("hola 2")
+			fmt.Println("hola 2")
 			if dimension_res.Tipo == interfaces.VOID || dimension_res.Tipo == dimension_tipo {
 				if dimension_res.Dimensions.Len() != p.Tipo.Tipo2.Len() {
 					env.(environment.Environment).NewError("LOS TAMAÑOS NO CONCUERDAN", p.Line, p.Col)
@@ -135,6 +138,10 @@ func (p Declaracion) Ejecutar(env interface{}, gen *generator.Generator) interfa
 			fragmento = generator.Fragment{Valor: code, Tipo: 5, Valido: true, Mod: false, Line: p.Line}
 			gen.AddFragment(name, fragmento)
 			//gen.AddCodes(code, ambito)
+		} else if interfaces.STRUCT == result.Type {
+			tipo := interfaces.TipoSimbolo{result.Type, result.Tipo2}
+			simbolo := interfaces.Symbol{Id: p.Id, Tipo: tipo, Posicion: result.Value, Mutable: p.Mutable}
+			env.(environment.Environment).SaveVariable(p.Line, p.Col, p.Id, simbolo, p.Tipo)
 		} else {
 
 			//codigo := "//--------------INICIO DE DECLARACION--------" + p.Id + "\n"

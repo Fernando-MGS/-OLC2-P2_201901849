@@ -20,6 +20,15 @@ type ChemsListener interface {
 	// EnterInstruccion_wc is called when entering the instruccion_wc production.
 	EnterInstruccion_wc(c *Instruccion_wcContext)
 
+	// EnterValue_ref is called when entering the value_ref production.
+	EnterValue_ref(c *Value_refContext)
+
+	// EnterLlamadas is called when entering the llamadas production.
+	EnterLlamadas(c *LlamadasContext)
+
+	// EnterParam_call is called when entering the param_call production.
+	EnterParam_call(c *Param_callContext)
+
 	// EnterAsignacion_var is called when entering the asignacion_var production.
 	EnterAsignacion_var(c *Asignacion_varContext)
 
@@ -113,6 +122,12 @@ type ChemsListener interface {
 	// EnterType_func is called when entering the type_func production.
 	EnterType_func(c *Type_funcContext)
 
+	// EnterT_struct is called when entering the t_struct production.
+	EnterT_struct(c *T_structContext)
+
+	// EnterLista_att is called when entering the lista_att production.
+	EnterLista_att(c *Lista_attContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -127,6 +142,9 @@ type ChemsListener interface {
 
 	// EnterListValues is called when entering the listValues production.
 	EnterListValues(c *ListValuesContext)
+
+	// EnterListAtt is called when entering the listAtt production.
+	EnterListAtt(c *ListAttContext)
 
 	// EnterListArray is called when entering the listArray production.
 	EnterListArray(c *ListArrayContext)
@@ -145,6 +163,15 @@ type ChemsListener interface {
 
 	// ExitInstruccion_wc is called when exiting the instruccion_wc production.
 	ExitInstruccion_wc(c *Instruccion_wcContext)
+
+	// ExitValue_ref is called when exiting the value_ref production.
+	ExitValue_ref(c *Value_refContext)
+
+	// ExitLlamadas is called when exiting the llamadas production.
+	ExitLlamadas(c *LlamadasContext)
+
+	// ExitParam_call is called when exiting the param_call production.
+	ExitParam_call(c *Param_callContext)
 
 	// ExitAsignacion_var is called when exiting the asignacion_var production.
 	ExitAsignacion_var(c *Asignacion_varContext)
@@ -239,6 +266,12 @@ type ChemsListener interface {
 	// ExitType_func is called when exiting the type_func production.
 	ExitType_func(c *Type_funcContext)
 
+	// ExitT_struct is called when exiting the t_struct production.
+	ExitT_struct(c *T_structContext)
+
+	// ExitLista_att is called when exiting the lista_att production.
+	ExitLista_att(c *Lista_attContext)
+
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)
 
@@ -253,6 +286,9 @@ type ChemsListener interface {
 
 	// ExitListValues is called when exiting the listValues production.
 	ExitListValues(c *ListValuesContext)
+
+	// ExitListAtt is called when exiting the listAtt production.
+	ExitListAtt(c *ListAttContext)
 
 	// ExitListArray is called when exiting the listArray production.
 	ExitListArray(c *ListArrayContext)

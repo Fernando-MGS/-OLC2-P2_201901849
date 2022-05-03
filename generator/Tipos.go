@@ -218,7 +218,7 @@ func (p Salto) Ejecutar() string {
 }
 
 func (p Return) Ejecutar() string {
-	code := "();"
+	code := "return;"
 	if p.Comentario {
 		code += "//" + p.Comentario_Cont
 	}

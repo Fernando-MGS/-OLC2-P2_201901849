@@ -45,6 +45,24 @@ func (s *BaseChemsListener) EnterInstruccion_wc(ctx *Instruccion_wcContext) {}
 // ExitInstruccion_wc is called when production instruccion_wc is exited.
 func (s *BaseChemsListener) ExitInstruccion_wc(ctx *Instruccion_wcContext) {}
 
+// EnterValue_ref is called when production value_ref is entered.
+func (s *BaseChemsListener) EnterValue_ref(ctx *Value_refContext) {}
+
+// ExitValue_ref is called when production value_ref is exited.
+func (s *BaseChemsListener) ExitValue_ref(ctx *Value_refContext) {}
+
+// EnterLlamadas is called when production llamadas is entered.
+func (s *BaseChemsListener) EnterLlamadas(ctx *LlamadasContext) {}
+
+// ExitLlamadas is called when production llamadas is exited.
+func (s *BaseChemsListener) ExitLlamadas(ctx *LlamadasContext) {}
+
+// EnterParam_call is called when production param_call is entered.
+func (s *BaseChemsListener) EnterParam_call(ctx *Param_callContext) {}
+
+// ExitParam_call is called when production param_call is exited.
+func (s *BaseChemsListener) ExitParam_call(ctx *Param_callContext) {}
+
 // EnterAsignacion_var is called when production asignacion_var is entered.
 func (s *BaseChemsListener) EnterAsignacion_var(ctx *Asignacion_varContext) {}
 
@@ -231,6 +249,18 @@ func (s *BaseChemsListener) EnterType_func(ctx *Type_funcContext) {}
 // ExitType_func is called when production type_func is exited.
 func (s *BaseChemsListener) ExitType_func(ctx *Type_funcContext) {}
 
+// EnterT_struct is called when production t_struct is entered.
+func (s *BaseChemsListener) EnterT_struct(ctx *T_structContext) {}
+
+// ExitT_struct is called when production t_struct is exited.
+func (s *BaseChemsListener) ExitT_struct(ctx *T_structContext) {}
+
+// EnterLista_att is called when production lista_att is entered.
+func (s *BaseChemsListener) EnterLista_att(ctx *Lista_attContext) {}
+
+// ExitLista_att is called when production lista_att is exited.
+func (s *BaseChemsListener) ExitLista_att(ctx *Lista_attContext) {}
+
 // EnterExpression is called when production expression is entered.
 func (s *BaseChemsListener) EnterExpression(ctx *ExpressionContext) {}
 
@@ -260,6 +290,12 @@ func (s *BaseChemsListener) EnterListValues(ctx *ListValuesContext) {}
 
 // ExitListValues is called when production listValues is exited.
 func (s *BaseChemsListener) ExitListValues(ctx *ListValuesContext) {}
+
+// EnterListAtt is called when production listAtt is entered.
+func (s *BaseChemsListener) EnterListAtt(ctx *ListAttContext) {}
+
+// ExitListAtt is called when production listAtt is exited.
+func (s *BaseChemsListener) ExitListAtt(ctx *ListAttContext) {}
 
 // EnterListArray is called when production listArray is entered.
 func (s *BaseChemsListener) EnterListArray(ctx *ListArrayContext) {}

@@ -4,6 +4,7 @@ import (
 	"OLC2/environment"
 	"OLC2/generator"
 	"OLC2/interfaces"
+	"fmt"
 	"strconv"
 )
 
@@ -30,9 +31,11 @@ func (m ModArray) Ejecutar(env interface{}, gen *generator.Generator) interface{
 		return retorno
 	}
 	//gen.AddCodes("//INICIANDO LA ASIGNACION DE UN ARRAY O VECTOR", ambito)
-	gen.NewComentario("INICIO DE ASIGNACION DE ARRAY O VECTOR", name, true, false, m.Line)
+
 	if bounds.Type == value.Type {
 		if bounds.Type == interfaces.ARRAY || bounds.Type == interfaces.VECTOR {
+			fmt.Println("AVERS I ENTRA")
+			gen.NewComentario("INICIO DE ASIGNACION DE ARRAY O VECTOR", name, true, false, m.Line)
 			//env.(environment.Environment).NewError("EL ELEMENTO QUE SE QUIERE MODIFICAR NO ES UN VECTOR", m.Line, m.Col)
 			dim_bounds := bounds.Tipo2.GetValue(0).(interfaces.Dimensions)
 			dim_value := value.Tipo2.GetValue(0).(interfaces.Dimensions)
@@ -40,11 +43,18 @@ func (m ModArray) Ejecutar(env interface{}, gen *generator.Generator) interface{
 				env.(environment.Environment).NewError("LAS DIMENSIONES NO CONCUERDAN", m.Line, m.Col)
 				return retorno
 			}
+
 			//gen.AddCodes(bounds.Value+"="+value.Value+";", ambito)
 			//return retorno
 		}
-		//gen.AddCodes("HEAP[(int)"+bounds.TrueLabel+"]="+value.Value+";", ambito)
+		//if bounds.FalseLabel == "1" {
 		gen.NewHeap(bounds.TrueLabel, value.Value, false, "", name, true, false, m.Line)
+		/*} else if bounds.FalseLabel == "2" {
+			gen.NewAsignacion(bounds.Value, value.Value, true, "ASIGNACION DE STRUCT", name, true, true, "")
+		}*/
+
+		//gen.AddCodes("HEAP[(int)"+bounds.TrueLabel+"]="+value.Value+";", ambito)
+
 		/*entrada := gen.NewLabel()
 			salida := gen.NewLabel()
 			//gen.AddCodes("if("+bounds.TrueLabel+") ",ambito)

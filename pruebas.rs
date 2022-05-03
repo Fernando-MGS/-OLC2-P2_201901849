@@ -27,3 +27,33 @@ let mut arr3: [[[i64; 4];2]; 2] = [
 println!("{}",arr3);
 arr3[0][0][0]=10;
 println!("{}",arr3);
+
+fn main(){
+    println!("----------------------");
+    println!("----ARCHIVO BASICO----");
+    println!("----------------------");
+    let mut bo1: bool = false;
+    let mut a1:&str="hola";
+    let mut a2:char='c';
+    let mut a3:i64=4;
+    let  mut a4:f64=5.0;
+    let mut a5:usize=7;
+    println!("{}",bo1);
+    println!("{}",a1);
+    println!("{}",a2);
+    println!("{}",a3);
+    println!("{}",a4);
+    println!("{}",a5);
+    bo1 = true;
+    a1="adios";
+    a2='b';
+    a3=5;
+    a4=56.0;
+//    let a5:usize=7;
+    println!("{}",bo1);
+    println!("{}",a1);
+    println!("{}",a2);
+    println!("{}",a3);
+    println!("{}",a4);
+    println!("{}",a5);
+}

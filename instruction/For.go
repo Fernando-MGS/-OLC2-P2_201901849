@@ -94,6 +94,7 @@ func (f For) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		//fmt.Println("hoal")
 		if rangoInf.Type == interfaces.ARRAY || rangoInf.Type == interfaces.VECTOR {
 			//i:=gen.NewTemp()
+			fmt.Println("ESTOY EN UN FOR")
 			index := gen.NewTemp()
 			largo := gen.NewTemp()
 			value := gen.NewTemp()

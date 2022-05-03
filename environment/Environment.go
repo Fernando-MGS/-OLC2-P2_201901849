@@ -16,7 +16,7 @@ type Environment struct {
 	simbolos  *arraylist.List
 	errores   *arraylist.List
 	functions map[string]interfaces.Functions
-	structs   map[string]interfaces.Symbol
+	structs   map[string]interfaces.Structs
 }
 
 type EnvControl struct {
@@ -29,7 +29,7 @@ type EnvControl struct {
 }
 
 func NewEnvironment(father interface{}, id, in, out string, ciclo bool, stack int) Environment {
-	env := Environment{&EnvControl{Id: id, Stack: stack, Heap: 1, Entrada: in, Salida: out, Ciclo: ciclo}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New(), make(map[string]interfaces.Functions), make(map[string]interfaces.Symbol)}
+	env := Environment{&EnvControl{Id: id, Stack: stack, Heap: 1, Entrada: in, Salida: out, Ciclo: ciclo}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New(), make(map[string]interfaces.Functions), make(map[string]interfaces.Structs)}
 	return env
 }
 
@@ -59,6 +59,36 @@ func (env Environment) SaveVariable(line, col, id string, value interfaces.Symbo
 	simbolos := interfaces.Simbolos{ID: id, Tipo: Tipo2(value.Tipo.Tipo), Ambito: env.Control.Id, Fila: line, Columna: col}
 	env.LogSimbolo(simbolos)
 	//env.size = env.size + 1
+}
+
+func (env Environment) SaveStruct(line, col, id string, structs interfaces.Structs) {
+	if variable, ok := env.variable[id]; ok {
+		env.NewError("EL STRUCT \""+variable.Id+"\" YA HA SIDO DECLARADO", line, col)
+		return
+	}
+	env.structs[id] = structs
+	simbolos := interfaces.Simbolos{ID: id, Tipo: "STRUCT", Ambito: env.Control.Id, Fila: line, Columna: col}
+	env.LogSimbolo(simbolos)
+	//env.size = env.size + 1
+}
+
+func (env Environment) GetFunc(id, line, col string) (bool, interfaces.Functions) {
+	var tmpEnv Environment
+	tmpEnv = env
+
+	for {
+		if variable, ok := tmpEnv.functions[id]; ok {
+			return true, variable
+		}
+
+		if tmpEnv.father == nil {
+			break
+		} else {
+			tmpEnv = tmpEnv.father.(Environment)
+		}
+	}
+	env.NewError("LA FUNCION "+id+" NO HA SIDO ENCONTRADA", line, col)
+	return false, interfaces.Functions{}
 }
 
 func inutil(v interfaces.Symbol) {
@@ -109,6 +139,25 @@ func (env Environment) GetVariable(id, line, col string) interfaces.Symbol {
 	env.Errores(err)
 	tipos := interfaces.TipoSimbolo{Tipo: interfaces.NULL}
 	return interfaces.Symbol{Id: "", Tipo: tipos, Posicion: "0"}
+}
+
+func (env Environment) GetStruct(id, line, col string) (bool, interfaces.Structs) {
+	var tmpEnv Environment
+	tmpEnv = env
+
+	for {
+		if tmpStruct, ok := tmpEnv.structs[id]; ok {
+			return true, tmpStruct
+		}
+
+		if tmpEnv.father == nil {
+			break
+		} else {
+			tmpEnv = tmpEnv.father.(Environment)
+		}
+	}
+	env.NewError("EL STRUCT \""+id+"\" NO FUE ENCONTRADO", line, col)
+	return false, interfaces.Structs{}
 }
 
 func (env Environment) LogBase(s interfaces.Bases) {
