@@ -17,6 +17,9 @@ type ChemsListener interface {
 	// EnterInstruccion is called when entering the instruccion production.
 	EnterInstruccion(c *InstruccionContext)
 
+	// EnterDec_Mod is called when entering the dec_Mod production.
+	EnterDec_Mod(c *Dec_ModContext)
+
 	// EnterInstruccion_wc is called when entering the instruccion_wc production.
 	EnterInstruccion_wc(c *Instruccion_wcContext)
 
@@ -166,6 +169,9 @@ type ChemsListener interface {
 
 	// ExitInstruccion is called when exiting the instruccion production.
 	ExitInstruccion(c *InstruccionContext)
+
+	// ExitDec_Mod is called when exiting the dec_Mod production.
+	ExitDec_Mod(c *Dec_ModContext)
 
 	// ExitInstruccion_wc is called when exiting the instruccion_wc production.
 	ExitInstruccion_wc(c *Instruccion_wcContext)

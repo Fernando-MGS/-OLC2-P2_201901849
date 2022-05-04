@@ -4,59 +4,268 @@ float HEAP[82000];
 float STACK[82000];
 float P;
 float H;
-float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, t60, t61, t62, t63, t64, t65, t66, t67, t68, t69, t70, t71, t72, t73, t74, t75, t76, t77, t78, t79, t80, t81, t82, t83, t84, t85, t86, t87, t88, t89, t90, t91, t92, t93, t94, t95, t96, t97, t98, t99, t100, t101, t102, t103, t104, t105, t106, t107, t108, t109, t110, t111, t112, t113, t114, t115, t116, t117, t118, t119, t120, t121, t122, t123, t124, t125, t126, t127, t128, t129, t130, t131, t132, t133, t134, t135, t136, t137, t138, t139, t140, t141, t142, t143, t144, t145, t146, t147, t148, t149, t150, t151, t152, t153, t154, t155, t156, t157, t158, t159, t160, t161, t162, t163, t164, t165, t166, t167, t168, t169, t170, t171, t172, t173, t174, t175, t176, t177, t178, t179, t180, t181, t182, t183, t184, t185, t186, t187, t188, t189, t190, t191, t192, t193, t194, t195, t196, t197, t198, t199, t200, t201, t202, t203, t204, t205, t206, t207, t208, t209, t210, t211, t212, t213, t214, t215, t216, t217, t218, t219, t220, t221, t222, t223, t224, t225, t226, t227, t228, t229, t230, t231, t232, t233, t234, t235, t236, t237, t238, t239, t240, t241, t242, t243, t244, t245, t246, t247, t248, t249, t250, t251;
+float t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, t60, t61, t62, t63, t64, t65, t66, t67, t68, t69, t70, t71, t72, t73, t74, t75, t76, t77, t78, t79, t80, t81, t82, t83, t84, t85, t86, t87, t88, t89, t90, t91, t92, t93, t94, t95, t96, t97, t98, t99, t100, t101, t102, t103, t104, t105, t106, t107, t108, t109, t110, t111, t112, t113, t114, t115, t116, t117, t118, t119, t120, t121, t122, t123, t124, t125, t126, t127, t128, t129, t130, t131, t132, t133, t134, t135, t136, t137;
 
 void proc_printString(){
-t2=P+1;
-t3=STACK[(int)t2];
-L2:
-t4=HEAP[(int)t3];
-if(t4!=-1) goto L3;
-goto L4;
-L3:
-printf("%c",(int)t4);
-t3=t3 + 1;
+t84=P+1;
+t85=STACK[(int)t84];
+L17:
+t86=HEAP[(int)t85];
+if(t86!=-1) goto L18;
+goto L19;
+L18:
+printf("%c",(int)t86);
+t85=t85 + 1;
+goto L17;
+L19:
+return;
+}
+
+void f (){
+t0=P+1;
+t1=STACK[(int)t0];
+STACK[(int)t0]=t1;//DECLARACION DEL PARAMETRO n
+//--------<
+////INICIO DE LLAMADAn
+t3=STACK[(int)t0];
+if(t3<2) goto L1;
 goto L2;
+//INICIO DE IF PRIMARIO
+L1:
+STACK[(int)P]=1;
+goto L0;
+goto L3;
+L2:
+//INICIO DE BOOLEANO
+if(1==1) goto L4;
+goto L5;
+//FIN DE BOOLEANO 0-0
+//INICIO DE IF ELSE
 L4:
+//EJECUTANDO PARAMETROS
+////INICIO DE LLAMADAn
+t6=STACK[(int)t0];
+t5=t6-1;
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+t8=STACK[(int)81999];
+t8=t8+1;
+t7=81999-t8;
+t9=STACK[(int)t0];
+STACK[(int)81999]=t8;
+STACK[(int)t7]=t9;
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t10=P;//GUARDADO DEL VALOR DE P
+t11=P+1;
+STACK[(int)t11]=t5;
+f();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+t12=STACK[(int)81999];
+t13=81999-t12;
+t14=STACK[(int)t13];
+STACK[(int)t0]=t14;
+t12=t12-1;
+STACK[(int)81999]=t12;
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t15=STACK[(int)P];//RETORNO DE f
+P=t10;//RECUPERACION DEL VALOR DE P
+////INICIO DE LLAMADAn
+t16=STACK[(int)t0];
+t4=t16*t15;
+STACK[(int)P]=t4;
+goto L0;
+goto L3;
+L5:
+//SALIDA DE IF
+L3:
+L0:
 return;
 }
-void proc_extra_printTrue(){
-printf("%c",116);
-printf("%c",114);
-printf("%c",117);
-printf("%c",101);
+void ack (){
+t17=P+1;
+t18=STACK[(int)t17];
+STACK[(int)t17]=t18;//DECLARACION DEL PARAMETRO m
+t19=P+2;
+t20=STACK[(int)t19];
+STACK[(int)t19]=t20;//DECLARACION DEL PARAMETRO n
+//-------------==--------
+////INICIO DE LLAMADAm
+t22=STACK[(int)t17];
+if(t22==0) goto L7;
+goto L8;
+//INICIO DE IF PRIMARIO
+L7:
+////INICIO DE LLAMADAn
+t24=STACK[(int)t19];
+t23=t24+1;
+STACK[(int)P]=t23;
+goto L6;
+goto L9;
+L8:
+//-------------==--------
+////INICIO DE LLAMADAn
+t26=STACK[(int)t19];
+if(t26==0) goto L10;
+goto L11;
+//INICIO DE IF ELSE
+L10:
+//EJECUTANDO PARAMETROS
+////INICIO DE LLAMADAm
+t28=STACK[(int)t17];
+t27=t28-1;
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+t30=STACK[(int)81999];
+t30=t30+1;
+t29=81999-t30;
+t31=STACK[(int)t17];
+STACK[(int)81999]=t30;
+STACK[(int)t29]=t31;
+t33=STACK[(int)81999];
+t33=t33+1;
+t32=81999-t33;
+t34=STACK[(int)t19];
+STACK[(int)81999]=t33;
+STACK[(int)t32]=t34;
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t35=P;//GUARDADO DEL VALOR DE P
+t36=P+1;
+STACK[(int)t36]=t27;
+t37=P+2;
+STACK[(int)t37]=1;
+ack();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+t38=STACK[(int)81999];
+t39=81999-t38;
+t40=STACK[(int)t39];
+STACK[(int)t17]=t40;
+t38=t38-1;
+STACK[(int)81999]=t38;
+t41=STACK[(int)81999];
+t42=81999-t41;
+t43=STACK[(int)t42];
+STACK[(int)t19]=t43;
+t41=t41-1;
+STACK[(int)81999]=t41;
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t44=STACK[(int)P];//RETORNO DE ack
+P=t35;//RECUPERACION DEL VALOR DE P
+STACK[(int)P]=t44;
+goto L6;
+goto L9;
+L11:
+//INICIO DE BOOLEANO
+if(1==1) goto L12;
+goto L13;
+//FIN DE BOOLEANO 0-0
+//INICIO DE IF ELSE
+L12:
+//EJECUTANDO PARAMETROS
+////INICIO DE LLAMADAm
+t46=STACK[(int)t17];
+t45=t46-1;
+//EJECUTANDO PARAMETROS
+////INICIO DE LLAMADAm
+t47=STACK[(int)t17];
+////INICIO DE LLAMADAn
+t49=STACK[(int)t19];
+t48=t49-1;
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+t51=STACK[(int)81999];
+t51=t51+1;
+t50=81999-t51;
+t52=STACK[(int)t17];
+STACK[(int)81999]=t51;
+STACK[(int)t50]=t52;
+t54=STACK[(int)81999];
+t54=t54+1;
+t53=81999-t54;
+t55=STACK[(int)t19];
+STACK[(int)81999]=t54;
+STACK[(int)t53]=t55;
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t56=P;//GUARDADO DEL VALOR DE P
+t57=P+1;
+STACK[(int)t57]=t47;
+t58=P+2;
+STACK[(int)t58]=t48;
+ack();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+t59=STACK[(int)81999];
+t60=81999-t59;
+t61=STACK[(int)t60];
+STACK[(int)t17]=t61;
+t59=t59-1;
+STACK[(int)81999]=t59;
+t62=STACK[(int)81999];
+t63=81999-t62;
+t64=STACK[(int)t63];
+STACK[(int)t19]=t64;
+t62=t62-1;
+STACK[(int)81999]=t62;
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t65=STACK[(int)P];//RETORNO DE ack
+P=t56;//RECUPERACION DEL VALOR DE P
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+t67=STACK[(int)81999];
+t67=t67+1;
+t66=81999-t67;
+t68=STACK[(int)t17];
+STACK[(int)81999]=t67;
+STACK[(int)t66]=t68;
+t70=STACK[(int)81999];
+t70=t70+1;
+t69=81999-t70;
+t71=STACK[(int)t19];
+STACK[(int)81999]=t70;
+STACK[(int)t69]=t71;
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t72=P;//GUARDADO DEL VALOR DE P
+t73=P+1;
+STACK[(int)t73]=t45;
+t74=P+2;
+STACK[(int)t74]=t65;
+ack();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+t75=STACK[(int)81999];
+t76=81999-t75;
+t77=STACK[(int)t76];
+STACK[(int)t17]=t77;
+t75=t75-1;
+STACK[(int)81999]=t75;
+t78=STACK[(int)81999];
+t79=81999-t78;
+t80=STACK[(int)t79];
+STACK[(int)t19]=t80;
+t78=t78-1;
+STACK[(int)81999]=t78;
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t81=STACK[(int)P];//RETORNO DE ack
+P=t72;//RECUPERACION DEL VALOR DE P
+STACK[(int)P]=t81;
+goto L6;
+goto L9;
+L13:
+//SALIDA DE IF
+L9:
+L6:
 return;
 }
-
-void proc_extra_printFalse(){
-printf("%c",102);
-printf("%c",97);
-printf("%c",108);
-printf("%c",115);
-printf("%c",101);
-return;
-}
-
-
-void proc_divZero(){
-printf("%c",77);
-printf("%c",97);
-printf("%c",116);
-printf("%c",104);
-printf("%c",69);
-printf("%c",114);
-printf("%c",114);
-printf("%c",111);
-printf("%c",114);
-printf("%c",10);
-return;
-}
-
 
 void main (){
 //INICIO DE PRINT
 //INICIO DE STRING
-t0=H;
+t82=H;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
 HEAP[(int)H]=45;//-
 H=H+1;
 HEAP[(int)H]=45;//-
@@ -104,20 +313,20 @@ H=H+1;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if(t0==-1) goto L0;
+if(t82==-1) goto L15;
 P=P+1;
-t1=P+1;
-STACK[(int)t1]=t0;
+t83=P+1;
+STACK[(int)t83]=t82;
 proc_printString();
 P=P-1;
-goto L1;
-L0:
-L1:
+goto L16;
+L15:
+L16:
 printf("%c",10);//SALTO DE LINEA
 //FIN DE PRINT
 //INICIO DE PRINT
 //INICIO DE STRING
-t5=H;
+t87=H;
 HEAP[(int)H]=45;//-
 H=H+1;
 HEAP[(int)H]=45;//-
@@ -142,78 +351,25 @@ HEAP[(int)H]=79;//O
 H=H+1;
 HEAP[(int)H]=32;// 
 H=H+1;
-HEAP[(int)H]=66;//B
+HEAP[(int)H]=82;//R
 H=H+1;
-HEAP[(int)H]=65;//A
+HEAP[(int)H]=69;//E
+H=H+1;
+HEAP[(int)H]=67;//C
+H=H+1;
+HEAP[(int)H]=85;//U
+H=H+1;
+HEAP[(int)H]=82;//R
 H=H+1;
 HEAP[(int)H]=83;//S
 H=H+1;
 HEAP[(int)H]=73;//I
 H=H+1;
-HEAP[(int)H]=67;//C
+HEAP[(int)H]=86;//V
 H=H+1;
 HEAP[(int)H]=79;//O
 H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t5==-1) goto L5;
-P=P+1;
-t6=P+1;
-STACK[(int)t6]=t5;
-proc_printString();
-P=P-1;
-goto L6;
-L5:
-L6:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t7=H;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
-H=H+1;
-HEAP[(int)H]=45;//-
+HEAP[(int)H]=83;//S
 H=H+1;
 HEAP[(int)H]=45;//-
 H=H+1;
@@ -226,610 +382,106 @@ H=H+1;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if(t7==-1) goto L7;
-P=P+1;
-t8=P+1;
-STACK[(int)t8]=t7;
-proc_printString();
-P=P-1;
-goto L8;
-L7:
-L8:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE BOOLEANO
-if(0==1) goto L9;
-goto L10;
-//FIN DE BOOLEANO 9-20
-//--------------INICIO DE DECLARACION--------bo1
-L9://-----VERDADERO
-STACK[(int)t9]=1;
-P=P+1;
-goto L11;
-L10:
-STACK[(int)t9]=0;
-P=P+1;
-L11:
-//FIN DE DECLARACION bo1
-////INICIO DE LLAMADAbo1
-t11=STACK[(int)t9];
-if(t11==1) goto L12;
-goto L13;
-//--------------INICIO DE DECLARACION--------bol21
-L13://-----VERDADERO
-STACK[(int)t12]=1;
-P=P+1;
-goto L14;
-L12:
-STACK[(int)t12]=0;
-P=P+1;
-L14:
-//FIN DE DECLARACION bol21
-//INICIO DE STRING
-t13=H;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=112;//p
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-//--------------INICIO DE DECLARACION--------cad1
-t14=P;
-STACK[(int)t14]=t13;
-P=P+1;
-//--------------FIN DE DECLARACION--------cad1
-//INICIO DE STRING
-t15=H;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-//--------------INICIO DE DECLARACION--------cad21
-t16=P;
-STACK[(int)t16]=t15;
-P=P+1;
-//--------------FIN DE DECLARACION--------cad21
-//--------------INICIO DE DECLARACION--------letra1
-t18=P;
-STACK[(int)t18]=99;
-P=P+1;
-//------FIN DE DECLARACION--------letra1
-t27=2*3;
-t26=5+t27;
-t25=4*t26;
-t24=2+t25;
-t23=10*t24;
-t22=5+t23;
-t29=8*3;
-t28=t29*3;
-t21=t22-t28;
-t20=7-t21;
-t31=6*2;
-t30=50*t31;
-t19=t20+t30;
-//--------------INICIO DE DECLARACION--------val11
-t33=P;
-STACK[(int)t33]=t19;
-P=P+1;
-//------FIN DE DECLARACION--------val11
-t40=2*2;
-t39=t40*2;
-t38=t39*2;
-t37=t38-9;
-t43=8-6;
-t48=3*3;
-t49=6*5;
-t47=t48-t49;
-t46=t47-7;
-t52=7*7;
-t51=t52*7;
-t50=9+t51;
-t45=t46-t50;
-t44=t45+10;
-t42=t43+t44;
-t41=t42-5;
-t36=t37-t41;
-t35=t36+8;
-t55=2*3;
-t54=5*t55;
-t53=6-t54;
-t34=t35-t53;
-//--------------INICIO DE DECLARACION--------val21
-t57=P;
-STACK[(int)t57]=t34;
-P=P+1;
-//------FIN DE DECLARACION--------val21
-////INICIO DE LLAMADAval11
-t60=STACK[(int)t32];
-////INICIO DE LLAMADAval21
-t65=STACK[(int)t56];
-t64=t65*3;
-t63=2+t64;
-t62=t63+1;
-t69=2*2;
-t68=t69*2;
-t67=t68-2;
-t66=t67*2;
-t61=t62-t66;
-t59=t60+t61;
-t58=t59-2;
-//--------------INICIO DE DECLARACION--------val31
-t71=P;
-STACK[(int)t71]=t58;
-P=P+1;
-//------FIN DE DECLARACION--------val31
-//INICIO DE PRINT
-//INICIO DE STRING
-t72=H;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t72==-1) goto L15;
-P=P+1;
-t73=P+1;
-STACK[(int)t73]=t72;
-proc_printString();
-P=P-1;
-goto L16;
-L15:
-L16:
-////INICIO DE LLAMADAval11
-t74=STACK[(int)t32];
-printf("%d",(int)t74);
-//INICIO DE STRING
-t75=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t75==-1) goto L17;
-P=P+1;
-t76=P+1;
-STACK[(int)t76]=t75;
-proc_printString();
-P=P-1;
-goto L18;
-L17:
-L18:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t77=H;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=50;//2
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t77==-1) goto L19;
-P=P+1;
-t78=P+1;
-STACK[(int)t78]=t77;
-proc_printString();
-P=P-1;
-goto L20;
-L19:
-L20:
-////INICIO DE LLAMADAval21
-t79=STACK[(int)t56];
-printf("%d",(int)t79);
-//INICIO DE STRING
-t80=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t80==-1) goto L21;
-P=P+1;
-t81=P+1;
-STACK[(int)t81]=t80;
-proc_printString();
-P=P-1;
-goto L22;
-L21:
-L22:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t82=H;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=51;//3
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t82==-1) goto L23;
-P=P+1;
-t83=P+1;
-STACK[(int)t83]=t82;
-proc_printString();
-P=P-1;
-goto L24;
-L23:
-L24:
-////INICIO DE LLAMADAval31
-t84=STACK[(int)t70];
-printf("%d",(int)t84);
-//INICIO DE STRING
-t85=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t85==-1) goto L25;
-P=P+1;
-t86=P+1;
-STACK[(int)t86]=t85;
-proc_printString();
-P=P-1;
-goto L26;
-L25:
-L26:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t87=H;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=117;//u
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=112;//p
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=195;//Ã
-H=H+1;
-HEAP[(int)H]=179;//³
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t87==-1) goto L27;
+if(t87==-1) goto L20;
 P=P+1;
 t88=P+1;
 STACK[(int)t88]=t87;
 proc_printString();
 P=P-1;
-goto L28;
-L27:
-L28:
-////INICIO DE LLAMADAval31
-t89=STACK[(int)t70];
-printf("%d",(int)t89);
-//INICIO DE STRING
-t90=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t90==-1) goto L29;
-P=P+1;
-t91=P+1;
-STACK[(int)t91]=t90;
-proc_printString();
-P=P-1;
-goto L30;
-L29:
-L30:
+goto L21;
+L20:
+L21:
 printf("%c",10);//SALTO DE LINEA
 //FIN DE PRINT
 //INICIO DE PRINT
 //INICIO DE STRING
-t92=H;
-HEAP[(int)H]=69;//E
+t89=H;
+HEAP[(int)H]=45;//-
 H=H+1;
-HEAP[(int)H]=108;//l
+HEAP[(int)H]=45;//-
 H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=45;//-
 H=H+1;
-HEAP[(int)H]=118;//v
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=45;//-
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t89==-1) goto L22;
+P=P+1;
+t90=P+1;
+STACK[(int)t90]=t89;
+proc_printString();
+P=P-1;
+goto L23;
+L22:
+L23:
+printf("%c",10);//SALTO DE LINEA
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t91=H;
+HEAP[(int)H]=70;//F
 H=H+1;
 HEAP[(int)H]=97;//a
 H=H+1;
-HEAP[(int)H]=108;//l
+HEAP[(int)H]=99;//c
+H=H+1;
+HEAP[(int)H]=116;//t
 H=H+1;
 HEAP[(int)H]=111;//o
 H=H+1;
 HEAP[(int)H]=114;//r
+H=H+1;
+HEAP[(int)H]=105;//i
+H=H+1;
+HEAP[(int)H]=97;//a
+H=H+1;
+HEAP[(int)H]=108;//l
 H=H+1;
 HEAP[(int)H]=32;// 
 H=H+1;
@@ -839,83 +491,209 @@ HEAP[(int)H]=101;//e
 H=H+1;
 HEAP[(int)H]=32;// 
 H=H+1;
-HEAP[(int)H]=98;//b
+HEAP[(int)H]=54;//6
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t91==-1) goto L24;
+P=P+1;
+t92=P+1;
+STACK[(int)t92]=t91;
+proc_printString();
+P=P-1;
+goto L25;
+L24:
+L25:
+//EJECUTANDO PARAMETROS
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t93=P;//GUARDADO DEL VALOR DE P
+t94=P+1;
+STACK[(int)t94]=6;
+f();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t95=STACK[(int)P];//RETORNO DE f
+P=t93;//RECUPERACION DEL VALOR DE P
+printf("%d",(int)t95);
+//INICIO DE STRING
+t96=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t96==-1) goto L26;
+P=P+1;
+t97=P+1;
+STACK[(int)t97]=t96;
+proc_printString();
+P=P-1;
+goto L27;
+L26:
+L27:
+printf("%c",10);//SALTO DE LINEA
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t98=H;
+HEAP[(int)H]=70;//F
+H=H+1;
+HEAP[(int)H]=97;//a
+H=H+1;
+HEAP[(int)H]=99;//c
+H=H+1;
+HEAP[(int)H]=116;//t
 H=H+1;
 HEAP[(int)H]=111;//o
 H=H+1;
-HEAP[(int)H]=49;//1
+HEAP[(int)H]=114;//r
+H=H+1;
+HEAP[(int)H]=105;//i
+H=H+1;
+HEAP[(int)H]=97;//a
+H=H+1;
+HEAP[(int)H]=108;//l
 H=H+1;
 HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=100;//d
 H=H+1;
 HEAP[(int)H]=101;//e
 H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
 HEAP[(int)H]=32;// 
 H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=52;//4
 H=H+1;
 HEAP[(int)H]=32;// 
 H=H+1;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if(t92==-1) goto L31;
+if(t98==-1) goto L28;
 P=P+1;
-t93=P+1;
-STACK[(int)t93]=t92;
+t99=P+1;
+STACK[(int)t99]=t98;
 proc_printString();
 P=P-1;
-goto L32;
-L31:
-L32:
-////INICIO DE LLAMADAbo1
-t94=STACK[(int)t9];
-if(t94==1) goto L33;
-goto L34;
-L33:
-proc_extra_printTrue();//IMPRIMIR BOOLEANOS
-goto L35;
-L34:
-proc_extra_printFalse();//IMPRIMIR BOOLEANOS
-L35:
+goto L29;
+L28:
+L29:
+//EJECUTANDO PARAMETROS
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t100=P;//GUARDADO DEL VALOR DE P
+t101=P+1;
+STACK[(int)t101]=4;
+f();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t102=STACK[(int)P];//RETORNO DE f
+P=t100;//RECUPERACION DEL VALOR DE P
+printf("%d",(int)t102);
 //INICIO DE STRING
-t95=H;
+t103=H;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if(t95==-1) goto L36;
+if(t103==-1) goto L30;
 P=P+1;
-t96=P+1;
-STACK[(int)t96]=t95;
+t104=P+1;
+STACK[(int)t104]=t103;
+proc_printString();
+P=P-1;
+goto L31;
+L30:
+L31:
+printf("%c",10);//SALTO DE LINEA
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t105=H;
+HEAP[(int)H]=70;//F
+H=H+1;
+HEAP[(int)H]=97;//a
+H=H+1;
+HEAP[(int)H]=99;//c
+H=H+1;
+HEAP[(int)H]=116;//t
+H=H+1;
+HEAP[(int)H]=111;//o
+H=H+1;
+HEAP[(int)H]=114;//r
+H=H+1;
+HEAP[(int)H]=105;//i
+H=H+1;
+HEAP[(int)H]=97;//a
+H=H+1;
+HEAP[(int)H]=108;//l
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=100;//d
+H=H+1;
+HEAP[(int)H]=101;//e
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=51;//3
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t105==-1) goto L32;
+P=P+1;
+t106=P+1;
+STACK[(int)t106]=t105;
+proc_printString();
+P=P-1;
+goto L33;
+L32:
+L33:
+//EJECUTANDO PARAMETROS
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t107=P;//GUARDADO DEL VALOR DE P
+t108=P+1;
+STACK[(int)t108]=3;
+f();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t109=STACK[(int)P];//RETORNO DE f
+P=t107;//RECUPERACION DEL VALOR DE P
+printf("%d",(int)t109);
+//INICIO DE STRING
+t110=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t110==-1) goto L34;
+P=P+1;
+t111=P+1;
+STACK[(int)t111]=t110;
+proc_printString();
+P=P-1;
+goto L35;
+L34:
+L35:
+printf("%c",10);//SALTO DE LINEA
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t112=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t112==-1) goto L36;
+P=P+1;
+t113=P+1;
+STACK[(int)t113]=t112;
 proc_printString();
 P=P-1;
 goto L37;
@@ -925,223 +703,231 @@ printf("%c",10);//SALTO DE LINEA
 //FIN DE PRINT
 //INICIO DE PRINT
 //INICIO DE STRING
-t97=H;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
+t114=H;
+HEAP[(int)H]=65;//A
 H=H+1;
 HEAP[(int)H]=99;//c
 H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=107;//k
 H=H+1;
 HEAP[(int)H]=101;//e
 H=H+1;
-HEAP[(int)H]=115;//s
+HEAP[(int)H]=114;//r
 H=H+1;
-HEAP[(int)H]=58;//:
+HEAP[(int)H]=109;//m
 H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=97;//a
 H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=110;//n
 H=H+1;
 HEAP[(int)H]=32;// 
 H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=100;//d
+H=H+1;
+HEAP[(int)H]=101;//e
 H=H+1;
 HEAP[(int)H]=32;// 
 H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=51;//3
 H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=44;//,
 H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
+HEAP[(int)H]=48;//0
 H=H+1;
 HEAP[(int)H]=32;// 
 H=H+1;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if(t97==-1) goto L38;
+if(t114==-1) goto L38;
 P=P+1;
-t98=P+1;
-STACK[(int)t98]=t97;
+t115=P+1;
+STACK[(int)t115]=t114;
 proc_printString();
 P=P-1;
 goto L39;
 L38:
 L39:
-////INICIO DE LLAMADAcad1
-t99=STACK[(int)t14];
-if(t99==-1) goto L40;
+//EJECUTANDO PARAMETROS
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t116=P;//GUARDADO DEL VALOR DE P
+t117=P+1;
+STACK[(int)t117]=3;
+t118=P+2;
+STACK[(int)t118]=0;
+ack();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t119=STACK[(int)P];//RETORNO DE ack
+P=t116;//RECUPERACION DEL VALOR DE P
+printf("%d",(int)t119);
+//INICIO DE STRING
+t120=H;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t120==-1) goto L40;
 P=P+1;
-t100=P+1;
-STACK[(int)t100]=t99;
+t121=P+1;
+STACK[(int)t121]=t120;
 proc_printString();
 P=P-1;
 goto L41;
 L40:
 L41:
+printf("%c",10);//SALTO DE LINEA
+//FIN DE PRINT
+//INICIO DE PRINT
 //INICIO DE STRING
-t101=H;
+t122=H;
+HEAP[(int)H]=65;//A
+H=H+1;
+HEAP[(int)H]=99;//c
+H=H+1;
+HEAP[(int)H]=107;//k
+H=H+1;
+HEAP[(int)H]=101;//e
+H=H+1;
+HEAP[(int)H]=114;//r
+H=H+1;
+HEAP[(int)H]=109;//m
+H=H+1;
+HEAP[(int)H]=97;//a
+H=H+1;
+HEAP[(int)H]=110;//n
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=100;//d
+H=H+1;
+HEAP[(int)H]=101;//e
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=50;//2
+H=H+1;
+HEAP[(int)H]=44;//,
+H=H+1;
+HEAP[(int)H]=56;//8
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if(t101==-1) goto L42;
+if(t122==-1) goto L42;
 P=P+1;
-t102=P+1;
-STACK[(int)t102]=t101;
+t123=P+1;
+STACK[(int)t123]=t122;
 proc_printString();
 P=P-1;
 goto L43;
 L42:
 L43:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
+//EJECUTANDO PARAMETROS
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t124=P;//GUARDADO DEL VALOR DE P
+t125=P+1;
+STACK[(int)t125]=2;
+t126=P+2;
+STACK[(int)t126]=8;
+ack();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t127=STACK[(int)P];//RETORNO DE ack
+P=t124;//RECUPERACION DEL VALOR DE P
+printf("%d",(int)t127);
 //INICIO DE STRING
-t103=H;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=50;//2
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
+t128=H;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if(t103==-1) goto L44;
+if(t128==-1) goto L44;
 P=P+1;
-t104=P+1;
-STACK[(int)t104]=t103;
+t129=P+1;
+STACK[(int)t129]=t128;
 proc_printString();
 P=P-1;
 goto L45;
 L44:
 L45:
-////INICIO DE LLAMADAcad21
-t105=STACK[(int)t16];
-if(t105==-1) goto L46;
+printf("%c",10);//SALTO DE LINEA
+//FIN DE PRINT
+//INICIO DE PRINT
+//INICIO DE STRING
+t130=H;
+HEAP[(int)H]=65;//A
+H=H+1;
+HEAP[(int)H]=99;//c
+H=H+1;
+HEAP[(int)H]=107;//k
+H=H+1;
+HEAP[(int)H]=101;//e
+H=H+1;
+HEAP[(int)H]=114;//r
+H=H+1;
+HEAP[(int)H]=109;//m
+H=H+1;
+HEAP[(int)H]=97;//a
+H=H+1;
+HEAP[(int)H]=110;//n
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=100;//d
+H=H+1;
+HEAP[(int)H]=101;//e
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=50;//2
+H=H+1;
+HEAP[(int)H]=44;//,
+H=H+1;
+HEAP[(int)H]=49;//1
+H=H+1;
+HEAP[(int)H]=32;// 
+H=H+1;
+HEAP[(int)H]=-1;
+H=H+1;
+//FIN DE STRING
+if(t130==-1) goto L46;
 P=P+1;
-t106=P+1;
-STACK[(int)t106]=t105;
+t131=P+1;
+STACK[(int)t131]=t130;
 proc_printString();
 P=P-1;
 goto L47;
 L46:
 L47:
+//EJECUTANDO PARAMETROS
+//INICIANDO EL RESGUARDO DE LAS POSICIONES
+//FIN DEL RESGUARDO DE LAS POSICIONES
+//INICIO DE TRASLADO DE PARAMETROS
+t132=P;//GUARDADO DEL VALOR DE P
+t133=P+1;
+STACK[(int)t133]=2;
+t134=P+2;
+STACK[(int)t134]=1;
+ack();
+//INICIO DE LA RECUPERACION DE LAS POSICIONES
+//FIN DE LA RECUPERACION DE LAS POSICIONES
+t135=STACK[(int)P];//RETORNO DE ack
+P=t132;//RECUPERACION DEL VALOR DE P
+printf("%d",(int)t135);
 //INICIO DE STRING
-t107=H;
+t136=H;
 HEAP[(int)H]=-1;
 H=H+1;
 //FIN DE STRING
-if(t107==-1) goto L48;
+if(t136==-1) goto L48;
 P=P+1;
-t108=P+1;
-STACK[(int)t108]=t107;
+t137=P+1;
+STACK[(int)t137]=t136;
 proc_printString();
 P=P-1;
 goto L49;
@@ -1149,1709 +935,6 @@ L48:
 L49:
 printf("%c",10);//SALTO DE LINEA
 //FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t109=H;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t109==-1) goto L50;
-P=P+1;
-t110=P+1;
-STACK[(int)t110]=t109;
-proc_printString();
-P=P-1;
-goto L51;
-L50:
-L51:
-////INICIO DE LLAMADAletra1
-t111=STACK[(int)t17];
-printf("%c",(int)t111);
-//INICIO DE STRING
-t112=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t112==-1) goto L52;
-P=P+1;
-t113=P+1;
-STACK[(int)t113]=t112;
-proc_printString();
-P=P-1;
-goto L53;
-L52:
-L53:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t114=H;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=50;//2
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t114==-1) goto L54;
-P=P+1;
-t115=P+1;
-STACK[(int)t115]=t114;
-proc_printString();
-P=P-1;
-goto L55;
-L54:
-L55:
-////INICIO DE LLAMADAbol21
-t116=STACK[(int)t12];
-if(t116==1) goto L56;
-goto L57;
-L56:
-proc_extra_printTrue();//IMPRIMIR BOOLEANOS
-goto L58;
-L57:
-proc_extra_printFalse();//IMPRIMIR BOOLEANOS
-L58:
-//INICIO DE STRING
-t117=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t117==-1) goto L59;
-P=P+1;
-t118=P+1;
-STACK[(int)t118]=t117;
-proc_printString();
-P=P-1;
-goto L60;
-L59:
-L60:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t119=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t119==-1) goto L61;
-P=P+1;
-t120=P+1;
-STACK[(int)t120]=t119;
-proc_printString();
-P=P-1;
-goto L62;
-L61:
-L62:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//--------------INICIO DE DECLARACION--------a
-t122=P;
-STACK[(int)t122]=100;
-P=P+1;
-//------FIN DE DECLARACION--------a
-//--------------INICIO DE DECLARACION--------b
-t124=P;
-STACK[(int)t124]=100;
-P=P+1;
-//------FIN DE DECLARACION--------b
-//--------------INICIO DE DECLARACION--------c
-t126=P;
-STACK[(int)t126]=7;
-P=P+1;
-//------FIN DE DECLARACION--------c
-//INICIO DE BOOLEANO
-if(1==1) goto L63;
-goto L64;
-//FIN DE BOOLEANO 36-17
-//--------------INICIO DE DECLARACION--------f
-L63://-----VERDADERO
-STACK[(int)t127]=1;
-P=P+1;
-goto L65;
-L64:
-STACK[(int)t127]=0;
-P=P+1;
-L65:
-//FIN DE DECLARACION f
-//--------------INICIO DE DECLARACION--------j
-t129=P;
-STACK[(int)t129]=10;
-P=P+1;
-//------FIN DE DECLARACION--------j
-//--------------INICIO DE DECLARACION--------k
-t131=P;
-STACK[(int)t131]=10;
-P=P+1;
-//------FIN DE DECLARACION--------k
-//INICIO DE PRINT
-//INICIO DE STRING
-t132=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t132==-1) goto L66;
-P=P+1;
-t133=P+1;
-STACK[(int)t133]=t132;
-proc_printString();
-P=P-1;
-goto L67;
-L66:
-L67:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t134=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t134==-1) goto L68;
-P=P+1;
-t135=P+1;
-STACK[(int)t135]=t134;
-proc_printString();
-P=P-1;
-goto L69;
-L68:
-L69:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//-------------||--------
-//-------->
-////INICIO DE LLAMADAa
-t138=STACK[(int)t121];
-////INICIO DE LLAMADAb
-t139=STACK[(int)t123];
-if(t138>t139) goto L70;
-goto L71;
-L71:
-//--------<
-////INICIO DE LLAMADAb
-t141=STACK[(int)t123];
-////INICIO DE LLAMADAc
-t142=STACK[(int)t125];
-if(t141<t142) goto L72;
-goto L73;
-L72:
-goto L70;
-//INICIO DE IF PRIMARIO
-L70:
-//INICIO DE PRINT
-//INICIO DE STRING
-t143=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=237;//í
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=112;//p
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t143==-1) goto L75;
-P=P+1;
-t144=P+1;
-STACK[(int)t144]=t143;
-proc_printString();
-P=P-1;
-goto L76;
-L75:
-L76:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-goto L74;
-L73:
-//INICIO DE BOOLEANO
-if(1==1) goto L77;
-goto L78;
-//FIN DE BOOLEANO 0-0
-//INICIO DE IF ELSE
-L77:
-//INICIO DE PRINT
-//INICIO DE STRING
-t145=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=237;//í
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=112;//p
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t145==-1) goto L79;
-P=P+1;
-t146=P+1;
-STACK[(int)t146]=t145;
-proc_printString();
-P=P-1;
-goto L80;
-L79:
-L80:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-goto L74;
-L78:
-//SALIDA DE IF
-L74:
-//-------------||--------
-//--------&&
-//--------RetornoIZQ
-//-------------==--------
-////INICIO DE LLAMADAa
-t150=STACK[(int)t121];
-////INICIO DE LLAMADAb
-t151=STACK[(int)t123];
-if(t150==t151) goto L81;
-goto L82;
-L81:
-//--------RetornoDER
-//-------------==--------
-////INICIO DE LLAMADAj
-t153=STACK[(int)t128];
-////INICIO DE LLAMADAk
-t154=STACK[(int)t130];
-if(t153==t154) goto L83;
-goto L84;
-L84:
-goto L82;
-L82:
-//-------------!=--------
-////INICIO DE LLAMADAc
-t156=STACK[(int)t125];
-if(14!=t156) goto L85;
-goto L86;
-L85:
-goto L83;
-//INICIO DE IF PRIMARIO
-L83:
-//INICIO DE PRINT
-//INICIO DE STRING
-t157=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=237;//í
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=112;//p
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t157==-1) goto L88;
-P=P+1;
-t158=P+1;
-STACK[(int)t158]=t157;
-proc_printString();
-P=P-1;
-goto L89;
-L88:
-L89:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-goto L87;
-L86:
-//INICIO DE BOOLEANO
-if(1==1) goto L90;
-goto L91;
-//FIN DE BOOLEANO 0-0
-//INICIO DE IF ELSE
-L90:
-//INICIO DE PRINT
-//INICIO DE STRING
-t159=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=237;//í
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=112;//p
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t159==-1) goto L92;
-P=P+1;
-t160=P+1;
-STACK[(int)t160]=t159;
-proc_printString();
-P=P-1;
-goto L93;
-L92:
-L93:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-goto L87;
-L91:
-//SALIDA DE IF
-L87:
-//--------------INICIO DE DECLARACION--------val1
-t162=P;
-STACK[(int)t162]=5;
-P=P+1;
-//------FIN DE DECLARACION--------val1
-//--------------INICIO DE DECLARACION--------resp
-t164=P;
-STACK[(int)t164]=5;
-P=P+1;
-//------FIN DE DECLARACION--------resp
-//--------------INICIO DE DECLARACION--------valorVerdadero
-t166=P;
-STACK[(int)t166]=100;
-P=P+1;
-//------FIN DE DECLARACION--------valorVerdadero
-//--------&&
-//--------RetornoIZQ
-//-------------==--------
-////INICIO DE LLAMADAvalorVerdadero
-t169=STACK[(int)t165];
-t171=50+50;
-////INICIO DE LLAMADAval1
-t173=STACK[(int)t161];
-////INICIO DE LLAMADAval1
-t174=STACK[(int)t161];
-t172=t173-t174;
-t170=t171+t172;
-if(t169==t170) goto L94;
-goto L95;
-L94:
-//--------RetornoDER
-//INICIO DE BOOLEANO
-if(1==1) goto L96;
-goto L97;
-//FIN DE BOOLEANO 59-76
-L97:
-goto L95;
-//INICIO DE IF PRIMARIO
-L96:
-//INICIO DE PRINT
-//INICIO DE STRING
-t185=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=117;//u
-H=H+1;
-HEAP[(int)H]=103;//g
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=41;//)
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t185==-1) goto L99;
-P=P+1;
-t186=P+1;
-STACK[(int)t186]=t185;
-proc_printString();
-P=P-1;
-goto L100;
-L99:
-L100:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIANDO ASIGNACION DE valorVerdadero
-//---------INICIANDO ASIGNACION-------valorVerdadero
-STACK[(int)t165]=50;
-//---------FIN DE ASIGNACION-------valorVerdadero
-goto L98;
-L95:
-//--------&&
-//--------RetornoIZQ
-//-------------||--------
-////INICIO DE LLAMADAf
-t189=STACK[(int)t127];
-if(t189==1) goto L101;
-goto L102;
-L102:
-//-------->
-////INICIO DE LLAMADAvalorVerdadero
-t191=STACK[(int)t165];
-if(t191>50) goto L103;
-goto L104;
-L103:
-goto L101;
-L101:
-//--------RetornoDER
-//--------&&
-//--------RetornoIZQ
-//-------------!=--------
-////INICIO DE LLAMADAresp
-t194=STACK[(int)t163];
-if(t194!=100) goto L105;
-goto L106;
-L105:
-//--------RetornoDER
-////INICIO DE LLAMADAf
-t200=STACK[(int)t127];
-if(t200==1) goto L107;
-goto L108;
-L107:
-goto L106;
-L106:
-goto L104;
-//INICIO DE IF ELSE
-L108:
-//INICIO DE PRINT
-//INICIO DE STRING
-t201=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=65;//A
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t201==-1) goto L109;
-P=P+1;
-t202=P+1;
-STACK[(int)t202]=t201;
-proc_printString();
-P=P-1;
-goto L110;
-L109:
-L110:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIANDO ASIGNACION DE valorVerdadero
-//---------INICIANDO ASIGNACION-------valorVerdadero
-STACK[(int)t165]=70;
-//---------FIN DE ASIGNACION-------valorVerdadero
-goto L98;
-L104:
-//INICIO DE BOOLEANO
-if(1==1) goto L111;
-goto L112;
-//FIN DE BOOLEANO 0-0
-//INICIO DE IF ELSE
-L111:
-//INICIO DE PRINT
-//INICIO DE STRING
-t203=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=65;//A
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=99;//c
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t203==-1) goto L113;
-P=P+1;
-t204=P+1;
-STACK[(int)t204]=t203;
-proc_printString();
-P=P-1;
-goto L114;
-L113:
-L114:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-goto L98;
-L112:
-//SALIDA DE IF
-L98:
-//--------------INICIO DE DECLARACION--------x1
-t206=P;
-STACK[(int)t206]=15;
-P=P+1;
-//------FIN DE DECLARACION--------x1
-//-------------==--------
-////INICIO DE LLAMADAx1
-t209=STACK[(int)t205];
-if(2!=0) goto L115;
-proc_divZero();
-t208=0;
-goto L116;
-L115:
-t208=fmod(t209,2);
-L116:
-if(t208==0) goto L117;
-goto L118;
-//INICIO DE IF PRIMARIO
-L117:
-//INICIO DE PRINT
-//INICIO DE STRING
-t210=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=117;//u
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=80;//P
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=103;//g
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=102;//f
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=44;//,
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t210==-1) goto L120;
-P=P+1;
-t211=P+1;
-STACK[(int)t211]=t210;
-proc_printString();
-P=P-1;
-goto L121;
-L120:
-L121:
-////INICIO DE LLAMADAx1
-t212=STACK[(int)t205];
-printf("%d",(int)t212);
-//INICIO DE STRING
-t213=H;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=112;//p
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t213==-1) goto L122;
-P=P+1;
-t214=P+1;
-STACK[(int)t214]=t213;
-proc_printString();
-P=P-1;
-goto L123;
-L122:
-L123:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-goto L119;
-L118:
-//INICIO DE BOOLEANO
-if(1==1) goto L124;
-goto L125;
-//FIN DE BOOLEANO 0-0
-//INICIO DE IF ELSE
-L124:
-//INICIO DE PRINT
-//INICIO DE STRING
-t215=H;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=62;//>
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=117;//u
-H=H+1;
-HEAP[(int)H]=109;//m
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=80;//P
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=103;//g
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=105;//i
-H=H+1;
-HEAP[(int)H]=102;//f
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=102;//f
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=44;//,
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t215==-1) goto L126;
-P=P+1;
-t216=P+1;
-STACK[(int)t216]=t215;
-proc_printString();
-P=P-1;
-goto L127;
-L126:
-L127:
-////INICIO DE LLAMADAx1
-t217=STACK[(int)t205];
-printf("%d",(int)t217);
-//INICIO DE STRING
-t218=H;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=110;//n
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=112;//p
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t218==-1) goto L128;
-P=P+1;
-t219=P+1;
-STACK[(int)t219]=t218;
-proc_printString();
-P=P-1;
-goto L129;
-L128:
-L129:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-goto L119;
-L125:
-//SALIDA DE IF
-L119:
-t220=7-11;
-//--------------INICIO DE DECLARACION--------abs1
-t222=P;
-STACK[(int)t222]=t220;
-P=P+1;
-//------FIN DE DECLARACION--------abs1
-//--------------INICIO DE DECLARACION--------abs2
-t224=P;
-STACK[(int)t224]=10;
-P=P+1;
-//------FIN DE DECLARACION--------abs2
-//--------------INICIO DE DECLARACION--------raiz1
-t226=P;
-STACK[(int)t226]=9;
-P=P+1;
-//------FIN DE DECLARACION--------raiz1
-//--------------INICIO DE DECLARACION--------raiz2
-t228=P;
-STACK[(int)t228]=100;
-P=P+1;
-//------FIN DE DECLARACION--------raiz2
-//INICIO DE PRINT
-//INICIO DE STRING
-t229=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t229==-1) goto L130;
-P=P+1;
-t230=P+1;
-STACK[(int)t230]=t229;
-proc_printString();
-P=P-1;
-goto L131;
-L130:
-L131:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t231=H;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=42;//*
-H=H+1;
-HEAP[(int)H]=80;//P
-H=H+1;
-HEAP[(int)H]=82;//R
-H=H+1;
-HEAP[(int)H]=85;//U
-H=H+1;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=66;//B
-H=H+1;
-HEAP[(int)H]=65;//A
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=68;//D
-H=H+1;
-HEAP[(int)H]=69;//E
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=78;//N
-H=H+1;
-HEAP[(int)H]=65;//A
-H=H+1;
-HEAP[(int)H]=84;//T
-H=H+1;
-HEAP[(int)H]=73;//I
-H=H+1;
-HEAP[(int)H]=86;//V
-H=H+1;
-HEAP[(int)H]=65;//A
-H=H+1;
-HEAP[(int)H]=83;//S
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t231==-1) goto L132;
-P=P+1;
-t232=P+1;
-STACK[(int)t232]=t231;
-proc_printString();
-P=P-1;
-goto L133;
-L132:
-L133:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t233=H;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=100;//d
-H=H+1;
-HEAP[(int)H]=101;//e
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t233==-1) goto L134;
-P=P+1;
-t234=P+1;
-STACK[(int)t234]=t233;
-proc_printString();
-P=P-1;
-goto L135;
-L134:
-L135:
-////INICIO DE LLAMADAb
-t235=STACK[(int)t123];
-printf("%d",(int)t235);
-//INICIO DE STRING
-t236=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t236==-1) goto L136;
-P=P+1;
-t237=P+1;
-STACK[(int)t237]=t236;
-proc_printString();
-P=P-1;
-goto L137;
-L136:
-L137:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t238=H;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=117;//u
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=49;//1
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t238==-1) goto L138;
-P=P+1;
-t239=P+1;
-STACK[(int)t239]=t238;
-proc_printString();
-P=P-1;
-goto L139;
-L138:
-L139:
-////INICIO DE LLAMADAabs1
-t240=STACK[(int)t221];
-if(t240>=0) goto L140;
-t242=0-1;
-t241=t240*t242;
-goto L141;
-L140:
-t241=t240;
-L141:
-printf("%d",(int)t241);
-//INICIO DE STRING
-t243=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t243==-1) goto L142;
-P=P+1;
-t244=P+1;
-STACK[(int)t244]=t243;
-proc_printString();
-P=P-1;
-goto L143;
-L142:
-L143:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
-//INICIO DE PRINT
-//INICIO DE STRING
-t245=H;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=118;//v
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=114;//r
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=97;//a
-H=H+1;
-HEAP[(int)H]=98;//b
-H=H+1;
-HEAP[(int)H]=115;//s
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=108;//l
-H=H+1;
-HEAP[(int)H]=117;//u
-H=H+1;
-HEAP[(int)H]=116;//t
-H=H+1;
-HEAP[(int)H]=111;//o
-H=H+1;
-HEAP[(int)H]=50;//2
-H=H+1;
-HEAP[(int)H]=58;//:
-H=H+1;
-HEAP[(int)H]=32;// 
-H=H+1;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t245==-1) goto L144;
-P=P+1;
-t246=P+1;
-STACK[(int)t246]=t245;
-proc_printString();
-P=P-1;
-goto L145;
-L144:
-L145:
-////INICIO DE LLAMADAabs2
-t247=STACK[(int)t223];
-if(t247>=0) goto L146;
-t249=0-1;
-t248=t247*t249;
-goto L147;
-L146:
-t248=t247;
-L147:
-printf("%f",t248);
-//INICIO DE STRING
-t250=H;
-HEAP[(int)H]=-1;
-H=H+1;
-//FIN DE STRING
-if(t250==-1) goto L148;
-P=P+1;
-t251=P+1;
-STACK[(int)t251]=t250;
-proc_printString();
-P=P-1;
-goto L149;
-L148:
-L149:
-printf("%c",10);//SALTO DE LINEA
-//FIN DE PRINT
+L14:
 return;
 }

@@ -49,7 +49,14 @@ instruccion returns [interfaces.Instruction instr]
   |t_struct {$instr=$t_struct.i}
   |llamadas PTCOMA{$instr=$llamadas.i}
   |retorno PTCOMA {$instr=$retorno.i}
+  |dec_Mod    {$instr=$dec_Mod.i}
 ;
+
+dec_Mod returns [interfaces.Instruction i]:
+  MODULE id=ID LLAVEIZQ  LLAVEDER {$i=instruction.NewMod($id.text,$id.GetLine(),$id.GetColumn())}
+;
+
+
 instruccion_wc returns [interfaces.Instruction instr]:
   CONSOLE '.' LOG PARIZQ expression PARDER {$instr = instruction.NewImprimir($expression.p)}
   |declaracion_var  {$instr=$declaracion_var.i}

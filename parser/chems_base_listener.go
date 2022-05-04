@@ -39,6 +39,12 @@ func (s *BaseChemsListener) EnterInstruccion(ctx *InstruccionContext) {}
 // ExitInstruccion is called when production instruccion is exited.
 func (s *BaseChemsListener) ExitInstruccion(ctx *InstruccionContext) {}
 
+// EnterDec_Mod is called when production dec_Mod is entered.
+func (s *BaseChemsListener) EnterDec_Mod(ctx *Dec_ModContext) {}
+
+// ExitDec_Mod is called when production dec_Mod is exited.
+func (s *BaseChemsListener) ExitDec_Mod(ctx *Dec_ModContext) {}
+
 // EnterInstruccion_wc is called when production instruccion_wc is entered.
 func (s *BaseChemsListener) EnterInstruccion_wc(ctx *Instruccion_wcContext) {}
 
