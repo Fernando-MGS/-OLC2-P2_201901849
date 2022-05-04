@@ -5,6 +5,7 @@ import (
 	"OLC2/generator"
 	"OLC2/interfaces"
 	"fmt"
+	"reflect"
 	"strconv"
 )
 
@@ -768,8 +769,16 @@ func DevTipos(p Aritmetica, env interface{}, gen *generator.Generator) (interfac
 		retornoIzq = p.Op1.Ejecutar(env, gen)
 
 	} else {
-		retornoIzq = p.Op1.Ejecutar(env, gen)
-		retornoDer = p.Op2.Ejecutar(env, gen)
+		tipo := reflect.TypeOf(p.Op2)
+		t := fmt.Sprintf("%v", tipo)
+		fmt.Println(t)
+		if t == "expresion.DevLoop" {
+			retornoDer = p.Op2.Ejecutar(env, gen)
+			retornoIzq = p.Op1.Ejecutar(env, gen)
+		} else {
+			retornoIzq = p.Op1.Ejecutar(env, gen)
+			retornoDer = p.Op2.Ejecutar(env, gen)
+		}
 	}
 	return retornoIzq, retornoDer
 }

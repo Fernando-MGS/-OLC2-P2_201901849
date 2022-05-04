@@ -207,6 +207,7 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator, 
 		gen.NewIf(result.Value, "==", "-1", l1, false, "", name, true, true, linea)
 		//code += "P=P+1;\n"
 		gen.NewOperacion("P", "P", "+", "1", false, "", name, true, false, linea)
+		env.(environment.Environment).Control.Stack++
 		gen.Stack++
 		t1 := gen.NewTemp()
 		//code += t1 + "=P+1;\n"
@@ -217,7 +218,8 @@ func console(p interfaces.Expresion, env interface{}, gen *generator.Generator, 
 		gen.NewLlamada("proc_printString", false, "", name, true, false, linea)
 		//code += "P=P-1;\n"
 		gen.NewOperacion("P", "P", "-", "1", false, "", name, true, false, linea)
-		gen.Stack--
+		/*env.(environment.Environment).Control.Stack--
+		gen.Stack--*/
 		//code += "goto " + l2 + ";\n"
 		gen.NewSalto(l2, false, "", name, true, true, linea)
 		//code += l1 + ":\n"

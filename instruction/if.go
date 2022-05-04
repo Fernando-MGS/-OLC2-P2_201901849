@@ -78,7 +78,7 @@ func (p If) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		out := env.(environment.Environment).Control.Salida
 		loop := env.(environment.Environment).Control.Ciclo
 		stack := env.(environment.Environment).Control.Stack
-		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, in, out, loop, stack)
+		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, in, out, loop, stack, "")
 		for _, s := range p.Cuerpo.ToArray() {
 			i := s.(interfaces.OpcionIf)
 			//fmt.Println(i)

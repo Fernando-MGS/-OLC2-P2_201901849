@@ -48,7 +48,7 @@ func (p While) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		gen.NewLabels(l1, false, "", name, true, true, "")
 		//gen.AddCodes(value, ambito)
 		stack := env.(environment.Environment).Control.Stack
-		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, l2, true, stack)
+		tmpEnv := environment.NewEnvironment(env.(environment.Environment), env.(environment.Environment).Control.Id, entrada, l2, true, stack, "")
 		for _, s := range p.Bloque.ToArray() {
 			s.(interfaces.Instruction).Ejecutar(tmpEnv, gen)
 		}

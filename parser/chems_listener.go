@@ -29,6 +29,9 @@ type ChemsListener interface {
 	// EnterParam_call is called when entering the param_call production.
 	EnterParam_call(c *Param_callContext)
 
+	// EnterRetorno is called when entering the retorno production.
+	EnterRetorno(c *RetornoContext)
+
 	// EnterAsignacion_var is called when entering the asignacion_var production.
 	EnterAsignacion_var(c *Asignacion_varContext)
 
@@ -49,6 +52,9 @@ type ChemsListener interface {
 
 	// EnterDimensiones is called when entering the dimensiones production.
 	EnterDimensiones(c *DimensionesContext)
+
+	// EnterDimensiones2 is called when entering the dimensiones2 production.
+	EnterDimensiones2(c *Dimensiones2Context)
 
 	// EnterTipo_vector is called when entering the tipo_vector production.
 	EnterTipo_vector(c *Tipo_vectorContext)
@@ -173,6 +179,9 @@ type ChemsListener interface {
 	// ExitParam_call is called when exiting the param_call production.
 	ExitParam_call(c *Param_callContext)
 
+	// ExitRetorno is called when exiting the retorno production.
+	ExitRetorno(c *RetornoContext)
+
 	// ExitAsignacion_var is called when exiting the asignacion_var production.
 	ExitAsignacion_var(c *Asignacion_varContext)
 
@@ -193,6 +202,9 @@ type ChemsListener interface {
 
 	// ExitDimensiones is called when exiting the dimensiones production.
 	ExitDimensiones(c *DimensionesContext)
+
+	// ExitDimensiones2 is called when exiting the dimensiones2 production.
+	ExitDimensiones2(c *Dimensiones2Context)
 
 	// ExitTipo_vector is called when exiting the tipo_vector production.
 	ExitTipo_vector(c *Tipo_vectorContext)

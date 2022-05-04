@@ -63,6 +63,7 @@ func (g *Generator) AddFragment(id string, fragment Fragment) {
 			function.Return = true
 		}
 		function.Fragmentos.Add(fragment)
+		g.funcs_map[id] = function
 	} else {
 		lista := arrayList.New()
 		lista.Add(fragment)

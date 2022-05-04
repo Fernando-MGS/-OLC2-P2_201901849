@@ -20,16 +20,18 @@ type Environment struct {
 }
 
 type EnvControl struct {
-	Id      string
-	Stack   int
-	Heap    int
-	Entrada string
-	Salida  string
-	Ciclo   bool
+	Id        string
+	Stack     int
+	Heap      int
+	Entrada   string
+	Salida    string
+	Ciclo     bool
+	Retorno   string
+	Variables *arraylist.List
 }
 
-func NewEnvironment(father interface{}, id, in, out string, ciclo bool, stack int) Environment {
-	env := Environment{&EnvControl{Id: id, Stack: stack, Heap: 1, Entrada: in, Salida: out, Ciclo: ciclo}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New(), make(map[string]interfaces.Functions), make(map[string]interfaces.Structs)}
+func NewEnvironment(father interface{}, id, in, out string, ciclo bool, stack int, retorn string) Environment {
+	env := Environment{&EnvControl{Id: id, Stack: stack, Heap: 1, Retorno: retorn, Entrada: in, Salida: out, Ciclo: ciclo, Variables: arraylist.New()}, father, make(map[string]interfaces.Symbol), arraylist.New(), arraylist.New(), arraylist.New(), make(map[string]interfaces.Functions), make(map[string]interfaces.Structs)}
 	return env
 }
 
@@ -45,7 +47,21 @@ func (env Environment) SaveFunc(line, col, id string, function interfaces.Functi
 	//env.size = env.size + 1
 }
 
-func (env Environment) SaveVariable(line, col, id string, value interfaces.Symbol, tipo interfaces.TipoSimbolo) {
+func (env Environment) DevSalida() string {
+	var tmpEnv Environment
+	tmpEnv = env
+	//salida:=""
+	for {
+		if tmpEnv.father.(Environment).Control.Id == "GLOBAL" {
+			break
+		} else {
+			tmpEnv = tmpEnv.father.(Environment)
+		}
+	}
+	return tmpEnv.Control.Retorno
+}
+
+func (env Environment) SaveVariable(line, col, id string, value interfaces.Symbol, Tipo interfaces.TipoSimbolo) {
 	if variable, ok := env.variable[id]; ok {
 		t := time.Now()
 		fecha := fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
@@ -56,9 +72,26 @@ func (env Environment) SaveVariable(line, col, id string, value interfaces.Symbo
 		return
 	}
 	env.variable[id] = value
+	if Tipo.Tipo == interfaces.BOOLEAN || Tipo.Tipo == interfaces.CHAR || Tipo.Tipo == interfaces.FLOAT || Tipo.Tipo == interfaces.INTEGER || Tipo.Tipo == interfaces.USIZE {
+		env.Control.Variables.Add(value)
+	}
 	simbolos := interfaces.Simbolos{ID: id, Tipo: Tipo2(value.Tipo.Tipo), Ambito: env.Control.Id, Fila: line, Columna: col}
 	env.LogSimbolo(simbolos)
 	//env.size = env.size + 1
+}
+
+func (env Environment) DevVariables() *arraylist.List {
+	var tmpEnv Environment
+	tmpEnv = env
+	for {
+		if tmpEnv.father.(Environment).Control.Id == "GLOBAL" {
+			break
+		} else {
+			tmpEnv = tmpEnv.father.(Environment)
+		}
+	}
+	//fmt.Println("EL SIZE LEN ES ", tmpEnv.Control.Variables.Len(), env.Control.Id)
+	return tmpEnv.Control.Variables
 }
 
 func (env Environment) SaveStruct(line, col, id string, structs interfaces.Structs) {
@@ -121,6 +154,8 @@ func (env Environment) GetVariable(id, line, col string) interfaces.Symbol {
 
 	for {
 		if variable, ok := tmpEnv.variable[id]; ok {
+			fmt.Println(id)
+			fmt.Println("El id es " + tmpEnv.Control.Id)
 			return variable
 		}
 
@@ -213,7 +248,7 @@ func (env Environment) DevErrores() []interface{} {
 }
 
 func (env Environment) DevAmbito() bool {
-	if env.Control.Id == "GLOBAL" || env.Control.Id == "main" {
+	if env.Control.Id == "main" {
 		return false
 	}
 	return true

@@ -63,6 +63,12 @@ func (s *BaseChemsListener) EnterParam_call(ctx *Param_callContext) {}
 // ExitParam_call is called when production param_call is exited.
 func (s *BaseChemsListener) ExitParam_call(ctx *Param_callContext) {}
 
+// EnterRetorno is called when production retorno is entered.
+func (s *BaseChemsListener) EnterRetorno(ctx *RetornoContext) {}
+
+// ExitRetorno is called when production retorno is exited.
+func (s *BaseChemsListener) ExitRetorno(ctx *RetornoContext) {}
+
 // EnterAsignacion_var is called when production asignacion_var is entered.
 func (s *BaseChemsListener) EnterAsignacion_var(ctx *Asignacion_varContext) {}
 
@@ -104,6 +110,12 @@ func (s *BaseChemsListener) EnterDimensiones(ctx *DimensionesContext) {}
 
 // ExitDimensiones is called when production dimensiones is exited.
 func (s *BaseChemsListener) ExitDimensiones(ctx *DimensionesContext) {}
+
+// EnterDimensiones2 is called when production dimensiones2 is entered.
+func (s *BaseChemsListener) EnterDimensiones2(ctx *Dimensiones2Context) {}
+
+// ExitDimensiones2 is called when production dimensiones2 is exited.
+func (s *BaseChemsListener) ExitDimensiones2(ctx *Dimensiones2Context) {}
 
 // EnterTipo_vector is called when production tipo_vector is entered.
 func (s *BaseChemsListener) EnterTipo_vector(ctx *Tipo_vectorContext) {}

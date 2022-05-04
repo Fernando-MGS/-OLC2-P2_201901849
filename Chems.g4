@@ -48,6 +48,7 @@ instruccion returns [interfaces.Instruction instr]
   |funcs {$instr=$funcs.i}
   |t_struct {$instr=$t_struct.i}
   |llamadas PTCOMA{$instr=$llamadas.i}
+  |retorno PTCOMA {$instr=$retorno.i}
 ;
 instruccion_wc returns [interfaces.Instruction instr]:
   CONSOLE '.' LOG PARIZQ expression PARDER {$instr = instruction.NewImprimir($expression.p)}
@@ -84,6 +85,10 @@ param_call returns [*arrayList.List l]:
               $l=$p.l
   }
   |           {$l=arrayList.New()}
+;
+
+retorno returns [interfaces.Instruction i]:
+  RETURN expression {$i=instruction.NewReturn($expression.p,$RETURN.GetLine(),$RETURN.GetColumn())}
 ;
 
 asignacion_var  returns [interfaces.Instruction i]:
@@ -129,15 +134,28 @@ tipo_d returns [interfaces.TipoExpresion t]:
 asignar_Array returns [interfaces.Dimensions d]:
   dimensiones {$d=$dimensiones.d}
   //|           {$d=interfaces.Dimensions{interfaces.ALL,arrayList.New()}}
+  |dimensiones2 {$d=$dimensiones2.d}
 ;
 dimensiones  returns [interfaces.Dimensions d]:
   CORIZQ tipo_d PTCOMA expression CORDER  {
     list:=arrayList.New()
     list.Add($expression.p)
     $d=interfaces.Dimensions{$tipo_d.t,list}}
-  |CORIZQ dimensiones PTCOMA expression CORDER  {$dimensiones.d.Dimensions.Add($expression.p)
-                                                  $d=$dimensiones.d;
-                                                } 
+  |CORIZQ dimensiones PTCOMA expression CORDER  {
+    $dimensiones.d.Dimensions.Add($expression.p)
+    $d=$dimensiones.d;
+  } 
+;
+
+dimensiones2 returns [interfaces.Dimensions d]:
+  CORIZQ tipo_d  CORDER  {
+    list:=arrayList.New()
+    list.Add($tipo_d.t)
+    $d=interfaces.Dimensions{$tipo_d.t,list}}
+  |CORIZQ dimensiones2 CORDER  {
+    $dimensiones2.d.Dimensions.Add(interfaces.ARRAY)
+    $d=$dimensiones2.d;
+  } 
 ;
 
 tipo_vector returns [interfaces.TipoSimbolo t]:

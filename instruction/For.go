@@ -30,7 +30,7 @@ func (f For) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 	rangoSup := f.Iteracion.Range2.Ejecutar(env, gen)
 	//ambito := env.(environment.Environment).DevAmbito()
 	stack := env.(environment.Environment).Control.Stack
-	tmpEnv := environment.NewEnvironment(env, env.(environment.Environment).Control.Id, "", "", true, stack)
+	tmpEnv := environment.NewEnvironment(env, env.(environment.Environment).Control.Id, "", "", true, stack, "")
 	name := env.(environment.Environment).Control.Id
 	if f.Iteracion.Tipo == 0 {
 		if rangoInf.Type != interfaces.INTEGER && rangoInf.Type != interfaces.USIZE || rangoSup.Type != interfaces.INTEGER && rangoSup.Type != interfaces.USIZE {
@@ -60,6 +60,7 @@ func (f For) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 		gen.NewStack(tam, rangoInf.Value, true, "DECLARACION DE CONTADOR "+f.Variable, name, true, false, f.line)
 		//gen.AddCodes("P=P+1;", ambito)
 		gen.NewOperacion("P", "P", "+", "1", false, "", name, true, true, f.line)
+		tmpEnv.Control.Stack++
 		//gen.AddCodes(entrada+":", ambito)
 		gen.NewLabels(entrada, false, "", name, true, true, "")
 		llamada := gen.NewTemp()
@@ -135,6 +136,7 @@ func (f For) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 			if conf_tipo {
 				gen.NewAsignacion(value, "P", true, "ASIGNACION DE LA POSICION DE "+f.Variable, name, true, false, "")
 				gen.NewOperacion("P", "P", "+", "1", false, "", name, true, false, "")
+				tmpEnv.Control.Stack++
 			}
 
 			//en.AddCodes(entrada+":", ambito)
